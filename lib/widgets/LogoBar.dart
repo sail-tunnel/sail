@@ -14,7 +14,7 @@ class LogoBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
 
@@ -26,8 +26,6 @@ class LogoBar extends StatelessWidget {
           ),
         ),
         
-        Expanded(child: Container()),
-
         // Premium Button
         Material(
           color: isOn? Color(0x66000000): kDarkSurfaceColor,

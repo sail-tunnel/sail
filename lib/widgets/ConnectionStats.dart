@@ -108,7 +108,7 @@ class _ConnectionStatsState extends State<ConnectionStats> {
                       borderRadius: BorderRadius.circular(13)
                     ),
                     padding: EdgeInsets.all(5),
-                    child: Icon(Icons.arrow_downward,
+                    child: Icon(Icons.arrow_upward,
                       color: Colors.white,
                     ),
                   ),
