@@ -1,5 +1,5 @@
-name: vpn_app
-description: A new Flutter project.
+name: sail_app
+description: Kanshiyun's proxy client application.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -25,10 +25,19 @@ dependencies:
     sdk: flutter
   flutter_icons: ^1.1.0
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
+  circular_check_box: ^1.0.2
+  dio: ^3.0.9
+  fluro: ^1.7.7
+  shared_preferences: ^0.5.7+3
+  flutter_webview_plugin: ^0.3.11
+  provider: ^4.3.2
+  flutter_screenutil: ^1.0.2
+  device_preview: ^0.4.8
+  flutter_swiper: ^1.1.6
+  flutter_login: ^1.0.14
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +56,7 @@ flutter:
 
   assets:
     - assets/flags/
+    - assets/images/
     - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see

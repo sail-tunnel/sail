@@ -1,98 +1,53 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:vpn_app/constants.dart';
+import 'package:sail_app/constant/app_strings.dart';
+import 'package:provider/provider.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:sail_app/router/application.dart';
+import 'package:sail_app/router/routers.dart';
+import 'package:sail_app/view_model/user_view_model.dart';
 
-import 'widgets/ConnectionStats.dart';
-import 'widgets/LogoBar.dart';
-import 'widgets/PowerBtn.dart';
-import 'widgets/RecentConnection.dart';
-import 'widgets/SelectLocation.dart';
+import 'constant/app_colors.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var _userViewModel = UserViewModel();
+
+  await _userViewModel.refreshData();
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<UserViewModel>.value(value: _userViewModel),
+    ],
+    child: DevicePreview(
+      enabled: false,
+      builder: (context) => SailApp(),
+    ),
+  ));
 }
 
-class MyApp extends StatelessWidget {
+class SailApp extends StatelessWidget {
+  SailApp() {
+    final router = FluroRouter();
+    Routers.configureRoutes(router);
+    Application.router = router;
+  }
+
+  // This widget is the root of your application.
   @override
-  
   Widget build(BuildContext context) {
-    // SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-    SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
+      locale: DevicePreview.of(context).locale,
+      // <--- /!\ Add the locale
+      builder: DevicePreview.appBuilder,
+      // <--- /!\ Add the builder
+      title: AppStrings.APP_NAME,
+      navigatorKey: Application.navigatorKey,
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      onGenerateRoute: Application.router.generator,
       theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        primarySwatch: Colors.yellow
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  MyHomePageState createState() => MyHomePageState();
-}
-
-class MyHomePageState extends State<MyHomePage> {
-  bool isOn;
-
-  @override
-  void initState() {
-    super.initState();
-    isOn = true;
-  }
-
-  void pressBtn(){
-    setState(() {
-      isOn = !isOn;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: isOn? kYellowColor: kGrayColor,
-      
-      body: Column(
-        children: [
-
-          // Logo bar
-          Padding(
-            padding: const EdgeInsets.only(top: 30,left: 30, right: 30),
-            child: LogoBar(isOn: isOn),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30),
-            child: RecentConnection(isOn: isOn),
-          ),
-
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Image.asset("assets/map.png",
-                scale: 3,
-                color: isOn?Color(0x15000000)
-                :kDarkSurfaceColor,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  PowerButton(this),
-                ],
-              )
-            ]
-          ),
-
-          isOn?
-          ConnectionStats()
-          :SelectLocation()
-        ],
+          primarySwatch: AppColors.THEME_COLOR,
+          visualDensity: VisualDensity.adaptivePlatformDensity
       ),
     );
   }
-
 }
