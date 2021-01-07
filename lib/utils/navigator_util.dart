@@ -5,7 +5,7 @@ import 'package:sail_app/router/routers.dart';
 import 'dart:convert';
 
 class NavigatorUtil {
-  static goMallMainPage(BuildContext context) {
+  static goMainPage(BuildContext context) {
     Application.router.navigateTo(context, Routers.home,
         transition: TransitionType.inFromRight, replace: true);
   }

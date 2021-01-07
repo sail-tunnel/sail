@@ -42,7 +42,7 @@ class RegisterPage extends StatelessWidget {
       onLogin: _authUser,
       onSignup: _authUser,
       onSubmitAnimationCompleted: () {
-        NavigatorUtil.goMallMainPage(context);
+        NavigatorUtil.goMainPage(context);
       },
       onRecoverPassword: _recoverPassword,
     );

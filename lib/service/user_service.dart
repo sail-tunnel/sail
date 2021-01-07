@@ -17,6 +17,18 @@ class UserService {
     }
   }
 
+  Future<bool> register(parameters) async {
+    try {
+      var result = await HttpUtil.instance.post(AppUrls.REGISTER, parameters: parameters);
+
+      bool registerResult = result['data'];
+
+      return registerResult;
+    } catch (err) {
+      return Future.error(err);
+    }
+  }
+
   Future<UserSubscribeEntity> userSubscribe() async {
     try {
       var result = await HttpUtil.instance.get(AppUrls.USER_SUBSCRIBE);

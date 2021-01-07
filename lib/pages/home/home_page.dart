@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
+import 'package:sail_app/service/user_service.dart';
 import 'package:sail_app/view_model/user_view_model.dart';
 import 'package:sail_app/widgets/connection_stats.dart';
 import 'package:sail_app/widgets/logo_bar.dart';
@@ -17,6 +18,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   UserViewModel _userViewModel;
   bool isOn;
+  int lastConnectedIndex = 1;
 
   @override
   void initState() {
@@ -24,7 +26,7 @@ class HomePageState extends State<HomePage> {
     isOn = true;
   }
 
-  void pressBtn(){
+  void pressBtn() {
     if (!_userViewModel.isLogin) {
       NavigatorUtil.goLogin(context);
     } else {
@@ -34,55 +36,60 @@ class HomePageState extends State<HomePage> {
     }
   }
 
+  void changeLastConnectedIndex(index) {
+    setState(() {
+      lastConnectedIndex = index;
+      isOn = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     _userViewModel = Provider.of<UserViewModel>(context);
 
-    return Scaffold(
-      backgroundColor: isOn? AppColors.YELLOW_COLOR: AppColors.GRAY_COLOR,
+    if (_userViewModel.isLogin) {
+      UserService().userSubscribe().then((value) {
+        print(value);
+      });
+    }
 
+    return Scaffold(
+      backgroundColor: isOn ? AppColors.YELLOW_COLOR : AppColors.GRAY_COLOR,
       body: Column(
         children: [
-
           // Logo bar
           Padding(
-            padding: const EdgeInsets.only(top: 30,left: 30, right: 30),
+            padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
             child: LogoBar(isOn: isOn),
           ),
 
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30),
-            child: RecentConnection(isOn: isOn),
+            child: RecentConnection(
+              isOn: isOn,
+              lastConnectedIndex: lastConnectedIndex,
+              parent: this,
+              countries: [
+                "United States"
+              ],
+            ),
           ),
 
-          Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset("assets/map.png",
-                  scale: 3,
-                  color: isOn?Color(0x15000000)
-                      :AppColors.DARK_SURFACE_COLOR,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        NavigatorUtil.goLogin(context);
-                      },
-                      child: PowerButton(this),
-                    ),
-                  ],
-                )
-              ]
-          ),
+          Stack(alignment: Alignment.center, children: [
+            Image.asset(
+              "assets/map.png",
+              scale: 3,
+              color: isOn ? Color(0x15000000) : AppColors.DARK_SURFACE_COLOR,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [PowerButton(this)],
+            )
+          ]),
 
-          isOn?
-          ConnectionStats()
-              :SelectLocation()
+          isOn ? ConnectionStats() : SelectLocation()
         ],
       ),
     );
   }
-
 }

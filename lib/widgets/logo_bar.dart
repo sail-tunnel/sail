@@ -39,10 +39,11 @@ class LogoBar extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 11, horizontal: 15),
                 child: Row(
                   children: [
-                    Icon(MaterialCommunityIcons.crown,
+                    Icon(MaterialCommunityIcons.wallet_outline,
                         color: Colors.yellow
                     ),
-                    Text("购买服务",
+                    Padding(padding: EdgeInsets.only(left: ScreenUtil().setWidth(5))),
+                    Text('我的账户',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/pages/server_list.dart';
 
@@ -41,8 +42,9 @@ class SelectLocation extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
             child: Row(
               children: [
-                Icon(MaterialCommunityIcons.map_marker),
-                Text("Select Location",
+                Icon(MaterialCommunityIcons.server_network),
+                Padding(padding: EdgeInsets.only(left: ScreenUtil().setWidth(10))),
+                Text("选择连接节点",
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold
