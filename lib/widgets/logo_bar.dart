@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
+import 'package:sail_app/utils/shared_preferences_util.dart';
+import 'package:sail_app/view_model/user_view_model.dart';
 
 class LogoBar extends StatelessWidget {
   const LogoBar({
@@ -13,6 +16,8 @@ class LogoBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserViewModel _userViewModel = Provider.of<UserViewModel>(context);
+
     return Container(
       margin: EdgeInsets.only(top: ScreenUtil().setWidth(50)),
       child: Row(
@@ -34,7 +39,9 @@ class LogoBar extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             child: InkWell(
               borderRadius: BorderRadius.circular(15),
-              onTap: (){},
+              onTap: (){
+                SharedPreferencesUtil.getInstance().clear();
+              },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 11, horizontal: 15),
                 child: Row(
@@ -43,7 +50,7 @@ class LogoBar extends StatelessWidget {
                         color: Colors.yellow
                     ),
                     Padding(padding: EdgeInsets.only(left: ScreenUtil().setWidth(5))),
-                    Text('我的账户',
+                    Text('余额：${_userViewModel?.userSubscribeEntity?.balance ?? 0}',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500

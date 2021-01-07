@@ -13,17 +13,22 @@ class SharedPreferencesUtil {
     return _instance;
   }
 
-  Future setBool(String tag, bool isFirst) async {
+  Future<bool> setBool(String tag, bool isFirst) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.setBool(tag, isFirst);
   }
 
-  Future getBool(String tag) async {
+  Future<bool> setString(String tag, String data) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.setString(tag, data);
+  }
+
+  Future<bool> getBool(String tag) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getBool(tag);
   }
 
-  Future getString(String tag) async {
+  Future<String> getString(String tag) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getString(tag);
   }

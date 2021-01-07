@@ -33,7 +33,7 @@ class UserService {
     try {
       var result = await HttpUtil.instance.get(AppUrls.USER_SUBSCRIBE);
 
-      UserSubscribeEntity userSubscribeEntity = UserSubscribeEntity.fromJson(result);
+      UserSubscribeEntity userSubscribeEntity = UserSubscribeEntity.fromMap(result);
 
       return userSubscribeEntity;
     } catch (err) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
-import 'package:sail_app/service/user_service.dart';
 import 'package:sail_app/view_model/user_view_model.dart';
 import 'package:sail_app/widgets/connection_stats.dart';
 import 'package:sail_app/widgets/logo_bar.dart';
@@ -46,12 +45,6 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     _userViewModel = Provider.of<UserViewModel>(context);
-
-    if (_userViewModel.isLogin) {
-      UserService().userSubscribe().then((value) {
-        print(value);
-      });
-    }
 
     return Scaffold(
       backgroundColor: isOn ? AppColors.YELLOW_COLOR : AppColors.GRAY_COLOR,
