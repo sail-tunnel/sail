@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:provider/provider.dart';
+import 'package:sail_app/models/login_model.dart';
+import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/service/user_service.dart';
 import 'package:sail_app/utils/navigator_util.dart';
 import 'package:sail_app/constant/app_strings.dart';
-import 'package:sail_app/view_model/login_view_model.dart';
-import 'package:sail_app/view_model/user_view_model.dart';
 
-const users = const {
-  'losgif@gmail.com': '12345',
-};
-
+// ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
   Duration get loginTime => Duration(milliseconds: 2250);
 
-  UserViewModel _userViewModel;
-  LoginViewModel _loginViewModel;
+  UserModel _userModel;
+  LoginModel _loginModel;
 
   static final FormFieldValidator<String> _emailValidator = (value) {
     if (value.isEmpty ||
@@ -37,12 +34,10 @@ class LoginPage extends StatelessWidget {
 
 
   Future<String> _login(LoginData data) async {
-    print('Name: ${data.name}, Password: ${data.password}');
-
     String result;
 
     try {
-      await _loginViewModel.login(data.name, data.password);
+      await _loginModel.login(data.name, data.password);
     } catch (err) {
       result = '登陆失败，请重试';
     }
@@ -51,15 +46,13 @@ class LoginPage extends StatelessWidget {
   }
 
   Future<String> _register(LoginData data) async {
-    print('Name: ${data.name}, Password: ${data.password}');
-
     String result;
 
     try {
       await UserService()
           .register({'email': data.name, 'password': data.password});
 
-      await _loginViewModel.login(data.name, data.password);
+      await _loginModel.login(data.name, data.password);
     } catch (err) {
       result = '注册失败，请重试';
     }
@@ -68,23 +61,15 @@ class LoginPage extends StatelessWidget {
   }
 
   Future<String> _recoverPassword(String name) {
-    print('Name: $name');
     return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(name)) {
-        return 'Username not exists';
-      }
       return null;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    _userViewModel = Provider.of<UserViewModel>(context);
-    _loginViewModel = LoginViewModel(_userViewModel);
-
-    if (_userViewModel.isLogin) {
-      NavigatorUtil.goMainPage(context);
-    }
+    _userModel = Provider.of<UserModel>(context);
+    _loginModel = LoginModel(_userModel);
 
     return FlutterLogin(
       title: AppStrings.APP_NAME,

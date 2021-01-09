@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sail_app/view_model/page_state.dart';
+import 'package:sail_app/models/page_state.dart';
 
-class BaseViewModel extends ChangeNotifier {
+class BaseModel extends ChangeNotifier {
   PageState pageState = PageState.loading;
   bool _isDispose = false;
   var errorMessage;

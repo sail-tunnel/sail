@@ -6,17 +6,27 @@ import 'dart:convert';
 
 class NavigatorUtil {
   static goMainPage(BuildContext context) {
+    Application.router.navigateTo(context, Routers.root,
+        transition: TransitionType.inFromRight, replace: true);
+  }
+
+  static goGuidePage(BuildContext context) {
+    Application.router.navigateTo(context, Routers.guide,
+        transition: TransitionType.inFromRight, replace: true);
+  }
+
+  static goHomePage(BuildContext context) {
     Application.router.navigateTo(context, Routers.home,
         transition: TransitionType.inFromRight, replace: true);
   }
 
-  static goRegister(BuildContext context) {
-    Application.router.navigateTo(context, Routers.register,
-        transition: TransitionType.inFromRight);
-  }
-
   static goLogin(BuildContext context) {
     Application.router.navigateTo(context, Routers.login,
+        transition: TransitionType.inFromRight, replace: true);
+  }
+
+  static goServerList(BuildContext context) {
+    Application.router.navigateTo(context, Routers.serverList,
         transition: TransitionType.inFromRight);
   }
 
@@ -26,5 +36,9 @@ class NavigatorUtil {
     return Application.router.navigateTo(
         context, Routers.webView + "?titleName=$encodeTitleName&url=$encodeUrl",
         transition: TransitionType.inFromRight);
+  }
+
+  static goBack(BuildContext context) {
+    Application.router.pop(context);
   }
 }

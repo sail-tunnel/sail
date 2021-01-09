@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sail_app/constant/app_colors.dart';
-import 'package:sail_app/pages/server_list.dart';
+import 'package:sail_app/utils/navigator_util.dart';
 
 class SelectLocation extends StatelessWidget {
   const SelectLocation({
@@ -12,16 +12,13 @@ class SelectLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical:20, horizontal: 30),
+      padding: EdgeInsets.symmetric(vertical:20, horizontal: ScreenUtil().setWidth(75)),
       child: Material(
         borderRadius: BorderRadius.circular(20),
         color: Colors.yellow[600],
         child: InkWell(
           onTap: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) {
-              return ServerListPage();
-            }));
+            NavigatorUtil.goServerList(context);
           },
           splashColor: Colors.grey,
           borderRadius: BorderRadius.circular(20),

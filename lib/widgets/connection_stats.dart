@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/pages/server_list.dart';
 
@@ -22,7 +23,7 @@ class _ConnectionStatsState extends State<ConnectionStats> {
         ),
 
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 100),
+          padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(75)),
           child: FlatButton(
             onPressed: (){
               Navigator.of(context)
@@ -42,7 +43,7 @@ class _ConnectionStatsState extends State<ConnectionStats> {
         ),
 
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+          padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(75),vertical: 10),
           child: Row(
             children: [
               // Download Stats

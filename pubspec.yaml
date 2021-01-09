@@ -38,6 +38,8 @@ dependencies:
   device_preview: ^0.4.8
   flutter_swiper: ^1.1.6
   flutter_login: ^1.0.14
+  flutter_easyrefresh: ^2.1.8
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:

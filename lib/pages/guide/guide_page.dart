@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sail_app/constant/app_dimens.dart';
 import 'package:sail_app/constant/app_images.dart';
 import 'package:sail_app/constant/app_strings.dart';
+import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/utils/navigator_util.dart';
-import 'package:sail_app/utils/shared_preferences_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
@@ -18,8 +18,7 @@ class _GuidePageState extends State<GuidePage> {
 
   @override
   Widget build(BuildContext context) {
-    SharedPreferencesUtil.getInstance().setBool(AppStrings.IS_FIRST, false);
-
+    UserModel().setIsFirst(false);
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -37,7 +36,7 @@ class _GuidePageState extends State<GuidePage> {
                         color: Color(0xFFFF5722),
                         textColor: Colors.white,
                         onPressed: () {
-                          NavigatorUtil.goMainPage(context);
+                          NavigatorUtil.goHomePage(context);
                         },
                         child: Text(AppStrings.OPEN_DOOR,
                             style: TextStyle(fontSize: AppDimens.BIG_TEXT_SIZE)),

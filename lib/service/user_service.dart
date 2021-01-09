@@ -5,7 +5,7 @@ import 'package:sail_app/entity/user_subscribe_entity.dart';
 import 'package:sail_app/utils/http_util.dart';
 
 class UserService {
-  Future<LoginEntity> login(parameters) async {
+  Future<LoginEntity> login(Map<String, dynamic> parameters) async {
     try {
       var result = await HttpUtil.instance.post(AppUrls.LOGIN, parameters: parameters);
 
@@ -33,7 +33,7 @@ class UserService {
     try {
       var result = await HttpUtil.instance.get(AppUrls.USER_SUBSCRIBE);
 
-      UserSubscribeEntity userSubscribeEntity = UserSubscribeEntity.fromMap(result);
+      UserSubscribeEntity userSubscribeEntity = UserSubscribeEntity.fromMap(result['data']);
 
       return userSubscribeEntity;
     } catch (err) {
@@ -45,7 +45,7 @@ class UserService {
     try {
       var result = await HttpUtil.instance.get(AppUrls.USER_INFO);
 
-      UserEntity userEntity = UserEntity.fromMap(result);
+      UserEntity userEntity = UserEntity.fromMap(result['data']);
 
       return userEntity;
     } catch (err) {

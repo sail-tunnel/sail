@@ -1,47 +1,27 @@
 import 'package:fluro/fluro.dart';
-import 'package:flutter/material.dart';
 import 'package:sail_app/router/router_handlers.dart';
-import 'package:sail_app/pages/404/not_find_page.dart';
 
 class Routers {
   static String root = "/";
   static String guide = "/guide";
   static String home = "/home";
-  static String categoryGoods = "/categoryGoods";
 
-  static String goodsDetail = "/goodsDetail";
   static String login = "/login";
-  static String register = "/register";
-  static String fillInOrder = "/fillInOrder";
-  static String address = "/address";
-  static String editAddress = "/editAddress";
-  static String coupon = "/coupon";
-  static String searchGoods = "/searchGoods";
+  static String serverList = '/server-list';
   static String webView = "/webView";
-  static String brandDetail = "/brandDetail";
-  static String projectSelectionDetail = "/projectSelectionDetail";
-  static String collect = "/collect";
-  static String aboutUs = "/aboutUs";
-  static String feedBack = "/feedBack";
-  static String footPrint = "/footPrint";
-  static String submitSuccess = "/submitSuccess";
-  static String homeCategoryGoods = "/homeCategoryGoods";
-  static String orderPage = "/orderPage";
-  static String orderDetailPage = "/orderDetailPage";
 
   static void configureRoutes(FluroRouter router) {
-    router.notFoundHandler = Handler(handlerFunc:
-        (BuildContext context, Map<String, List<String>> parameters) {
-      return NotFindPage();
-    });
+    router.notFoundHandler = notFindHandler;
 
-    router.define(root, handler: splashHandler);
+    router.define(root, handler: rootHandler);
+
+    router.define(guide, handler: splashHandler);
 
     router.define(home, handler: homeHandler);
 
-    router.define(register, handler: registerHandler);
-
     router.define(login, handler: loginHandler);
+
+    router.define(serverList, handler: serverListHandler);
 
     router.define(webView, handler: webViewHandler);
   }

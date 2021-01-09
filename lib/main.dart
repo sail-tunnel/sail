@@ -3,20 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:sail_app/constant/app_strings.dart';
 import 'package:provider/provider.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:sail_app/models/user_subscribe_model.dart';
 import 'package:sail_app/router/application.dart';
 import 'package:sail_app/router/routers.dart';
-import 'package:sail_app/view_model/user_view_model.dart';
+import 'package:sail_app/models/user_model.dart';
 
 import 'constant/app_colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var _userViewModel = UserViewModel();
+  var _userViewModel = UserModel();
+  var _userSubscribeModel = UserSubscribeModel();
 
   await _userViewModel.refreshData();
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider<UserViewModel>.value(value: _userViewModel),
+      ChangeNotifierProvider<UserModel>.value(value: _userViewModel),
+      ChangeNotifierProvider<UserSubscribeModel>.value(value: _userSubscribeModel),
     ],
     child: DevicePreview(
       enabled: false,
