@@ -99,7 +99,9 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: isOn ? AppColors.YELLOW_COLOR : AppColors.GRAY_COLOR,
-      body: Column(
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+          child: Column(
         children: [
           // Logo bar
           Padding(
@@ -155,7 +157,7 @@ class HomePageState extends State<HomePage> {
             ),
           ),
         ],
-      ),
+      )),
     );
   }
 }
