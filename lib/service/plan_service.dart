@@ -14,4 +14,17 @@ class PlanService {
       return Future.error(err);
     }
   }
+
+  Future<PlanEntity> planDetail(int id) async {
+    try {
+      var result = await HttpUtil.instance
+          .get('${AppUrls.PLAN}', parameters: {'id': id});
+
+      PlanEntity _planEntity = PlanEntity.fromMap(result['data']);
+
+      return _planEntity;
+    } catch (err) {
+      return Future.error(err);
+    }
+  }
 }
