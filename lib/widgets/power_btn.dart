@@ -26,7 +26,7 @@ class _PowerButtonState extends State<PowerButton> {
         child: InkWell(
           splashColor: AppColors.YELLOW_COLOR,
           onTap: (){
-            widget.parent.pressBtn();
+            widget.parent.checkHasLogin(() => widget.parent.pressConnectBtn());
           },
           borderRadius: BorderRadius.circular(ScreenUtil().setWidth(100)),
           child: Container(

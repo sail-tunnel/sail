@@ -69,7 +69,7 @@ class _PlanListState extends State<PlanList> {
             onTap: widget.isOn && widget.plans[i ~/ 2].id == widget.boughtPlanId
                 ? null
                 : () {
-                    widget.parent.changeBoughtPlanId(widget.plans[(i ~/ 2) - 1].id);
+                    widget.parent.checkHasLogin(() => widget.parent.changeBoughtPlanId(widget.plans[(i ~/ 2) - 1].id));
                   },
             child: Container(
                 width: ScreenUtil().setWidth(300),

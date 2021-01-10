@@ -1,8 +1,8 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tags/flutter_tags.dart';
+import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
-import 'package:sail_app/entity/server_entity.dart';
-import 'package:sail_app/service/server_service.dart';
+import 'package:sail_app/models/server_model.dart';
 import 'package:flutter/material.dart';
 import 'package:sail_app/utils/navigator_util.dart';
 
@@ -12,25 +12,17 @@ class ServerListPage extends StatefulWidget {
 }
 
 class _ServerListPageState extends State<ServerListPage> {
-  List<ServerEntity> _servers;
+  ServerModel _serverModel;
 
   @override
   void initState() {
     super.initState();
-
-    _onLoadData();
-  }
-
-  _onLoadData() async {
-    List<ServerEntity> servers = await ServerService().server();
-
-    setState(() {
-      _servers = servers;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    _serverModel = Provider.of<ServerModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -66,7 +58,7 @@ class _ServerListPageState extends State<ServerListPage> {
           Container(
             child: ListView.separated(
               shrinkWrap: true,
-              itemCount: _servers?.length ?? 0,
+              itemCount: _serverModel.serverEntityList?.length ?? 0,
               itemBuilder: (_, index) {
                 return Material(
                   borderRadius: BorderRadius.circular(10),
@@ -85,30 +77,35 @@ class _ServerListPageState extends State<ServerListPage> {
                             ),
                             CircleAvatar(
                               radius: ScreenUtil().setWidth(10),
-                              backgroundColor:
-                                  ((_servers[index].lastCheckAt ?? 0) * 1000 >
-                                          DateTime.now()
-                                                  .toLocal()
-                                                  .microsecondsSinceEpoch +
-                                              (1000 * 60))
-                                      ? Colors.green
-                                      : Colors.red,
+                              backgroundColor: ((_serverModel
+                                                  .serverEntityList[index]
+                                                  .lastCheckAt ??
+                                              0) *
+                                          1000 >
+                                      DateTime.now()
+                                              .toLocal()
+                                              .microsecondsSinceEpoch +
+                                          (1000 * 60))
+                                  ? Colors.green
+                                  : Colors.red,
                             ),
                             SizedBox(
                               width: 15,
                             ),
                             Text(
-                              _servers[index].name,
+                              _serverModel.serverEntityList[index].name,
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                             SizedBox(
                               width: 15,
                             ),
                             Tags(
-                                itemCount: _servers[index].tags.length,
+                                itemCount: _serverModel
+                                    .serverEntityList[index].tags.length,
                                 // required
                                 itemBuilder: (int i) {
-                                  final item = _servers[index].tags[i];
+                                  final item = _serverModel
+                                      .serverEntityList[index].tags[i];
 
                                   return ItemTags(
                                     // Each ItemTags must contain a Key. Keys allow Flutter to
@@ -132,6 +129,8 @@ class _ServerListPageState extends State<ServerListPage> {
                           borderRadius:
                               BorderRadius.circular(ScreenUtil().setWidth(30)),
                           onTap: () {
+                            _serverModel.setSelectServerEntity(
+                                _serverModel.serverEntityList[index]);
                             NavigatorUtil.goBack(context);
                           },
                           child: Container(

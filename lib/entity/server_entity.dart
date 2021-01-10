@@ -5,7 +5,8 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-List<ServerEntity> serverEntityFromList(List<dynamic> data) => List<ServerEntity>.from(data.map((x) => ServerEntity.fromMap(x)));
+List<ServerEntity> serverEntityFromList(List<dynamic> data) =>
+    List<ServerEntity>.from(data.map((x) => ServerEntity.fromMap((x))));
 
 class ServerEntity {
   ServerEntity({
@@ -85,47 +86,62 @@ class ServerEntity {
         lastCheckAt: lastCheckAt ?? this.lastCheckAt,
       );
 
-  factory ServerEntity.fromJson(String str) => ServerEntity.fromMap(json.decode(str));
+  factory ServerEntity.fromJson(String str) =>
+      ServerEntity.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory ServerEntity.fromMap(Map<String, dynamic> map) => ServerEntity(
-    id: map["id"] == null ? null : map["id"],
-    groupId: map["group_id"] == null ? null : List<String>.from(json.decode(map["group_id"]).map((x) => x)),
-    parentId: map["parent_id"],
-    tags: map["tags"] == null ? null : List<String>.from(json.decode(map["tags"]).map((x) => x)),
-    name: map["name"] == null ? null : map["name"],
-    rate: map["rate"] == null ? null : map["rate"],
-    host: map["host"] == null ? null : map["host"],
-    port: map["port"] == null ? null : map["port"],
-    serverPort: map["server_port"] == null ? null : map["server_port"],
-    cipher: map["cipher"] == null ? null : map["cipher"],
-    show: map["show"] == null ? null : map["show"],
-    sort: map["sort"],
-    createdAt: map["created_at"] == null ? null : DateTime.parse(map["created_at"]),
-    updatedAt: map["updated_at"] == null ? null : DateTime.parse(map["updated_at"]),
-    type: map["type"] == null ? null : map["type"],
-    link: map["link"] == null ? null : map["link"],
-    lastCheckAt: map["last_check_at"],
-  );
+        id: map["id"] == null ? null : map["id"],
+        groupId: map["group_id"] == null
+            ? null
+            : List<String>.from((map["group_id"] is String
+                    ? json.decode(map["group_id"])
+                    : map["group_id"])
+                .map((x) => x)),
+        parentId: map["parent_id"],
+        tags: map["tags"] == null
+            ? null
+            : List<String>.from(
+                (map["tags"] is String ? json.decode(map["tags"]) : map["tags"])
+                    .map((x) => x)),
+        name: map["name"] == null ? null : map["name"],
+        rate: map["rate"] == null ? null : map["rate"],
+        host: map["host"] == null ? null : map["host"],
+        port: map["port"] == null ? null : map["port"],
+        serverPort: map["server_port"] == null ? null : map["server_port"],
+        cipher: map["cipher"] == null ? null : map["cipher"],
+        show: map["show"] == null ? null : map["show"],
+        sort: map["sort"],
+        createdAt: map["created_at"] == null
+            ? null
+            : DateTime.parse(map["created_at"]),
+        updatedAt: map["updated_at"] == null
+            ? null
+            : DateTime.parse(map["updated_at"]),
+        type: map["type"] == null ? null : map["type"],
+        link: map["link"] == null ? null : map["link"],
+        lastCheckAt: map["last_check_at"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "id": id == null ? null : id,
-    "group_id": groupId == null ? null : List<dynamic>.from(groupId.map((x) => x)),
-    "parent_id": parentId,
-    "tags": tags == null ? null : List<dynamic>.from(tags.map((x) => x)),
-    "name": name == null ? null : name,
-    "rate": rate == null ? null : rate,
-    "host": host == null ? null : host,
-    "port": port == null ? null : port,
-    "server_port": serverPort == null ? null : serverPort,
-    "cipher": cipher == null ? null : cipher,
-    "show": show == null ? null : show,
-    "sort": sort,
-    "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-    "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
-    "type": type == null ? null : type,
-    "link": link == null ? null : link,
-    "last_check_at": lastCheckAt,
-  };
+        "id": id == null ? null : id,
+        "group_id":
+            groupId == null ? null : List<dynamic>.from(groupId.map((x) => x)),
+        "parent_id": parentId,
+        "tags": tags == null ? null : List<dynamic>.from(tags.map((x) => x)),
+        "name": name == null ? null : name,
+        "rate": rate == null ? null : rate,
+        "host": host == null ? null : host,
+        "port": port == null ? null : port,
+        "server_port": serverPort == null ? null : serverPort,
+        "cipher": cipher == null ? null : cipher,
+        "show": show == null ? null : show,
+        "sort": sort,
+        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
+        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
+        "type": type == null ? null : type,
+        "link": link == null ? null : link,
+        "last_check_at": lastCheckAt,
+      };
 }

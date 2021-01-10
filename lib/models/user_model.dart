@@ -23,6 +23,7 @@ class UserModel extends BaseModel {
 
     if (token != null && token.isNotEmpty) {
       _isLogin = true;
+      _token = token;
 
       Map<String, dynamic> _userEntityMap = await SharedPreferencesUtil.getInstance()
           .getMap(AppStrings.USER_INFO) ?? Map<String, dynamic>();
@@ -36,7 +37,7 @@ class UserModel extends BaseModel {
     SharedPreferencesUtil sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
 
     sharedPreferencesUtil.clear();
-    // setIsFirst(false);
+    setIsFirst(false);
 
     refreshData();
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/constant/app_dimens.dart';
 import 'package:sail_app/constant/app_images.dart';
 import 'package:sail_app/constant/app_strings.dart';
@@ -33,8 +34,8 @@ class _GuidePageState extends State<GuidePage> {
                   child: Center(
                       child: FlatButton(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
-                        color: Color(0xFFFF5722),
-                        textColor: Colors.white,
+                        color: AppColors.THEME_COLOR,
+                        textColor: Colors.black87,
                         onPressed: () {
                           NavigatorUtil.goHomePage(context);
                         },

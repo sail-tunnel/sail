@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/entity/plan_entity.dart';
+import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/models/user_subscribe_model.dart';
 import 'package:sail_app/service/plan_service.dart';
@@ -15,14 +16,17 @@ import 'package:sail_app/widgets/recent_connection.dart';
 import 'package:sail_app/widgets/select_location.dart';
 import 'package:sail_app/utils/navigator_util.dart';
 
+typedef Callback = Future<void> Function();
+
 class HomePage extends StatefulWidget {
   @override
   HomePageState createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
-  UserModel _userViewModel;
+  UserModel _userModel;
   UserSubscribeModel _userSubscribeModel;
+  ServerModel _serverModel;
   List<PlanEntity> _planEntityList = List<PlanEntity>();
   bool isOn;
   int lastConnectedIndex = 1;
@@ -49,47 +53,50 @@ class HomePageState extends State<HomePage> {
   }
 
   Future _onRefresh() async {
-    _userViewModel = Provider.of<UserModel>(context);
+    _userModel = Provider.of<UserModel>(context);
     _userSubscribeModel = Provider.of<UserSubscribeModel>(context);
+    _serverModel = Provider.of<ServerModel>(context);
 
-    print('_onRefresh');
-    print('_userViewModel: $_userViewModel');
-    print('_userSubscribeModel: ${_userSubscribeModel.userSubscribeEntity?.toJson()}');
-    if (_userViewModel.isLogin && !_isLoadingData) {
+    if (_userModel.isLogin && !_isLoadingData) {
       _isLoadingData = true;
       await _userSubscribeModel.getUserSubscribe();
+      await _serverModel.getServerList();
+      await _serverModel.getSelectServer();
+      await _serverModel.getSelectServerList();
     }
   }
 
-  void pressBtn() {
-    if (!_userViewModel.isLogin) {
-      NavigatorUtil.goLogin(context);
-    } else {
-      setState(() {
-        isOn = !isOn;
-      });
-    }
+  Future<void> pressConnectBtn() async {
+    setState(() {
+      isOn = !isOn;
+    });
   }
 
-  void changeBoughtPlanId(id) {
-    if (_userViewModel.isLogin) {
-      _userSubscribeModel.getUserSubscribe();
-    } else {
-      NavigatorUtil.goLogin(context);
-    }
+  Future<void> changeBoughtPlanId(id) async {
+    _userSubscribeModel.getUserSubscribe();
   }
 
-  void changeLastConnectedIndex(index) {
+  Future<void> changeLastConnectedIndex(index) async {
     setState(() {
       lastConnectedIndex = index;
       isOn = false;
     });
   }
 
+  Future<void> selectServerNode() async {
+    await NavigatorUtil.goServerList(context);
+  }
+
+  Future<void> checkHasLogin(Callback callback) async {
+    if (!_userModel.isLogin) {
+      NavigatorUtil.goLogin(context);
+    } else {
+      return callback();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    _userViewModel = Provider.of<UserModel>(context);
-
     return Scaffold(
       backgroundColor: isOn ? AppColors.YELLOW_COLOR : AppColors.GRAY_COLOR,
       body: Column(
@@ -103,7 +110,7 @@ class HomePageState extends State<HomePage> {
           Padding(
             padding: EdgeInsets.only(top: ScreenUtil().setWidth(30)),
             child: MySubscribe(
-              isLogin: _userViewModel.isLogin,
+              isLogin: _userModel.isLogin,
               isOn: isOn,
               parent: this,
               userSubscribeEntity: _userSubscribeModel.userSubscribeEntity,
@@ -136,7 +143,7 @@ class HomePageState extends State<HomePage> {
             ])
           ),
 
-          isOn ? ConnectionStats() : SelectLocation(),
+          isOn ? ConnectionStats(this) : SelectLocation(this),
 
           Padding(
             padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(30)),

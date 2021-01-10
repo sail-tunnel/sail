@@ -73,7 +73,6 @@ class LoginPage extends StatelessWidget {
 
     return FlutterLogin(
       title: AppStrings.APP_NAME,
-      logo: 'assets/logo.png',
       onLogin: _login,
       onSignup: _register,
       messages: LoginMessages(
@@ -90,7 +89,7 @@ class LoginPage extends StatelessWidget {
           recoverPasswordSuccess: '发送成功',
           goBackButton: '返回'),
       onSubmitAnimationCompleted: () {
-        NavigatorUtil.goMainPage(context);
+        NavigatorUtil.goHomePage(context);
       },
       onRecoverPassword: _recoverPassword,
       emailValidator: _emailValidator,

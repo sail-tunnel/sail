@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sail_app/constant/app_strings.dart';
 import 'package:provider/provider.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/models/user_subscribe_model.dart';
 import 'package:sail_app/router/application.dart';
 import 'package:sail_app/router/routers.dart';
@@ -14,12 +15,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   var _userViewModel = UserModel();
   var _userSubscribeModel = UserSubscribeModel();
+  var _serverModel = ServerModel();
 
   await _userViewModel.refreshData();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<UserModel>.value(value: _userViewModel),
       ChangeNotifierProvider<UserSubscribeModel>.value(value: _userSubscribeModel),
+      ChangeNotifierProvider<ServerModel>.value(value: _serverModel),
     ],
     child: DevicePreview(
       enabled: false,

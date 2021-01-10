@@ -92,7 +92,7 @@ class SharedPreferencesUtil {
 
   Future<List<dynamic>> getList(String tag) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return jsonDecode(sharedPreferences.getString(tag) ?? '{}');
+    return jsonDecode(sharedPreferences.getString(tag) ?? '[]');
   }
 
   Future<bool> clear() async {

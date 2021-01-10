@@ -11,11 +11,17 @@ class UserSubscribeModel extends BaseModel {
 
   UserSubscribeEntity get userSubscribeEntity => _userSubscribeEntity;
 
-  Future<bool> getUserSubscribe() async {
+  Future<bool> getUserSubscribe({bool forceRefresh = false}) async {
     bool result = false;
 
-    UserSubscribeEntity userSubscribeEntity = await _userService.userSubscribe();
-    setUserSubscribeEntity(userSubscribeEntity);
+    Map<String, dynamic> data = await SharedPreferencesUtil.getInstance()
+        .getMap(AppStrings.USER_SUBSCRIBE);
+
+    if (data == null || data.length == 0 || forceRefresh) {
+      setUserSubscribeEntity(await _userService.userSubscribe());
+    } else {
+      _userSubscribeEntity = UserSubscribeEntity.fromMap(data);
+    }
 
     notifyListeners();
 
@@ -31,8 +37,10 @@ class UserSubscribeModel extends BaseModel {
   }
 
   _saveUserSubscribe() async {
-    SharedPreferencesUtil sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
+    SharedPreferencesUtil sharedPreferencesUtil =
+        SharedPreferencesUtil.getInstance();
 
-    await sharedPreferencesUtil.setMap(AppStrings.USER_SUBSCRIBE, _userSubscribeEntity.toMap());
+    await sharedPreferencesUtil.setMap(
+        AppStrings.USER_SUBSCRIBE, _userSubscribeEntity.toMap());
   }
 }

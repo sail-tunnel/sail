@@ -68,7 +68,7 @@ class _RecentConnectionState extends State<RecentConnection> {
             onTap: widget.isOn && i == widget.lastConnectedIndex
                 ? null
                 : () {
-                    widget.parent.changeLastConnectedIndex(i - 1);
+                    widget.parent.checkHasLogin(() => widget.parent.changeLastConnectedIndex(i - 1));
                   },
             child: Container(
                 width: 150,
