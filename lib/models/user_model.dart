@@ -36,7 +36,7 @@ class UserModel extends BaseModel {
     SharedPreferencesUtil sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
 
     sharedPreferencesUtil.clear();
-    setIsFirst(false);
+    // setIsFirst(false);
 
     refreshData();
   }

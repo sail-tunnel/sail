@@ -33,6 +33,6 @@ class UserSubscribeModel extends BaseModel {
   _saveUserSubscribe() async {
     SharedPreferencesUtil sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
 
-    await sharedPreferencesUtil.setMap(AppStrings.USER_INFO, _userSubscribeEntity.toMap());
+    await sharedPreferencesUtil.setMap(AppStrings.USER_SUBSCRIBE, _userSubscribeEntity.toMap());
   }
 }

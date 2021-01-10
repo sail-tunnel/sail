@@ -70,6 +70,11 @@ class SharedPreferencesUtil {
     return sharedPreferences.setString(tag, jsonEncode(data));
   }
 
+  Future<bool> setList(String tag, List<dynamic> data) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.setString(tag, jsonEncode(data));
+  }
+
   Future<bool> getBool(String tag) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getBool(tag);
@@ -81,6 +86,11 @@ class SharedPreferencesUtil {
   }
 
   Future<Map<String, dynamic>> getMap(String tag) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return jsonDecode(sharedPreferences.getString(tag) ?? '{}');
+  }
+
+  Future<List<dynamic>> getList(String tag) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return jsonDecode(sharedPreferences.getString(tag) ?? '{}');
   }

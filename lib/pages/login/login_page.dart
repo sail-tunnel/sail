@@ -73,7 +73,7 @@ class LoginPage extends StatelessWidget {
 
     return FlutterLogin(
       title: AppStrings.APP_NAME,
-      logo: 'assets/usa.png',
+      logo: 'assets/logo.png',
       onLogin: _login,
       onSignup: _register,
       messages: LoginMessages(
