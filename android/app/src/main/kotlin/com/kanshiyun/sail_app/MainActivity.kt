@@ -1,4 +1,4 @@
-package com.example.sail_app
+package com.kanshiyun.sail_app
 
 import io.flutter.embedding.android.FlutterActivity
 

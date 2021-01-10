@@ -35,10 +35,10 @@ class _RecentConnectionState extends State<RecentConnection> {
                 fontWeight: FontWeight.w500),
           ),
         ),
-        SizedBox(height: 15),
+        SizedBox(height: ScreenUtil().setWidth(30)),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.only(bottom: 5),
+          padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(10)),
           child: Row(children: _buildConnections()),
         )
       ],
@@ -57,14 +57,14 @@ class _RecentConnectionState extends State<RecentConnection> {
                 ? 3
                 : 0
             : 0,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
         color: widget.isOn
             ? i == widget.lastConnectedIndex
                 ? Colors.white
                 : Color(0x15000000)
             : AppColors.DARK_SURFACE_COLOR,
         child: InkWell(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
             onTap: widget.isOn && i == widget.lastConnectedIndex
                 ? null
                 : () {
@@ -73,13 +73,13 @@ class _RecentConnectionState extends State<RecentConnection> {
             child: Container(
                 width: 150,
                 height: 100,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(40), vertical: ScreenUtil().setWidth(30)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Flag
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
+                      padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(16)),
                       child: Image.asset(
                           "assets/flags/${widget.countries[i ~/ 2]}.png",
                           scale: 2),
@@ -90,7 +90,7 @@ class _RecentConnectionState extends State<RecentConnection> {
                       widget.countries[i ~/ 2],
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 14,
+                          fontSize: ScreenUtil().setSp(42),
                           color: widget.isOn
                               ? i == widget.lastConnectedIndex
                                   ? Colors.black
@@ -100,7 +100,7 @@ class _RecentConnectionState extends State<RecentConnection> {
 
                     // Connection status
                     Padding(
-                      padding: const EdgeInsets.only(top: 5),
+                      padding: EdgeInsets.only(top: ScreenUtil().setWidth(10)),
                       child: widget.isOn && i == widget.lastConnectedIndex
                           ? Row(
                               children: [
@@ -112,7 +112,7 @@ class _RecentConnectionState extends State<RecentConnection> {
                                 Text(
                                   "已连接",
                                   style: TextStyle(
-                                      fontSize: 13,
+                                      fontSize: ScreenUtil().setSp(39),
                                       color: Color(0xFF1abb1d),
                                       fontWeight: FontWeight.bold),
                                 )
@@ -120,7 +120,7 @@ class _RecentConnectionState extends State<RecentConnection> {
                             )
                           : Text("连接",
                               style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: ScreenUtil().setSp(39),
                                   fontWeight: FontWeight.w500,
                                   color: widget.isOn
                                       ? Colors.black
