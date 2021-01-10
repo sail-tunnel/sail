@@ -26,6 +26,7 @@ class HomePageState extends State<HomePage> {
   List<PlanEntity> _planEntityList = List<PlanEntity>();
   bool isOn;
   int lastConnectedIndex = 1;
+  bool _isLoadingData = false;
 
   @override
   void initState() {
@@ -54,7 +55,8 @@ class HomePageState extends State<HomePage> {
     print('_onRefresh');
     print('_userViewModel: $_userViewModel');
     print('_userSubscribeModel: ${_userSubscribeModel.userSubscribeEntity?.toJson()}');
-    if (_userViewModel.isLogin && _userSubscribeModel.userSubscribeEntity == null) {
+    if (_userViewModel.isLogin && !_isLoadingData) {
+      _isLoadingData = true;
       await _userSubscribeModel.getUserSubscribe();
     }
   }
