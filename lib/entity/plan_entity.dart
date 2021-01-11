@@ -37,14 +37,14 @@ class PlanEntity {
   final dynamic sort;
   final int renew;
   final String content;
-  final int monthPrice;
-  final int quarterPrice;
-  final int halfYearPrice;
-  final int yearPrice;
+  final dynamic monthPrice;
+  final dynamic quarterPrice;
+  final dynamic halfYearPrice;
+  final dynamic yearPrice;
   final dynamic twoYearPrice;
   final dynamic threeYearPrice;
   final dynamic onetimePrice;
-  final int resetPrice;
+  final dynamic resetPrice;
   final DateTime createdAt;
   final DateTime updatedAt;
 

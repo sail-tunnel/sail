@@ -25,6 +25,12 @@ class NavigatorUtil {
         transition: TransitionType.inFromRight, replace: true);
   }
 
+  static goPlan(BuildContext context) {
+    Application.router.navigateTo(context, Routers.plan,
+        transition: TransitionType.inFromRight);
+  }
+
+
   static goServerList(BuildContext context) {
     Application.router.navigateTo(context, Routers.serverList,
         transition: TransitionType.inFromRight);
