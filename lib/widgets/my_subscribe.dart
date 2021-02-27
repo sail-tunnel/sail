@@ -34,6 +34,7 @@ class _MySubscribeState extends State<MySubscribe> {
           child: Text(
             "我的订阅",
             style: TextStyle(
+                fontSize: ScreenUtil().setSp(32),
                 color: widget.isOn ? AppColors.GRAY_COLOR : Colors.grey[400],
                 fontWeight: FontWeight.w500),
           ),
@@ -78,7 +79,7 @@ class _MySubscribeState extends State<MySubscribe> {
   Widget _buildConnections() {
     return Container(
         width: ScreenUtil().setWidth(1080),
-        height: ScreenUtil().setWidth(220),
+        height: ScreenUtil().setWidth(240),
         padding: EdgeInsets.symmetric(
             horizontal: ScreenUtil().setWidth(75),
             vertical: ScreenUtil().setWidth(0)),
@@ -104,7 +105,7 @@ class _MySubscribeState extends State<MySubscribe> {
                           widget.userSubscribeEntity.plan.name,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: ScreenUtil().setWidth(35),
+                              fontSize: ScreenUtil().setSp(35),
                               color: widget.isOn ? Colors.black : Colors.white),
                         ),
                         Padding(
@@ -116,7 +117,7 @@ class _MySubscribeState extends State<MySubscribe> {
                               : '长期有效',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: ScreenUtil().setWidth(35),
+                              fontSize: ScreenUtil().setSp(35),
                               color: widget.isOn ? Colors.black : Colors.white),
                         ),
                       ],
@@ -158,7 +159,7 @@ class _MySubscribeState extends State<MySubscribe> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                      width: ScreenUtil().setWidth(150),
+                      width: ScreenUtil().setWidth(160),
                       height: ScreenUtil().setWidth(75),
                       margin: EdgeInsets.only(right: ScreenUtil().setWidth(10)),
                       child: FlatButton(
@@ -170,7 +171,7 @@ class _MySubscribeState extends State<MySubscribe> {
                           '续费',
                           style: TextStyle(
                               color: Colors.black87,
-                              fontSize: ScreenUtil().setSp(32)),
+                              fontSize: ScreenUtil().setSp(24)),
                         ),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0)),
@@ -178,7 +179,7 @@ class _MySubscribeState extends State<MySubscribe> {
                       ),
                     ),
                     Container(
-                      width: ScreenUtil().setWidth(180),
+                      width: ScreenUtil().setWidth(160),
                       height: ScreenUtil().setWidth(75),
                       child: FlatButton(
                         color: Colors.yellow,
@@ -186,7 +187,7 @@ class _MySubscribeState extends State<MySubscribe> {
                         colorBrightness: Brightness.dark,
                         splashColor: Colors.grey,
                         child: Text(
-                          '重置流量',
+                          '重置',
                           style: TextStyle(
                               color: Colors.black87,
                               fontSize: ScreenUtil().setSp(24)),

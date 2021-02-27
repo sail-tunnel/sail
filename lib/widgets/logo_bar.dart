@@ -54,6 +54,7 @@ class LogoBar extends StatelessWidget {
                         Padding(padding: EdgeInsets.only(left: ScreenUtil().setWidth(5))),
                         Text('余额：${(_userSubscribeModel?.userSubscribeEntity?.balance ?? 0) / 100}',
                           style: TextStyle(
+                            fontSize: ScreenUtil().setSp(32),
                               color: Colors.white,
                               fontWeight: FontWeight.w500
                           ),
@@ -83,6 +84,7 @@ class LogoBar extends StatelessWidget {
                         Padding(padding: EdgeInsets.only(left: ScreenUtil().setWidth(5))),
                         Text('退出',
                           style: TextStyle(
+                              fontSize: ScreenUtil().setSp(32),
                               color: Colors.white,
                               fontWeight: FontWeight.w500
                           ),

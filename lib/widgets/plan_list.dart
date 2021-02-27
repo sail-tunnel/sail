@@ -32,6 +32,7 @@ class _PlanListState extends State<PlanList> {
           child: Text(
             "订阅套餐",
             style: TextStyle(
+                fontSize: ScreenUtil().setSp(32),
                 color: widget.isOn ? AppColors.GRAY_COLOR : Colors.grey[400],
                 fontWeight: FontWeight.w500),
           ),
@@ -76,6 +77,7 @@ class _PlanListState extends State<PlanList> {
                 height: ScreenUtil().setWidth(200),
                 padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(40), vertical: ScreenUtil().setWidth(30)),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Country name
@@ -83,7 +85,7 @@ class _PlanListState extends State<PlanList> {
                       widget.plans[i ~/ 2].name,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: ScreenUtil().setWidth(35),
+                          fontSize: ScreenUtil().setSp(32),
                           color: widget.isOn
                               ? widget.plans[i ~/ 2].id == widget.boughtPlanId
                                   ? Colors.black
@@ -93,7 +95,7 @@ class _PlanListState extends State<PlanList> {
 
                     // Connection status
                     Padding(
-                      padding: EdgeInsets.only(top: ScreenUtil().setWidth(50)),
+                      padding: EdgeInsets.only(top: ScreenUtil().setWidth(40)),
                       child: widget.plans[i ~/ 2].id == widget.boughtPlanId
                           ? Row(
                               children: [
@@ -105,7 +107,7 @@ class _PlanListState extends State<PlanList> {
                                 Text(
                                   "已订阅",
                                   style: TextStyle(
-                                      fontSize: ScreenUtil().setWidth(40),
+                                      fontSize: ScreenUtil().setSp(32),
                                       color: Color(0xFF1abb1d),
                                       fontWeight: FontWeight.bold),
                                 )
@@ -113,7 +115,7 @@ class _PlanListState extends State<PlanList> {
                             )
                           : Text("选购",
                               style: TextStyle(
-                                  fontSize: ScreenUtil().setWidth(40),
+                                  fontSize: ScreenUtil().setSp(32),
                                   fontWeight: FontWeight.w500,
                                   color: widget.isOn
                                       ? Colors.black

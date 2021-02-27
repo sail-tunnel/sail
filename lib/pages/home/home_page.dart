@@ -46,7 +46,6 @@ class HomePageState extends State<HomePage> {
 
   @override
   void didChangeDependencies() async {
-
     super.didChangeDependencies();
 
     _onRefresh();
@@ -84,7 +83,7 @@ class HomePageState extends State<HomePage> {
     });
   }
 
-  Future<void> selectServerNode() async {
+  Future<void> selectServerNode() async { 
     await NavigatorUtil.goServerList(context);
   }
 
@@ -99,74 +98,85 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: isOn ? AppColors.YELLOW_COLOR : AppColors.GRAY_COLOR,
-      body: Stack(
-        children: [
-          SafeArea(child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Container(
-                constraints: BoxConstraints(minHeight: ScreenUtil().setHeight(1920 - 175)),
-                child: Column(
-                  children: [
-                    // Logo bar
-                    Padding(
-                      padding: EdgeInsets.only(left: ScreenUtil().setWidth(75), right: ScreenUtil().setWidth(75)),
-                      child: LogoBar(isOn: isOn),
-                    ),
+        backgroundColor: isOn ? AppColors.YELLOW_COLOR : AppColors.GRAY_COLOR,
+        body: Stack(
+          children: [
+            SafeArea(
+                child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: Container(
+                        constraints: BoxConstraints(
+                            minHeight: ScreenUtil().setHeight(1920)),
+                        child: Column(
+                          children: [
+                            // Logo bar
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: ScreenUtil().setWidth(75),
+                                  right: ScreenUtil().setWidth(75)),
+                              child: LogoBar(isOn: isOn),
+                            ),
 
-                    Padding(
-                      padding: EdgeInsets.only(top: ScreenUtil().setWidth(30)),
-                      child: MySubscribe(
-                        isLogin: _userModel.isLogin,
-                        isOn: isOn,
-                        parent: this,
-                        userSubscribeEntity: _userSubscribeModel.userSubscribeEntity,
-                      ),
-                    ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: ScreenUtil().setWidth(30)),
+                              child: MySubscribe(
+                                isLogin: _userModel.isLogin,
+                                isOn: isOn,
+                                parent: this,
+                                userSubscribeEntity:
+                                    _userSubscribeModel.userSubscribeEntity,
+                              ),
+                            ),
 
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(30)),
-                      child: PlanList(
-                        isOn: isOn,
-                        boughtPlanId: _userSubscribeModel?.userSubscribeEntity?.planId ?? 0,
-                        parent: this,
-                        plans: _planEntityList,
-                      ),
-                    ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: ScreenUtil().setWidth(30)),
+                              // child: PlanList(
+                              //   isOn: isOn,
+                              //   boughtPlanId: _userSubscribeModel
+                              //           ?.userSubscribeEntity?.planId ??
+                              //       0,
+                              //   parent: this,
+                              //   plans: _planEntityList,
+                              // ),
+                            ),
 
-                    Container(
-                        padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(75)),
-                        child: Stack(alignment: Alignment.center, children: [
-                          Image.asset(
-                            "assets/map.png",
-                            scale: 3,
-                            color:
-                            isOn ? Color(0x15000000) : AppColors.DARK_SURFACE_COLOR,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [PowerButton(this)],
-                          )
-                        ])
-                    ),
+                            Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: ScreenUtil().setWidth(75)),
+                                child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Image.asset(
+                                        "assets/map.png",
+                                        scale: 3,
+                                        color: isOn
+                                            ? Color(0x15000000)
+                                            : AppColors.DARK_SURFACE_COLOR,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [PowerButton(this)],
+                                      )
+                                    ])),
 
-                    isOn ? ConnectionStats(this) : SelectLocation(this),
+                            isOn ? ConnectionStats(this) : SelectLocation(this),
 
-                    // Padding(
-                    //   padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(30)),
-                    //   child: RecentConnection(
-                    //     isOn: isOn,
-                    //     lastConnectedIndex: lastConnectedIndex,
-                    //     parent: this,
-                    //     countries: ["United States"],
-                    //   ),
-                    // ),
-                  ],
-                )
-              ))),
-          RecentConnectionBottomSheet()
-        ],
-      )
-    );
+                            // Padding(
+                            //   padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(30)),
+                            //   child: RecentConnection(
+                            //     isOn: isOn,
+                            //     lastConnectedIndex: lastConnectedIndex,
+                            //     parent: this,
+                            //     countries: ["United States"],
+                            //   ),
+                            // ),
+                          ],
+                        )))),
+            RecentConnectionBottomSheet()
+          ],
+        ));
   }
 }

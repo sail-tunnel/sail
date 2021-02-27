@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' as Services;
 import 'package:sail_app/constant/app_strings.dart';
 import 'package:provider/provider.dart';
 import 'package:device_preview/device_preview.dart';
@@ -41,6 +42,11 @@ class SailApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Services.SystemChrome.setPreferredOrientations([
+      Services.DeviceOrientation.portraitUp,
+      Services.DeviceOrientation.portraitDown
+    ]);
+
     return MaterialApp(
       locale: DevicePreview.of(context).locale,
       // <--- /!\ Add the locale
