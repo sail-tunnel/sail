@@ -8,6 +8,39 @@ import Flutter
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
+    
+    let controller : FlutterViewController = window?.rootViewController as! FlutterViewController;
+    let vpnManagerChannel = FlutterMethodChannel.init(name: "com.kanshiyun.sail/vpn_manager",
+                                                   binaryMessenger: controller.binaryMessenger);
+    let manager = VPNManager.shared()
+    
+    vpnManagerChannel.setMethodCallHandler({
+        (call: FlutterMethodCall, result: FlutterResult) -> Void in
+        guard call.method == "enableVPNManager" else {
+          result(FlutterMethodNotImplemented)
+          return
+        }
+        
+        manager.loadVPNPreference() { error in
+            guard error == nil else {
+                fatalError("load VPN preference failed: \(error.debugDescription)")
+            }
+
+            manager.enableVPNManager() { error in
+                guard error == nil else {
+                    fatalError("enable VPN failed: \(error.debugDescription)")
+                }
+                manager.toggleVPNConnection() { error in
+                    guard error == nil else {
+                        fatalError("toggle VPN connection failed: \(error.debugDescription)")
+                    }
+                }
+            }
+        }
+        
+        result(true)
+      })
+    
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 

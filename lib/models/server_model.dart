@@ -47,7 +47,6 @@ class ServerModel extends BaseModel {
 
     _selectServerEntity = ServerEntity.fromMap(data);
 
-
     notifyListeners();
 
     result = true;

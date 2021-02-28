@@ -9,7 +9,7 @@ class Routers {
   static String login = "/login";
   static String plan = "/plan";
   static String serverList = '/server-list';
-  static String webView = "/webView";
+  static String webView = "/web-view";
 
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = notFindHandler;

@@ -5,6 +5,9 @@ import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/models/server_model.dart';
 import 'package:flutter/material.dart';
 import 'package:sail_app/utils/navigator_util.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_easyrefresh/taurus_header.dart';
+import 'package:flutter_easyrefresh/taurus_footer.dart';
 
 class ServerListPage extends StatefulWidget {
   @override
@@ -17,6 +20,10 @@ class _ServerListPageState extends State<ServerListPage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  Future _onRefresh() async {
+    await _serverModel.getServerList(forceRefresh: true);
   }
 
   @override
@@ -33,10 +40,13 @@ class _ServerListPageState extends State<ServerListPage> {
               .copyWith(fontWeight: FontWeight.w600),
         ),
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Container(
+      body: EasyRefresh.custom(
+          header: TaurusHeader(),
+          footer: TaurusFooter(),
+          onRefresh: _onRefresh,
+          slivers: <Widget>[
+            SliverToBoxAdapter(
+                child: Container(
               padding: EdgeInsets.all(ScreenUtil().setWidth(40)),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -50,13 +60,13 @@ class _ServerListPageState extends State<ServerListPage> {
                               .subtitle2
                               .copyWith(fontWeight: FontWeight.w700),
                           children: [
-                            TextSpan(
-                                text: '节点',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2
-                                    .copyWith(fontWeight: FontWeight.normal))
-                          ])),
+                        TextSpan(
+                            text: '节点',
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle2
+                                .copyWith(fontWeight: FontWeight.normal))
+                      ])),
                   SizedBox(
                     height: 20,
                   ),
@@ -82,31 +92,34 @@ class _ServerListPageState extends State<ServerListPage> {
                                     ),
                                     CircleAvatar(
                                       radius: ScreenUtil().setWidth(10),
-                                      backgroundColor: ((_serverModel
-                                          .serverEntityList[index]
-                                          .lastCheckAt ??
-                                          0) *
-                                          1000 >
-                                          DateTime.now()
-                                              .toLocal()
-                                              .microsecondsSinceEpoch +
-                                              (1000 * 60))
-                                          ? Colors.green
-                                          : Colors.red,
+                                      backgroundColor:
+                                          (DateTime.now().microsecondsSinceEpoch /
+                                                          1000000 -
+                                                      (int.parse(_serverModel
+                                                              .serverEntityList[
+                                                                  index]
+                                                              .lastCheckAt) ??
+                                                          0) <
+                                                  60 * 3)
+                                              ? Colors.green
+                                              : Colors.red,
                                     ),
                                     SizedBox(
                                       width: 15,
                                     ),
                                     Text(
                                       _serverModel.serverEntityList[index].name,
-                                      style: Theme.of(context).textTheme.bodyText1,
+                                      style:
+                                          Theme.of(context).textTheme.bodyText1,
                                     ),
                                     SizedBox(
                                       width: 15,
                                     ),
                                     Tags(
                                         itemCount: _serverModel
-                                            .serverEntityList[index].tags.length,
+                                            .serverEntityList[index]
+                                            .tags
+                                            .length,
                                         // required
                                         itemBuilder: (int i) {
                                           final item = _serverModel
@@ -115,7 +128,7 @@ class _ServerListPageState extends State<ServerListPage> {
                                           return ItemTags(
                                             // Each ItemTags must contain a Key. Keys allow Flutter to
                                             // uniquely identify widgets.
-                                            index: index,
+                                            index: i,
                                             // required
                                             color: AppColors.THEME_COLOR,
                                             activeColor: AppColors.THEME_COLOR,
@@ -123,16 +136,18 @@ class _ServerListPageState extends State<ServerListPage> {
                                             textActiveColor: Colors.black87,
                                             title: item,
                                             textStyle: TextStyle(
-                                                fontSize: ScreenUtil().setSp(24)),
+                                                fontSize:
+                                                    ScreenUtil().setSp(24)),
                                             onPressed: (item) => print(item),
-                                            onLongPressed: (item) => print(item),
+                                            onLongPressed: (item) =>
+                                                print(item),
                                           );
                                         })
                                   ],
                                 ),
                                 InkWell(
-                                  borderRadius:
-                                  BorderRadius.circular(ScreenUtil().setWidth(30)),
+                                  borderRadius: BorderRadius.circular(
+                                      ScreenUtil().setWidth(30)),
                                   onTap: () {
                                     _serverModel.setSelectServerEntity(
                                         _serverModel.serverEntityList[index]);
@@ -141,7 +156,8 @@ class _ServerListPageState extends State<ServerListPage> {
                                   child: Container(
                                       padding: EdgeInsets.symmetric(
                                           vertical: ScreenUtil().setWidth(10),
-                                          horizontal: ScreenUtil().setWidth(30)),
+                                          horizontal:
+                                              ScreenUtil().setWidth(30)),
                                       child: Text(
                                         '选择',
                                         style: TextStyle(
@@ -159,10 +175,8 @@ class _ServerListPageState extends State<ServerListPage> {
                   )
                 ],
               ),
-            ),
-          )
-        ],
-      ),
+            ))
+          ]),
     );
   }
 }

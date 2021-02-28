@@ -37,7 +37,7 @@ public class VPNManager {
             if managers.count == 0 {
                 let newManager = NETunnelProviderManager()
                 newManager.protocolConfiguration = NETunnelProviderProtocol()
-                newManager.localizedDescription = "iLeaf"
+                newManager.localizedDescription = "瞰视云加速"
                 newManager.protocolConfiguration?.serverAddress = "iLeaf"
                 newManager.saveToPreferences { error in
                     guard error == nil else {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sail_app/constant/app_strings.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewPage extends StatelessWidget {
   String bannerDetailUrl;
@@ -15,11 +15,9 @@ class WebViewPage extends StatelessWidget {
         title: Text(bannerName),
         centerTitle: true,
       ),
-      body: WebviewScaffold(
-        url: bannerDetailUrl.isEmpty ? AppStrings.APP_NAME : bannerDetailUrl,
-        withZoom: false,
-        withLocalStorage: true,
-        withJavascript: true,
+      body: WebView(
+        initialUrl: bannerDetailUrl.isEmpty ? AppStrings.APP_NAME : bannerDetailUrl,
+        javascriptMode: JavascriptMode.unrestricted,
       ),
     );
   }

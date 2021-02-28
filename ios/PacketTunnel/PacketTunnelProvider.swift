@@ -7,12 +7,15 @@ let conf = """
 loglevel = trace
 dns-server = 223.5.5.5, 114.114.114.114
 tun-fd = REPLACE-ME-WITH-THE-FD
+
 [Proxy]
 Direct = direct
-vmess-out = vmess, domain.com, 443, username=9bb8c108-3d92-4dfb-b557-7ff2a2b8d06d, ws=true, tls=true, ws-path=/v2
+# Shadowsocks
+SS = ss, 154.17.4.96, 996, encrypt-method=chacha20-ietf-poly1305, password=b9bd376c-642a-42c3-85ea-afec2bb812d6
+
 [Rule]
 EXTERNAL, site:cn, Direct
-FINAL, vmess-out
+FINAL, SS
 """
 
 class PacketTunnelProvider: NEPacketTunnelProvider {

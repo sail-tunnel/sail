@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:sail_app/channels/vpn_manager.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/entity/plan_entity.dart';
 import 'package:sail_app/models/server_model.dart';
@@ -31,6 +33,7 @@ class HomePageState extends State<HomePage> {
   bool isOn;
   int lastConnectedIndex = 1;
   bool _isLoadingData = false;
+  VpnManager vpnManager = VpnManager();
 
   @override
   void initState() {
@@ -66,8 +69,13 @@ class HomePageState extends State<HomePage> {
   }
 
   Future<void> pressConnectBtn() async {
+    await vpnManager.enableVPNManager();
     setState(() {
       isOn = !isOn;
+
+      if (isOn) {
+        print(_serverModel.selectServerEntity.toJson());
+      }
     });
   }
 
@@ -76,14 +84,7 @@ class HomePageState extends State<HomePage> {
     // _userSubscribeModel.getUserSubscribe();
   }
 
-  Future<void> changeLastConnectedIndex(index) async {
-    setState(() {
-      lastConnectedIndex = index;
-      isOn = false;
-    });
-  }
-
-  Future<void> selectServerNode() async { 
+  Future<void> selectServerNode() async {
     await NavigatorUtil.goServerList(context);
   }
 
@@ -97,86 +98,81 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: isOn ? AppColors.YELLOW_COLOR : AppColors.GRAY_COLOR,
-        body: Stack(
-          children: [
-            SafeArea(
-                child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Container(
-                        constraints: BoxConstraints(
-                            minHeight: ScreenUtil().setHeight(1920)),
-                        child: Column(
-                          children: [
-                            // Logo bar
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: ScreenUtil().setWidth(75),
-                                  right: ScreenUtil().setWidth(75)),
-                              child: LogoBar(isOn: isOn),
-                            ),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: isOn ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
+        child: Scaffold(
+            backgroundColor:
+                isOn ? AppColors.YELLOW_COLOR : AppColors.GRAY_COLOR,
+            body: Stack(
+              children: [
+                SafeArea(
+                    child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: Container(
+                            constraints: BoxConstraints(
+                                minHeight: ScreenUtil().setHeight(1920)),
+                            child: Column(
+                              children: [
+                                // Logo bar
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: ScreenUtil().setWidth(75),
+                                      right: ScreenUtil().setWidth(75)),
+                                  child: LogoBar(isOn: isOn),
+                                ),
 
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: ScreenUtil().setWidth(30)),
-                              child: MySubscribe(
-                                isLogin: _userModel.isLogin,
-                                isOn: isOn,
-                                parent: this,
-                                userSubscribeEntity:
-                                    _userSubscribeModel.userSubscribeEntity,
-                              ),
-                            ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: ScreenUtil().setWidth(30)),
+                                  child: MySubscribe(
+                                    isLogin: _userModel.isLogin,
+                                    isOn: isOn,
+                                    parent: this,
+                                    userSubscribeEntity:
+                                        _userSubscribeModel.userSubscribeEntity,
+                                  ),
+                                ),
 
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: ScreenUtil().setWidth(30)),
-                              // child: PlanList(
-                              //   isOn: isOn,
-                              //   boughtPlanId: _userSubscribeModel
-                              //           ?.userSubscribeEntity?.planId ??
-                              //       0,
-                              //   parent: this,
-                              //   plans: _planEntityList,
-                              // ),
-                            ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: ScreenUtil().setWidth(30)),
+                                  child: PlanList(
+                                    isOn: isOn,
+                                    boughtPlanId: _userSubscribeModel
+                                            ?.userSubscribeEntity?.planId ??
+                                        0,
+                                    parent: this,
+                                    plans: _planEntityList,
+                                  ),
+                                ),
 
-                            Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: ScreenUtil().setWidth(75)),
-                                child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Image.asset(
-                                        "assets/map.png",
-                                        scale: 3,
-                                        color: isOn
-                                            ? Color(0x15000000)
-                                            : AppColors.DARK_SURFACE_COLOR,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [PowerButton(this)],
-                                      )
-                                    ])),
+                                Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: ScreenUtil().setWidth(75)),
+                                    child: Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          Image.asset(
+                                            "assets/map.png",
+                                            scale: 3,
+                                            color: isOn
+                                                ? Color(0x15000000)
+                                                : AppColors.DARK_SURFACE_COLOR,
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [PowerButton(this)],
+                                          )
+                                        ])),
 
-                            isOn ? ConnectionStats(this) : SelectLocation(this),
-
-                            // Padding(
-                            //   padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(30)),
-                            //   child: RecentConnection(
-                            //     isOn: isOn,
-                            //     lastConnectedIndex: lastConnectedIndex,
-                            //     parent: this,
-                            //     countries: ["United States"],
-                            //   ),
-                            // ),
-                          ],
-                        )))),
-            RecentConnectionBottomSheet()
-          ],
-        ));
+                                isOn
+                                    ? ConnectionStats(this)
+                                    : SelectLocation(this),
+                              ],
+                            )))),
+                RecentConnectionBottomSheet()
+              ],
+            )));
   }
 }
