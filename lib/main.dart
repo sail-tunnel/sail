@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as Services;
 import 'package:sail_app/constant/app_strings.dart';
 import 'package:provider/provider.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/models/user_subscribe_model.dart';
 import 'package:sail_app/router/application.dart';
@@ -25,10 +24,7 @@ void main() async {
       ChangeNotifierProvider<UserSubscribeModel>.value(value: _userSubscribeModel),
       ChangeNotifierProvider<ServerModel>.value(value: _serverModel),
     ],
-    child: DevicePreview(
-      enabled: false,
-      builder: (context) => SailApp(),
-    ),
+    child: SailApp()
   ));
 }
 
@@ -48,9 +44,6 @@ class SailApp extends StatelessWidget {
     ]);
 
     return MaterialApp(
-      locale: DevicePreview.of(context).locale,
-      // <--- /!\ Add the locale
-      builder: DevicePreview.appBuilder,
       // <--- /!\ Add the builder
       title: AppStrings.APP_NAME,
       navigatorKey: Application.navigatorKey,
