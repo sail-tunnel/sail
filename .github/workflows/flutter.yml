@@ -34,6 +34,11 @@ jobs:
     - run: flutter --version
     - run: flutter pub get
     - run: flutter build apk
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: silversabres.${{ github.sha }}.android.zip
+        path: build/app/outputs/flutter-apk/app-release.apk
     
   build_ios:
     needs: check_commit_msg
@@ -50,3 +55,8 @@ jobs:
     - run: flutter --version
     - run: flutter pub get
     - run: flutter build ios --release --no-codesign
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: silversabres.${{ github.sha }}.android.zip
+        path: build/ios/iphoneos/Runner.app
