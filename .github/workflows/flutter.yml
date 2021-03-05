@@ -37,7 +37,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: silversabres.${{ github.sha }}.android.zip
+        name: silversabres.${{ github.sha }}.android
         path: build/app/outputs/flutter-apk/app-release.apk
     
   build_ios:
@@ -58,5 +58,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: silversabres.${{ github.sha }}.android.zip
+        name: silversabres.${{ github.sha }}.ios
         path: build/ios/iphoneos/Runner.app
