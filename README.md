@@ -1,4 +1,8 @@
+English | [简体中文](./README_zh-CN.md)
+
 # Sail
+
+[![Flutter](https://github.com/losgif/sail/actions/workflows/flutter.yml/badge.svg)](https://github.com/losgif/sail/actions/workflows/flutter.yml)
 
 A flutter application for [V2Board](https://github.com/v2board/v2board) and [SSPanel-Uim](https://github.com/Anankke/SSPanel-Uim)
 
