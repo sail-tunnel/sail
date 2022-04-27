@@ -15,7 +15,29 @@
 - [flat flags](https://github.com/wobblecode/flat-flags)
 - [flutter icons](https://pub.dev/packages/flutter_icons)
 
-# 截图
+## 安装
+
+```shell
+flutter pub get
+```
+
+## 开发
+```shell
+flutter run
+```
+
+## 构建
+build android apk
+```shell
+flutter build apk
+```
+
+build ios
+```shell
+flutter build ios
+```
+
+## 截图
 
 <img src="https://user-images.githubusercontent.com/13404752/110204775-dc941180-7eaf-11eb-968b-af8975294368.png" width="300" alt="Screenshot">
 <img src="https://user-images.githubusercontent.com/13404752/110204822-1b29cc00-7eb0-11eb-8a95-a7c3ca7aa472.png" width="300" alt="Screenshot">
