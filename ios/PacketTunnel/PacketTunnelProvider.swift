@@ -11,7 +11,7 @@ tun-fd = REPLACE-ME-WITH-THE-FD
 [Proxy]
 Direct = direct
 # Shadowsocks
-SS = ss, 154.17.4.96, 996, encrypt-method=chacha20-ietf-poly1305, password=b9bd376c-642a-42c3-85ea-afec2bb812d6
+SS = ss, SERVER_HOST, SERVER_PORT, encrypt-method=chacha20-ietf-poly1305, password=b9bd376c-642a-42c3-85ea-afec2bb812d6
 
 [Rule]
 EXTERNAL, site:cn, Direct
