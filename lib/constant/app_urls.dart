@@ -1,5 +1,5 @@
 class AppUrls {
-  static const String BASE_URL = 'https://kanshiyun.com/api/v1'; // 基础接口地址
+  static const String BASE_URL = 'https://dns.github.bet/api/v1'; // 基础接口地址
 
   static const String LOGIN = '$BASE_URL/passport/auth/login';
   static const String REGISTER = '$BASE_URL/passport/auth/register';

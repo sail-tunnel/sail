@@ -40,6 +40,7 @@ class LoginPage extends StatelessWidget {
       await _loginModel.login(data.name, data.password);
     } catch (err) {
       result = '登陆失败，请重试';
+      throw err;
     }
 
     return result;

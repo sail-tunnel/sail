@@ -25,123 +25,98 @@ class ServerEntity {
     @required this.createdAt,
     @required this.updatedAt,
     @required this.type,
-    @required this.link,
     @required this.lastCheckAt,
   });
 
   final int id;
   final List<String> groupId;
-  final dynamic parentId;
+  final int parentId;
   final List<String> tags;
   final String name;
   final String rate;
-  final String host;
+  final Host host;
   final int port;
   final int serverPort;
-  final String cipher;
+  final Cipher cipher;
   final int show;
-  final dynamic sort;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final String type;
-  final String link;
-  dynamic lastCheckAt;
+  final int sort;
+  final int createdAt;
+  final int updatedAt;
+  final Type type;
+  final String lastCheckAt;
 
-  ServerEntity copyWith({
-    int id,
-    List<int> groupId,
-    dynamic parentId,
-    List<String> tags,
-    String name,
-    String rate,
-    String host,
-    int port,
-    int serverPort,
-    String cipher,
-    int show,
-    dynamic sort,
-    DateTime createdAt,
-    DateTime updatedAt,
-    String type,
-    String link,
-    dynamic lastCheckAt,
-  }) =>
-      ServerEntity(
-        id: id ?? this.id,
-        groupId: groupId ?? this.groupId,
-        parentId: parentId ?? this.parentId,
-        tags: tags ?? this.tags,
-        name: name ?? this.name,
-        rate: rate ?? this.rate,
-        host: host ?? this.host,
-        port: port ?? this.port,
-        serverPort: serverPort ?? this.serverPort,
-        cipher: cipher ?? this.cipher,
-        show: show ?? this.show,
-        sort: sort ?? this.sort,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        type: type ?? this.type,
-        link: link ?? this.link,
-        lastCheckAt: lastCheckAt ?? this.lastCheckAt,
-      );
-
-  factory ServerEntity.fromJson(String str) =>
-      ServerEntity.fromMap(json.decode(str));
+  factory ServerEntity.fromJson(String str) => ServerEntity.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory ServerEntity.fromMap(Map<String, dynamic> map) => ServerEntity(
-        id: map["id"] == null ? null : map["id"],
-        groupId: map["group_id"] == null
-            ? null
-            : List<String>.from((map["group_id"] is String
-                    ? json.decode(map["group_id"])
-                    : map["group_id"])
-                .map((x) => x)),
-        parentId: map["parent_id"],
-        tags: map["tags"] == null
-            ? null
-            : List<String>.from(
-                (map["tags"] is String ? json.decode(map["tags"]) : map["tags"])
-                    .map((x) => x)),
-        name: map["name"] == null ? null : map["name"],
-        rate: map["rate"] == null ? null : map["rate"],
-        host: map["host"] == null ? null : map["host"],
-        port: map["port"] == null ? null : map["port"],
-        serverPort: map["server_port"] == null ? null : map["server_port"],
-        cipher: map["cipher"] == null ? null : map["cipher"],
-        show: map["show"] == null ? null : map["show"],
-        sort: map["sort"],
-        createdAt: map["created_at"] == null
-            ? null
-            : DateTime.parse(map["created_at"]),
-        updatedAt: map["updated_at"] == null
-            ? null
-            : DateTime.parse(map["updated_at"]),
-        type: map["type"] == null ? null : map["type"],
-        link: map["link"] == null ? null : map["link"],
-        lastCheckAt: map["last_check_at"],
-      );
+  factory ServerEntity.fromMap(Map<String, dynamic> json) => ServerEntity(
+    id: json["id"],
+    groupId: List<String>.from(json["group_id"].map((x) => x)),
+    parentId: json["parent_id"] == null ? null : json["parent_id"],
+    tags: List<String>.from(json["tags"].map((x) => x)),
+    name: json["name"],
+    rate: json["rate"],
+    host: hostValues.map[json["host"]],
+    port: json["port"],
+    serverPort: json["server_port"],
+    cipher: cipherValues.map[json["cipher"]],
+    show: json["show"],
+    sort: json["sort"],
+    createdAt: json["created_at"],
+    updatedAt: json["updated_at"],
+    type: typeValues.map[json["type"]],
+    lastCheckAt: json["last_check_at"],
+  );
 
   Map<String, dynamic> toMap() => {
-        "id": id == null ? null : id,
-        "group_id":
-            groupId == null ? null : List<dynamic>.from(groupId.map((x) => x)),
-        "parent_id": parentId,
-        "tags": tags == null ? null : List<dynamic>.from(tags.map((x) => x)),
-        "name": name == null ? null : name,
-        "rate": rate == null ? null : rate,
-        "host": host == null ? null : host,
-        "port": port == null ? null : port,
-        "server_port": serverPort == null ? null : serverPort,
-        "cipher": cipher == null ? null : cipher,
-        "show": show == null ? null : show,
-        "sort": sort,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
-        "type": type == null ? null : type,
-        "link": link == null ? null : link,
-        "last_check_at": lastCheckAt,
-      };
+    "id": id,
+    "group_id": List<dynamic>.from(groupId.map((x) => x)),
+    "parent_id": parentId == null ? null : parentId,
+    "tags": List<dynamic>.from(tags.map((x) => x)),
+    "name": name,
+    "rate": rate,
+    "host": hostValues.reverse[host],
+    "port": port,
+    "server_port": serverPort,
+    "cipher": cipherValues.reverse[cipher],
+    "show": show,
+    "sort": sort,
+    "created_at": createdAt,
+    "updated_at": updatedAt,
+    "type": typeValues.reverse[type],
+    "last_check_at": lastCheckAt,
+  };
+}
+
+enum Cipher { AES_256_GCM, AES_128_GCM }
+
+final cipherValues = EnumValues({
+  "aes-128-gcm": Cipher.AES_128_GCM,
+  "aes-256-gcm": Cipher.AES_256_GCM
+});
+
+enum Host { ANYCAST_XTCPDNS_AS4812_COM }
+
+final hostValues = EnumValues({
+  "anycast.xtcpdns.as4812.com": Host.ANYCAST_XTCPDNS_AS4812_COM
+});
+
+enum Type { SHADOWSOCKS }
+
+final typeValues = EnumValues({
+  "shadowsocks": Type.SHADOWSOCKS
+});
+
+class EnumValues<T> {
+  Map<String, T> map;
+  Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
 }

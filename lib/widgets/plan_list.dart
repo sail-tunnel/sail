@@ -73,7 +73,7 @@ class _PlanListState extends State<PlanList> {
                     widget.parent.checkHasLogin(() => widget.parent.changeBoughtPlanId(widget.plans[(i ~/ 2) - 1].id));
                   },
             child: Container(
-                width: ScreenUtil().setWidth(300),
+                // width: ScreenUtil().setWidth(300),
                 height: ScreenUtil().setWidth(200),
                 padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(40), vertical: ScreenUtil().setWidth(30)),
                 child: Column(

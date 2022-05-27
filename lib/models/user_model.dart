@@ -67,7 +67,7 @@ class UserModel extends BaseModel {
   }
 
   setToken(LoginEntity loginEntity) {
-    _token = loginEntity.token;
+    _token = loginEntity.authToken;
     _isLogin = true;
 
     _saveUserToken(loginEntity);

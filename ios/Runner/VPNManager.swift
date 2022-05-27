@@ -16,28 +16,28 @@ extension NEVPNStatus: CustomStringConvertible {
 
 public class VPNManager {
     public var manager = NEVPNManager.shared()
-    
+
     private static var sharedVPNManager: VPNManager = {
         return VPNManager()
     }()
-    
+
     public class func shared() -> VPNManager {
         return sharedVPNManager
     }
-    
+
     public init() {}
-    
+
     public func loadVPNPreference(completion: @escaping (Error?) -> Void) {
         NETunnelProviderManager.loadAllFromPreferences() { managers, error in
             guard let managers = managers, error == nil else {
                 completion(error)
                 return
             }
-            
+
             if managers.count == 0 {
                 let newManager = NETunnelProviderManager()
                 newManager.protocolConfiguration = NETunnelProviderProtocol()
-                newManager.localizedDescription = "瞰视云加速"
+                newManager.localizedDescription = "Sail"
                 newManager.protocolConfiguration?.serverAddress = "iLeaf"
                 newManager.saveToPreferences { error in
                     guard error == nil else {
@@ -55,7 +55,7 @@ public class VPNManager {
             }
         }
     }
-    
+
     public func enableVPNManager(completion: @escaping (Error?) -> Void) {
         manager.isEnabled = true
         manager.saveToPreferences { error in
@@ -68,7 +68,7 @@ public class VPNManager {
             }
         }
     }
-    
+
     public func toggleVPNConnection(completion: @escaping (Error?) -> Void) {
         if self.manager.connection.status == .disconnected || self.manager.connection.status == .invalid {
             do {

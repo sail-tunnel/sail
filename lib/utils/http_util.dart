@@ -1,8 +1,9 @@
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:sail_app/constant/app_strings.dart';
 import 'package:sail_app/router/application.dart';
 import 'package:sail_app/router/routers.dart';
-import 'package:sail_app/utils/shared_preferences_util.dart';
 
 class HttpUtil {
   // 工厂模式
@@ -23,47 +24,40 @@ class HttpUtil {
       receiveTimeout: 10000,
     );
     dio = new Dio(options);
-    dio.interceptors
-        .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
+    dio.interceptors.add(CookieManager(CookieJar()));
+
+    dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) async {
       print("========================请求数据===================");
       print("url=${options.uri.toString()}");
+      print("headers=${options.headers}");
       print("params=${options.data}");
-      dio.lock();
 
-      //如果token存在在请求头加上token
-      await SharedPreferencesUtil.getInstance()
-          .getString(AppStrings.TOKEN)
-          .then((token) {
-        options.headers[AppStrings.TOKEN] = token;
-        print("token=$token");
-      });
-      dio.unlock();
-      return options;
-    }, onResponse: (Response response) {
+      return handler.next(options);
+    }, onResponse: (response, handler) {
       print("========================请求数据===================");
       print("code=${response.statusCode}");
       print("response=${response.data}");
       if (response.data[AppStrings.ERR_NO] == 501) {
         Application.navigatorKey.currentState.pushNamed(Routers.login);
-        dio.reject("");
+        return handler.reject(new DioError(requestOptions: response.requestOptions));
       }
-      return response;
-    }, onError: (DioError error) {
+
+      return handler.next(response);
+    }, onError: (error, handler) {
       print("========================请求错误===================");
       print("message =${error.message}");
-      print("code=${error.response.statusCode}");
-      print("response=${error.response.data}");
-      return error;
+      print("code=${error.response?.statusCode}");
+      print("response=${error.response?.data}");
+
+      return handler.next(error);
     }));
   }
 
   //get请求
-  Future get(String url,
-      {Map<String, dynamic> parameters, Options options}) async {
+  Future get(String url, {Map<String, dynamic> parameters, Options options}) async {
     Response response;
     if (parameters != null && options != null) {
-      response =
-      await dio.get(url, queryParameters: parameters, options: options);
+      response = await dio.get(url, queryParameters: parameters, options: options);
     } else if (parameters != null && options == null) {
       response = await dio.get(url, queryParameters: parameters);
     } else if (parameters == null && options != null) {
@@ -75,8 +69,7 @@ class HttpUtil {
   }
 
   //post请求
-  Future post(String url,
-      {Map<String, dynamic> parameters, Options options}) async {
+  Future post(String url, {Map<String, dynamic> parameters, Options options}) async {
     Response response;
     if (parameters != null && options != null) {
       response = await dio.post(url, data: parameters, options: options);
@@ -91,8 +84,7 @@ class HttpUtil {
   }
 
   //put请求
-  Future put(String url,
-      {Map<String, dynamic> parameters, Options options}) async {
+  Future put(String url, {Map<String, dynamic> parameters, Options options}) async {
     Response response;
     if (parameters != null && options != null) {
       response = await dio.put(url, data: parameters, options: options);
@@ -107,8 +99,7 @@ class HttpUtil {
   }
 
   //delete请求
-  Future delete(String url,
-      {Map<String, dynamic> parameters, Options options}) async {
+  Future delete(String url, {Map<String, dynamic> parameters, Options options}) async {
     Response response;
     if (parameters != null && options != null) {
       response = await dio.delete(url, data: parameters, options: options);

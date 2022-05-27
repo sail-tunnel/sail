@@ -110,8 +110,8 @@ class PlanEntity {
     threeYearPrice: json["three_year_price"],
     onetimePrice: json["onetime_price"],
     resetPrice: json["reset_price"] == null ? null : json["reset_price"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+    createdAt: json["created_at"] == null ? null : DateTime.fromMillisecondsSinceEpoch(json["created_at"] * 1000),
+    updatedAt: json["updated_at"] == null ? null : DateTime.fromMillisecondsSinceEpoch(json["updated_at"] * 1000),
   );
 
   Map<String, dynamic> toMap() => {
@@ -131,7 +131,7 @@ class PlanEntity {
     "three_year_price": threeYearPrice,
     "onetime_price": onetimePrice,
     "reset_price": resetPrice == null ? null : resetPrice,
-    "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-    "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
+    "created_at": createdAt == null ? null : createdAt.millisecondsSinceEpoch ~/ 1000,
+    "updated_at": updatedAt == null ? null : updatedAt.millisecondsSinceEpoch ~/ 1000,
   };
 }

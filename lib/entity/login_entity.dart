@@ -8,20 +8,11 @@ import 'dart:convert';
 class LoginEntity {
   LoginEntity({
     @required this.token,
-    @required this.isAdmin,
+    @required this.authToken,
   });
 
   final String token;
-  final bool isAdmin;
-
-  LoginEntity copyWith({
-    String token,
-    bool isAdmin,
-  }) =>
-      LoginEntity(
-        token: token ?? this.token,
-        isAdmin: isAdmin ?? this.isAdmin,
-      );
+  final String authToken;
 
   factory LoginEntity.fromJson(String str) => LoginEntity.fromMap(json.decode(str));
 
@@ -29,11 +20,11 @@ class LoginEntity {
 
   factory LoginEntity.fromMap(Map<String, dynamic> json) => LoginEntity(
     token: json["token"],
-    isAdmin: json["is_admin"],
+    authToken: json["auth_token"],
   );
 
   Map<String, dynamic> toMap() => {
     "token": token,
-    "is_admin": isAdmin,
+    "auth_token": authToken,
   };
 }
