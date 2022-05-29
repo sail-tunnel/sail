@@ -5,7 +5,7 @@ import 'package:sail_app/utils/http_util.dart';
 class ServerService {
   Future<List<ServerEntity>> server() async {
     try {
-      var result = await HttpUtil.instance.get(AppUrls.SERVER);
+      var result = await HttpUtil.instance.get(AppUrls.server);
 
       List<ServerEntity> _serverEntityList = serverEntityFromList(result['data']);
 

@@ -21,7 +21,7 @@ class ServerModel extends BaseModel {
     bool result = false;
 
     List<dynamic> data = await SharedPreferencesUtil.getInstance()
-            .getList(AppStrings.SERVER_NODE) ??
+            .getList(AppStrings.serverNode) ??
         List<dynamic>();
     List<dynamic> newData =
         List.from(data.map((e) => Map<String, dynamic>.from(jsonDecode(e))));
@@ -43,7 +43,7 @@ class ServerModel extends BaseModel {
     bool result = false;
 
     Map<String, dynamic> data = await SharedPreferencesUtil.getInstance()
-        .getMap(AppStrings.SELECT_SERVER) ?? Map<String, dynamic>();
+        .getMap(AppStrings.selectServer) ?? Map<String, dynamic>();
 
     _selectServerEntity = ServerEntity.fromMap(data);
 
@@ -58,7 +58,7 @@ class ServerModel extends BaseModel {
     bool result = false;
 
     List<dynamic> data = await SharedPreferencesUtil.getInstance()
-        .getList(AppStrings.SELECT_SERVER_NODE) ??
+        .getList(AppStrings.selectServerNode) ??
         List<dynamic>();
     List<dynamic> newData =
     List.from(data.map((e) => Map<String, dynamic>.from(jsonDecode(e))));
@@ -97,7 +97,7 @@ class ServerModel extends BaseModel {
         SharedPreferencesUtil.getInstance();
 
     await sharedPreferencesUtil.setList(
-        AppStrings.SERVER_NODE, _serverEntityList);
+        AppStrings.serverNode, _serverEntityList);
   }
 
   _saveSelectServerEntity() async {
@@ -105,7 +105,7 @@ class ServerModel extends BaseModel {
         SharedPreferencesUtil.getInstance();
 
     await sharedPreferencesUtil.setMap(
-        AppStrings.SELECT_SERVER, _selectServerEntity.toMap());
+        AppStrings.selectServer, _selectServerEntity.toMap());
   }
 
   _saveSelectServerEntityList() async {
@@ -113,6 +113,6 @@ class ServerModel extends BaseModel {
     SharedPreferencesUtil.getInstance();
 
     await sharedPreferencesUtil.setList(
-        AppStrings.SELECT_SERVER_NODE, _selectServerEntityList);
+        AppStrings.selectServerNode, _selectServerEntityList);
   }
 }

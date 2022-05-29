@@ -10,17 +10,17 @@ import Flutter
     GeneratedPluginRegistrant.register(with: self)
     
     let controller : FlutterViewController = window?.rootViewController as! FlutterViewController;
-    let vpnManagerChannel = FlutterMethodChannel.init(name: "com.kanshiyun.sail/vpn_manager",
+    let vpnManagerChannel = FlutterMethodChannel.init(name: "com.losgif.sail/vpn_manager",
                                                    binaryMessenger: controller.binaryMessenger);
     let manager = VPNManager.shared()
-    
+
     vpnManagerChannel.setMethodCallHandler({
         (call: FlutterMethodCall, result: FlutterResult) -> Void in
         guard call.method == "enableVPNManager" else {
           result(FlutterMethodNotImplemented)
           return
         }
-        
+
         manager.loadVPNPreference() { error in
             guard error == nil else {
                 fatalError("load VPN preference failed: \(error.debugDescription)")
@@ -37,7 +37,7 @@ import Flutter
                 }
             }
         }
-        
+
         result(true)
       })
     

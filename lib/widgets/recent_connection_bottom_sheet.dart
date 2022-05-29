@@ -83,7 +83,7 @@ class _RecentConnectionBottomSheetState
               padding: const EdgeInsets.symmetric(horizontal: 32),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [AppColors.THEME_COLOR, Colors.pink],
+                    colors: [AppColors.themeColor, Colors.pink],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight),
                 borderRadius: BorderRadius.vertical(top: Radius.circular(32)),

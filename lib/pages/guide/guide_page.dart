@@ -14,7 +14,7 @@ class GuidePage extends StatefulWidget {
 }
 
 class _GuidePageState extends State<GuidePage> {
-  var guides = [AppImages.GUIDE_1, AppImages.GUIDE_2, AppImages.GUIDE_3];
+  var guides = [AppImages.guide1, AppImages.guide2, AppImages.guide3];
   var _showButton = false;
 
   @override
@@ -34,13 +34,13 @@ class _GuidePageState extends State<GuidePage> {
                   child: Center(
                       child: FlatButton(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
-                        color: AppColors.THEME_COLOR,
+                        color: AppColors.themeColor,
                         textColor: Colors.black87,
                         onPressed: () {
                           NavigatorUtil.goHomePage(context);
                         },
-                        child: Text(AppStrings.OPEN_DOOR,
-                            style: TextStyle(fontSize: AppDimens.BIG_TEXT_SIZE)),
+                        child: Text(AppStrings.openDoor,
+                            style: TextStyle(fontSize: AppDimens.bigTextSize)),
                       )),
                 )),
           ],

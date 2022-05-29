@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:fluro/fluro.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:sail_app/pages/crisp_page.dart';
+import 'package:sail_app/pages/plan/plan_page.dart';
+import 'package:sail_app/pages/server_list.dart';
 import 'package:sail_app/router/application.dart';
 import 'package:sail_app/router/routers.dart';
-import 'dart:convert';
 
 class NavigatorUtil {
   static goMainPage(BuildContext context) {
@@ -26,21 +31,35 @@ class NavigatorUtil {
   }
 
   static goPlan(BuildContext context) {
-    Application.router.navigateTo(context, Routers.plan,
-        transition: TransitionType.inFromRight);
+    showCupertinoModalBottomSheet(
+      context: context,
+      builder: (context) => PlanPage()
+    );
+    // Application.router.navigateTo(context, Routers.plan,
+    //     transition: TransitionType.inFromRight);
   }
 
-
   static goServerList(BuildContext context) {
-    Application.router.navigateTo(context, Routers.serverList,
-        transition: TransitionType.inFromRight);
+    showCupertinoModalBottomSheet(
+        context: context,
+        builder: (context) => ServerListPage()
+    );
+    // Application.router.navigateTo(context, Routers.serverList,
+    //     transition: TransitionType.inFromRight);
+  }
+
+  static goToCrisp(BuildContext context) {
+    showCupertinoModalBottomSheet(
+        context: context,
+        builder: (context) => const CrispPage()
+    );
   }
 
   static goWebView(BuildContext context, String titleName, String url) {
     String encodeUrl = Uri.encodeComponent(jsonEncode(url));
     String encodeTitleName = Uri.encodeComponent(jsonEncode(titleName));
     return Application.router.navigateTo(
-        context, Routers.webView + "?titleName=$encodeTitleName&url=$encodeUrl",
+        context, "${Routers.webView}?titleName=$encodeTitleName&url=$encodeUrl",
         transition: TransitionType.inFromRight);
   }
 

@@ -22,9 +22,9 @@ class _PowerButtonState extends State<PowerButton> {
       ),
       child: Material(
         borderRadius: BorderRadius.circular(ScreenUtil().setWidth(100)),
-        color: widget.parent.isOn? AppColors.GRAY_COLOR: Colors.grey,
+        color: widget.parent.isOn? AppColors.grayColor: Colors.grey,
         child: InkWell(
-          splashColor: AppColors.YELLOW_COLOR,
+          splashColor: AppColors.yellowColor,
           onTap: (){
             widget.parent.checkHasLogin(() => widget.parent.pressConnectBtn());
           },

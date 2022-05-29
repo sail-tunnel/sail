@@ -1,6 +1,8 @@
 import NetworkExtension
 
-let appGroup = "group.com.kanshiyun.sail"
+let appGroup = "group.com.losgif.sail"
+
+let leafId: UInt16 = 0
 
 let conf = """
 [General]
@@ -10,12 +12,10 @@ tun-fd = REPLACE-ME-WITH-THE-FD
 
 [Proxy]
 Direct = direct
-# Shadowsocks
-SS = ss, SERVER_HOST, SERVER_PORT, encrypt-method=chacha20-ietf-poly1305, password=b9bd376c-642a-42c3-85ea-afec2bb812d6
 
 [Rule]
 EXTERNAL, site:cn, Direct
-FINAL, SS
+FINAL, Direct
 """
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
@@ -36,33 +36,34 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             let subpath = path[start..<path.endIndex]
             DispatchQueue.global(qos: .userInteractive).async {
                 signal(SIGPIPE, SIG_IGN)
-                run_leaf(String(subpath))
+                leaf_run(leafId, String(subpath))
             }
             completionHandler(nil)
         }
     }
-    
+
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+        leaf_shutdown(leafId)
         // Add code here to start the process of stopping the tunnel.
         completionHandler()
     }
-    
+
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
         // Add code here to handle the message.
         if let handler = completionHandler {
             handler(messageData)
         }
     }
-    
+
     override func sleep(completionHandler: @escaping () -> Void) {
         // Add code here to get ready to sleep.
         completionHandler()
     }
-    
+
     override func wake() {
         // Add code here to wake up.
     }
-    
+
     func createTunnelSettings() -> NEPacketTunnelNetworkSettings  {
         let newSettings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: "240.0.0.10")
         newSettings.ipv4Settings = NEIPv4Settings(addresses: ["240.0.0.1"], subnetMasks: ["255.255.255.0"])

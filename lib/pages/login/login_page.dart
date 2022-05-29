@@ -9,20 +9,22 @@ import 'package:sail_app/constant/app_strings.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
-  Duration get loginTime => Duration(milliseconds: 2250);
+  LoginPage({Key key}) : super(key: key);
+
+  Duration get loginTime => const Duration(milliseconds: 2250);
 
   UserModel _userModel;
   LoginModel _loginModel;
 
-  static final FormFieldValidator<String> _emailValidator = (value) {
+  static String _emailValidator (value) {
     if (value.isEmpty ||
         !RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(value)) {
       return '邮箱错误!';
     }
     return null;
-  };
+  }
 
-  static final FormFieldValidator<String> _passwordValidator = (value) {
+  static String _passwordValidator (String value) {
     if (value.isEmpty) {
       return '密码不能为空!';
     }
@@ -30,7 +32,7 @@ class LoginPage extends StatelessWidget {
       return '密码不能小于6位';
     }
     return null;
-  };
+  }
 
 
   Future<String> _login(LoginData data) async {
@@ -40,7 +42,7 @@ class LoginPage extends StatelessWidget {
       await _loginModel.login(data.name, data.password);
     } catch (err) {
       result = '登陆失败，请重试';
-      throw err;
+      rethrow;
     }
 
     return result;
@@ -73,7 +75,7 @@ class LoginPage extends StatelessWidget {
     _loginModel = LoginModel(_userModel);
 
     return FlutterLogin(
-      title: AppStrings.APP_NAME,
+      title: AppStrings.appName,
       onLogin: _login,
       onSignup: _register,
       messages: LoginMessages(

@@ -18,8 +18,8 @@ class _MainPageState extends State<MainPage> {
     UserModel _userViewModel = Provider.of<UserModel>(context);
 
     ScreenUtil.init(context,
-        width: AppDimens.MAX_WIDTH,
-        height: AppDimens.MAX_HEIGHT,
+        width: AppDimens.maxWidth,
+        height: AppDimens.maxHeight,
         allowFontScaling: false);
     return _userViewModel.isFirst
         ? GuidePage()

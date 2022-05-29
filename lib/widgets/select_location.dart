@@ -41,7 +41,7 @@ class _SelectLocationState extends State<SelectLocation> {
           child: Container(
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(
-                color: AppColors.YELLOW_COLOR.withAlpha(200),
+                color: AppColors.yellowColor.withAlpha(200),
                 blurRadius: 20,
                 spreadRadius: -6,
                 offset: Offset(

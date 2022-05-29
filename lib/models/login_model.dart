@@ -5,8 +5,8 @@ import 'package:sail_app/models/base_model.dart';
 import 'package:sail_app/models/user_model.dart';
 
 class LoginModel extends BaseModel {
-  UserService _userService = UserService();
-  UserModel _userModel;
+  final UserService _userService = UserService();
+  final UserModel _userModel;
 
   LoginModel(this._userModel);
 

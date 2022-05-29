@@ -1,5 +1,5 @@
 class AppDimens {
-  static const double MAX_WIDTH = 1080.0;
-  static const double MAX_HEIGHT = 1920.0;
-  static const double BIG_TEXT_SIZE = 13.0;
+  static const double maxWidth = 1080.0;
+  static const double maxHeight = 1920.0;
+  static const double bigTextSize = 13.0;
 }

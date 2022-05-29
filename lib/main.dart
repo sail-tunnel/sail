@@ -13,23 +13,23 @@ import 'constant/app_colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  var _userViewModel = UserModel();
-  var _userSubscribeModel = UserSubscribeModel();
-  var _serverModel = ServerModel();
+  var userViewModel = UserModel();
+  var userSubscribeModel = UserSubscribeModel();
+  var serverModel = ServerModel();
 
-  await _userViewModel.refreshData();
+  await userViewModel.refreshData();
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider<UserModel>.value(value: _userViewModel),
-      ChangeNotifierProvider<UserSubscribeModel>.value(value: _userSubscribeModel),
-      ChangeNotifierProvider<ServerModel>.value(value: _serverModel),
+      ChangeNotifierProvider<UserModel>.value(value: userViewModel),
+      ChangeNotifierProvider<UserSubscribeModel>.value(value: userSubscribeModel),
+      ChangeNotifierProvider<ServerModel>.value(value: serverModel),
     ],
     child: SailApp()
   ));
 }
 
 class SailApp extends StatelessWidget {
-  SailApp() {
+  SailApp({Key key}) : super(key: key) {
     final router = FluroRouter();
     Routers.configureRoutes(router);
     Application.router = router;
@@ -45,12 +45,12 @@ class SailApp extends StatelessWidget {
 
     return MaterialApp(
       // <--- /!\ Add the builder
-      title: AppStrings.APP_NAME,
+      title: AppStrings.appName,
       navigatorKey: Application.navigatorKey,
       debugShowCheckedModeBanner: false,
       onGenerateRoute: Application.router.generator,
       theme: ThemeData(
-          primarySwatch: AppColors.THEME_COLOR,
+          primarySwatch: AppColors.themeColor,
           visualDensity: VisualDensity.adaptivePlatformDensity
       ),
     );

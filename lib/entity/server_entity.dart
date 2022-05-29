@@ -51,7 +51,7 @@ class ServerEntity {
 
   factory ServerEntity.fromMap(Map<String, dynamic> json) => ServerEntity(
     id: json["id"],
-    groupId: List<String>.from(json["group_id"].map((x) => x)),
+    groupId: List<String>.from(json["group_id"]?.map((x) => x)),
     parentId: json["parent_id"] == null ? null : json["parent_id"],
     tags: List<String>.from(json["tags"].map((x) => x)),
     name: json["name"],

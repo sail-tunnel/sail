@@ -16,7 +16,7 @@ class WebViewPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: WebView(
-        initialUrl: bannerDetailUrl.isEmpty ? AppStrings.APP_NAME : bannerDetailUrl,
+        initialUrl: bannerDetailUrl.isEmpty ? AppStrings.appName : bannerDetailUrl,
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );

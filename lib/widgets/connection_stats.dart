@@ -23,7 +23,7 @@ class _ConnectionStatsState extends State<ConnectionStats> {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 40,
-              color: AppColors.GRAY_COLOR,
+              color: AppColors.grayColor,
             )),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(75)),
@@ -34,11 +34,11 @@ class _ConnectionStatsState extends State<ConnectionStats> {
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Icon(MaterialCommunityIcons.map_marker,
-                    color: AppColors.GRAY_COLOR, size: 20),
+                    color: AppColors.grayColor, size: 20),
                 Text("其他节点",
                     style:
-                        TextStyle(fontSize: 12, color: AppColors.GRAY_COLOR)),
-                Icon(Icons.chevron_right, color: AppColors.GRAY_COLOR, size: 20)
+                        TextStyle(fontSize: 12, color: AppColors.grayColor)),
+                Icon(Icons.chevron_right, color: AppColors.grayColor, size: 20)
               ])),
         ),
         Padding(
@@ -76,13 +76,13 @@ class _ConnectionStatsState extends State<ConnectionStats> {
                       Text(
                         "下行速度",
                         style: TextStyle(
-                            color: AppColors.GRAY_COLOR,
+                            color: AppColors.grayColor,
                             fontWeight: FontWeight.w500),
                       ),
                       RichText(
                         text: TextSpan(
                             style: TextStyle(
-                                color: AppColors.GRAY_COLOR,
+                                color: AppColors.grayColor,
                                 fontWeight: FontWeight.w900),
                             children: [
                               TextSpan(text: "75.9"),
@@ -128,13 +128,13 @@ class _ConnectionStatsState extends State<ConnectionStats> {
                       Text(
                         "上行速度",
                         style: TextStyle(
-                            color: AppColors.GRAY_COLOR,
+                            color: AppColors.grayColor,
                             fontWeight: FontWeight.w500),
                       ),
                       RichText(
                         text: TextSpan(
                             style: TextStyle(
-                                color: AppColors.GRAY_COLOR,
+                                color: AppColors.grayColor,
                                 fontWeight: FontWeight.w900),
                             children: [
                               TextSpan(text: "29.6"),

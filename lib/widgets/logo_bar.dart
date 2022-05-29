@@ -16,8 +16,8 @@ class LogoBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserModel _userModel = Provider.of<UserModel>(context);
-    UserSubscribeModel _userSubscribeModel = Provider.of<UserSubscribeModel>(context);
+    UserModel userModel = Provider.of<UserModel>(context);
+    UserSubscribeModel userSubscribeModel = Provider.of<UserSubscribeModel>(context);
 
     return Container(
       margin: EdgeInsets.only(top: ScreenUtil().setWidth(60)),
@@ -30,13 +30,31 @@ class LogoBar extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.w900,
               fontSize: ScreenUtil().setSp(60),
-              color: isOn ? AppColors.GRAY_COLOR : Colors.white,
+              color: isOn ? AppColors.grayColor : Colors.white,
             ),
           ),
           Row(
             children: [
               Material(
-                color: isOn ? Color(0x66000000) : AppColors.DARK_SURFACE_COLOR,
+                color: isOn ? const Color(0x66000000) : AppColors.darkSurfaceColor,
+                borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
+                  onTap: () => NavigatorUtil.goToCrisp(context),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                        vertical: ScreenUtil().setWidth(10), horizontal: ScreenUtil().setWidth(30)),
+                    child: Text(
+                      "客服",
+                      style:
+                      TextStyle(fontSize: ScreenUtil().setSp(32), color: Colors.white, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(padding: EdgeInsets.only(left: ScreenUtil().setWidth(15))),
+              Material(
+                color: isOn ? const Color(0x66000000) : AppColors.darkSurfaceColor,
                 borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
@@ -45,22 +63,22 @@ class LogoBar extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                         vertical: ScreenUtil().setWidth(10), horizontal: ScreenUtil().setWidth(30)),
                     child: Text(
-                      _userSubscribeModel?.userSubscribeEntity?.email ?? "欢迎光临",
+                      userSubscribeModel?.userSubscribeEntity?.email ?? "欢迎光临",
                       style:
                           TextStyle(fontSize: ScreenUtil().setSp(32), color: Colors.white, fontWeight: FontWeight.w500),
                     ),
                   ),
                 ),
               ),
-              _userModel.isLogin ? Padding(padding: EdgeInsets.only(left: ScreenUtil().setWidth(15))) : Container(),
-              _userModel.isLogin
+              userModel.isLogin ? Padding(padding: EdgeInsets.only(left: ScreenUtil().setWidth(15))) : Container(),
+              userModel.isLogin
                   ? Material(
-                      color: isOn ? Color(0x66000000) : AppColors.DARK_SURFACE_COLOR,
+                      color: isOn ? const Color(0x66000000) : AppColors.darkSurfaceColor,
                       borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
                         onTap: () {
-                          _userModel.logout();
+                          userModel.logout();
                           NavigatorUtil.goLogin(context);
                         },
                         child: Container(

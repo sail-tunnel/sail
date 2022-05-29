@@ -5,7 +5,7 @@ import 'package:sail_app/utils/http_util.dart';
 class PlanService {
   Future<List<PlanEntity>> plan() async {
     try {
-      var result = await HttpUtil.instance.get(AppUrls.PLAN);
+      var result = await HttpUtil.instance.get(AppUrls.plan);
 
       List<PlanEntity> _planEntityList = planEntityFromList(result['data']);
 
@@ -18,7 +18,7 @@ class PlanService {
   Future<PlanEntity> planDetail(int id) async {
     try {
       var result = await HttpUtil.instance
-          .get('${AppUrls.PLAN}', parameters: {'id': id});
+          .get('${AppUrls.plan}', parameters: {'id': id});
 
       PlanEntity _planEntity = PlanEntity.fromMap(result['data']);
 

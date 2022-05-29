@@ -33,7 +33,7 @@ class _PlanListState extends State<PlanList> {
             "订阅套餐",
             style: TextStyle(
                 fontSize: ScreenUtil().setSp(32),
-                color: widget.isOn ? AppColors.GRAY_COLOR : Colors.grey[400],
+                color: widget.isOn ? AppColors.grayColor : Colors.grey[400],
                 fontWeight: FontWeight.w500),
           ),
         ),
@@ -64,7 +64,7 @@ class _PlanListState extends State<PlanList> {
             ? widget.plans[i ~/ 2].id == widget.boughtPlanId
                 ? Colors.white
                 : Color(0x15000000)
-            : AppColors.DARK_SURFACE_COLOR,
+            : AppColors.darkSurfaceColor,
         child: InkWell(
             borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
             onTap: widget.isOn && widget.plans[i ~/ 2].id == widget.boughtPlanId
@@ -89,7 +89,7 @@ class _PlanListState extends State<PlanList> {
                           color: widget.isOn
                               ? widget.plans[i ~/ 2].id == widget.boughtPlanId
                                   ? Colors.black
-                                  : AppColors.GRAY_COLOR
+                                  : AppColors.grayColor
                               : Colors.white),
                     ),
 

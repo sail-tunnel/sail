@@ -15,7 +15,7 @@ class UserSubscribeModel extends BaseModel {
     bool result = false;
 
     Map<String, dynamic> data = await SharedPreferencesUtil.getInstance()
-        .getMap(AppStrings.USER_SUBSCRIBE);
+        .getMap(AppStrings.userSubscribe);
 
     if (data == null || data.length == 0 || forceRefresh) {
       setUserSubscribeEntity(await _userService.userSubscribe());
@@ -41,6 +41,6 @@ class UserSubscribeModel extends BaseModel {
         SharedPreferencesUtil.getInstance();
 
     await sharedPreferencesUtil.setMap(
-        AppStrings.USER_SUBSCRIBE, _userSubscribeEntity.toMap());
+        AppStrings.userSubscribe, _userSubscribeEntity.toMap());
   }
 }

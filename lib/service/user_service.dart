@@ -7,7 +7,7 @@ import 'package:sail_app/utils/http_util.dart';
 class UserService {
   Future<LoginEntity> login(Map<String, dynamic> parameters) async {
     try {
-      var result = await HttpUtil.instance.post(AppUrls.LOGIN, parameters: parameters);
+      var result = await HttpUtil.instance.post(AppUrls.login, parameters: parameters);
 
       LoginEntity loginEntity = LoginEntity.fromMap(result['data']);
 
@@ -19,7 +19,7 @@ class UserService {
 
   Future<bool> register(parameters) async {
     try {
-      var result = await HttpUtil.instance.post(AppUrls.REGISTER, parameters: parameters);
+      var result = await HttpUtil.instance.post(AppUrls.register, parameters: parameters);
 
       bool registerResult = result['data'];
 
@@ -31,7 +31,7 @@ class UserService {
 
   Future<UserSubscribeEntity> userSubscribe() async {
     try {
-      var result = await HttpUtil.instance.get(AppUrls.USER_SUBSCRIBE);
+      var result = await HttpUtil.instance.get(AppUrls.userSubscribe);
 
       UserSubscribeEntity userSubscribeEntity = UserSubscribeEntity.fromMap(result['data']);
 
@@ -43,7 +43,7 @@ class UserService {
 
   Future<UserEntity> info() async {
     try {
-      var result = await HttpUtil.instance.get(AppUrls.USER_INFO);
+      var result = await HttpUtil.instance.get(AppUrls.userInfo);
 
       UserEntity userEntity = UserEntity.fromMap(result['data']);
 

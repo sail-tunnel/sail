@@ -8,19 +8,21 @@ import 'package:sail_app/entity/plan_entity.dart';
 import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/models/user_subscribe_model.dart';
-import 'package:sail_app/widgets/recent_connection_bottom_sheet.dart';
 import 'package:sail_app/service/plan_service.dart';
+import 'package:sail_app/utils/navigator_util.dart';
 import 'package:sail_app/widgets/connection_stats.dart';
 import 'package:sail_app/widgets/logo_bar.dart';
 import 'package:sail_app/widgets/my_subscribe.dart';
 import 'package:sail_app/widgets/plan_list.dart';
 import 'package:sail_app/widgets/power_btn.dart';
+import 'package:sail_app/widgets/recent_connection_bottom_sheet.dart';
 import 'package:sail_app/widgets/select_location.dart';
-import 'package:sail_app/utils/navigator_util.dart';
 
 typedef Callback = Future<void> Function();
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key key}) : super(key: key);
+
   @override
   HomePageState createState() => HomePageState();
 }
@@ -102,12 +104,12 @@ class HomePageState extends State<HomePage> {
         value: isOn ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
         child: Scaffold(
             backgroundColor:
-                isOn ? AppColors.YELLOW_COLOR : AppColors.GRAY_COLOR,
+                isOn ? AppColors.yellowColor : AppColors.grayColor,
             body: Stack(
               children: [
                 SafeArea(
                     child: SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         child: Container(
                             constraints: BoxConstraints(
                                 minHeight: ScreenUtil().setHeight(1920)),
@@ -157,7 +159,7 @@ class HomePageState extends State<HomePage> {
                                             scale: 3,
                                             color: isOn
                                                 ? Color(0x15000000)
-                                                : AppColors.DARK_SURFACE_COLOR,
+                                                : AppColors.darkSurfaceColor,
                                           ),
                                           Column(
                                             mainAxisAlignment:

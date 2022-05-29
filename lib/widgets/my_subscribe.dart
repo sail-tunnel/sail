@@ -35,7 +35,7 @@ class _MySubscribeState extends State<MySubscribe> {
             "我的订阅",
             style: TextStyle(
                 fontSize: ScreenUtil().setSp(32),
-                color: widget.isOn ? AppColors.GRAY_COLOR : Colors.grey[400],
+                color: widget.isOn ? AppColors.grayColor : Colors.grey[400],
                 fontWeight: FontWeight.w500),
           ),
         ),
@@ -61,7 +61,7 @@ class _MySubscribeState extends State<MySubscribe> {
       child: Material(
         elevation: widget.isOn ? 3 : 0,
         borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
-        color: widget.isOn ? Colors.white : AppColors.DARK_SURFACE_COLOR,
+        color: widget.isOn ? Colors.white : AppColors.darkSurfaceColor,
         child: Container(
           alignment: Alignment.center,
           child: Text(
@@ -86,7 +86,7 @@ class _MySubscribeState extends State<MySubscribe> {
         child: Material(
           elevation: widget.isOn ? 3 : 0,
           borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
-          color: widget.isOn ? Colors.white : AppColors.DARK_SURFACE_COLOR,
+          color: widget.isOn ? Colors.white : AppColors.darkSurfaceColor,
           child: Container(
             padding: EdgeInsets.symmetric(
                 vertical: ScreenUtil().setWidth(30),
