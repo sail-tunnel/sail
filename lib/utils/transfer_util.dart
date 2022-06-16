@@ -1,5 +1,5 @@
 class TransferUtil {
-  int _transfer = 0;
+  double _transfer = 0;
   int _level = 0;
   List suffix = [
     'B',
@@ -11,15 +11,15 @@ class TransferUtil {
   ];
 
   String toHumanReadable(int transfer) {
-    _transfer = transfer;
+    _transfer = transfer.toDouble();
     handleTransfer();
 
-    return '$_transfer ${suffix[_level]}';
+    return '${_transfer.toStringAsFixed(2)} ${suffix[_level]}';
   }
 
   handleTransfer() {
     if (_transfer > 1024) {
-      _transfer = _transfer ~/ 1024;
+      _transfer = _transfer / 1024;
       ++_level;
       handleTransfer();
     }

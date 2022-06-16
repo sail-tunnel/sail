@@ -8,7 +8,7 @@ import Flutter
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
-    
+
     let controller : FlutterViewController = window?.rootViewController as! FlutterViewController;
     let vpnManagerChannel = FlutterMethodChannel.init(name: "com.losgif.sail/vpn_manager",
                                                    binaryMessenger: controller.binaryMessenger);
@@ -40,7 +40,7 @@ import Flutter
 
         result(true)
       })
-    
+
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 

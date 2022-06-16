@@ -8,7 +8,6 @@ let conf = """
 [General]
 loglevel = trace
 dns-server = 223.5.5.5, 114.114.114.114
-tun-fd = REPLACE-ME-WITH-THE-FD
 
 [Proxy]
 Direct = direct
@@ -22,21 +21,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         let tunnelNetworkSettings = createTunnelSettings()
-        setTunnelNetworkSettings(tunnelNetworkSettings) { [weak self] error in
-            let tunFd = self?.packetFlow.value(forKeyPath: "socket.fileDescriptor") as! Int32
-            let confWithFd = conf.replacingOccurrences(of: "REPLACE-ME-WITH-THE-FD", with: String(tunFd))
-            let url = FileManager().containerURL(forSecurityApplicationGroupIdentifier: appGroup)!.appendingPathComponent("running_config.conf")
-            do {
-                try confWithFd.write(to: url, atomically: false, encoding: .utf8)
-            } catch {
-                NSLog("fialed to write config file \(error)")
-            }
-            let path = url.absoluteString
-            let start = path.index(path.startIndex, offsetBy: 7)
-            let subpath = path[start..<path.endIndex]
+        setTunnelNetworkSettings(tunnelNetworkSettings) { error in
             DispatchQueue.global(qos: .userInteractive).async {
                 signal(SIGPIPE, SIG_IGN)
-                leaf_run(leafId, String(subpath))
+                leaf_run_with_config_string(leafId, conf)
             }
             completionHandler(nil)
         }

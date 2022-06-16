@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/channels/vpn_manager.dart';
 import 'package:sail_app/constant/app_colors.dart';
@@ -9,6 +10,7 @@ import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/models/user_subscribe_model.dart';
 import 'package:sail_app/service/plan_service.dart';
+import 'package:sail_app/utils/common_util.dart';
 import 'package:sail_app/utils/navigator_util.dart';
 import 'package:sail_app/widgets/connection_stats.dart';
 import 'package:sail_app/widgets/logo_bar.dart';
@@ -71,7 +73,20 @@ class HomePageState extends State<HomePage> {
   }
 
   Future<void> pressConnectBtn() async {
+    if (_serverModel.selectServerEntity == null) {
+      Fluttertoast.showToast(
+          msg: "请选择服务器节点",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 2,
+          textColor: Colors.white,
+          fontSize: 14.0
+      );
+      return;
+    }
+
     await vpnManager.enableVPNManager();
+
     setState(() {
       isOn = !isOn;
 
@@ -158,7 +173,7 @@ class HomePageState extends State<HomePage> {
                                             "assets/map.png",
                                             scale: 3,
                                             color: isOn
-                                                ? Color(0x15000000)
+                                                ? const Color(0x15000000)
                                                 : AppColors.darkSurfaceColor,
                                           ),
                                           Column(

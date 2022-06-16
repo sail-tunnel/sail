@@ -20,10 +20,11 @@ class MySubscribe extends StatefulWidget {
   final HomePageState parent;
   final UserSubscribeEntity userSubscribeEntity;
 
-  _MySubscribeState createState() => _MySubscribeState();
+  @override
+  MySubscribeState createState() => MySubscribeState();
 }
 
-class _MySubscribeState extends State<MySubscribe> {
+class MySubscribeState extends State<MySubscribe> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -167,18 +168,18 @@ class _MySubscribeState extends State<MySubscribe> {
                         highlightColor: Colors.yellow[700],
                         colorBrightness: Brightness.dark,
                         splashColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                        onPressed: () {},
                         child: Text(
                           '续费',
                           style: TextStyle(
                               color: Colors.black87,
                               fontSize: ScreenUtil().setSp(24)),
                         ),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                        onPressed: () {},
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: ScreenUtil().setWidth(160),
                       height: ScreenUtil().setWidth(75),
                       child: FlatButton(
@@ -186,15 +187,15 @@ class _MySubscribeState extends State<MySubscribe> {
                         highlightColor: Colors.yellow[700],
                         colorBrightness: Brightness.dark,
                         splashColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                        onPressed: () {},
                         child: Text(
                           '重置',
                           style: TextStyle(
                               color: Colors.black87,
                               fontSize: ScreenUtil().setSp(24)),
                         ),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                        onPressed: () {},
                       ),
                     )
                   ],
