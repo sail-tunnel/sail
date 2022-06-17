@@ -3,28 +3,15 @@ import 'package:sail_app/entity/plan_entity.dart';
 import 'package:sail_app/utils/http_util.dart';
 
 class PlanService {
-  Future<List<PlanEntity>> plan() async {
-    try {
-      var result = await HttpUtil.instance.get(AppUrls.plan);
-
-      List<PlanEntity> _planEntityList = planEntityFromList(result['data']);
-
-      return _planEntityList;
-    } catch (err) {
-      return Future.error(err);
-    }
+  Future<List<PlanEntity>> plan() {
+    return HttpUtil.instance.get(AppUrls.plan).then((result) {
+      return planEntityFromList(result['data']);
+    });
   }
 
-  Future<PlanEntity> planDetail(int id) async {
-    try {
-      var result = await HttpUtil.instance
-          .get('${AppUrls.plan}', parameters: {'id': id});
-
-      PlanEntity _planEntity = PlanEntity.fromMap(result['data']);
-
-      return _planEntity;
-    } catch (err) {
-      return Future.error(err);
-    }
+  Future<PlanEntity> planDetail(int id) {
+    return HttpUtil.instance.get(AppUrls.plan, parameters: {'id': id}).then((result) {
+      return PlanEntity.fromMap(result['data']);
+    });
   }
 }

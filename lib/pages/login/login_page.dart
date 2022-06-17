@@ -40,9 +40,8 @@ class LoginPage extends StatelessWidget {
 
     try {
       await _loginModel.login(data.name, data.password);
-    } catch (err) {
-      result = '登陆失败，请重试';
-      rethrow;
+    } catch (error) {
+      result = error?.response?.data['message'].toString() ?? '登陆失败，请重试';
     }
 
     return result;
@@ -56,8 +55,8 @@ class LoginPage extends StatelessWidget {
           .register({'email': data.name, 'password': data.password});
 
       await _loginModel.login(data.name, data.password);
-    } catch (err) {
-      result = '注册失败，请重试';
+    } catch (error) {
+      result = error?.response?.data['message'].toString() ?? '注册失败，请重试';
     }
 
     return result;

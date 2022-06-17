@@ -49,9 +49,14 @@ class HttpUtil {
       print("========================请求数据===================");
       print("code=${response.statusCode}");
       print("response=${response.data}");
-      if (response.statusCode == 403) {
-        Application.navigatorKey.currentState.pushNamed(Routers.login);
-        return handler.reject(DioError(requestOptions: response.requestOptions));
+
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        if (response.statusCode == 403) {
+          Application.navigatorKey.currentState.pushNamed(Routers.login);
+        }
+
+        return handler
+            .reject(DioError(requestOptions: response.requestOptions, response: response, type: DioErrorType.response));
       }
 
       return handler.next(response);
