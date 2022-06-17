@@ -4,6 +4,7 @@ import 'package:flutter/services.dart' as services;
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/constant/app_strings.dart';
 import 'package:provider/provider.dart';
+import 'package:sail_app/models/app_model.dart';
 import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/models/user_subscribe_model.dart';
 import 'package:sail_app/router/application.dart';
@@ -13,12 +14,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  var appModel = AppModel();
   var userViewModel = UserModel();
   var userSubscribeModel = UserSubscribeModel();
   var serverModel = ServerModel();
 
   await userViewModel.refreshData();
   runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<AppModel>.value(value: appModel),
     ChangeNotifierProvider<UserModel>.value(value: userViewModel),
     ChangeNotifierProvider<UserSubscribeModel>.value(value: userSubscribeModel),
     ChangeNotifierProvider<ServerModel>.value(value: serverModel),

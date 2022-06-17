@@ -3,7 +3,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/entity/plan_entity.dart';
-import 'package:sail_app/pages/home/home_page.dart';
+import 'package:sail_app/widgets/home_widget.dart';
 
 class PlanList extends StatefulWidget {
   const PlanList(
@@ -15,13 +15,14 @@ class PlanList extends StatefulWidget {
 
   final bool isOn;
   final int boughtPlanId;
-  final HomePageState parent;
+  final HomeWidgetState parent;
   final List<PlanEntity> plans;
 
-  _PlanListState createState() => _PlanListState();
+  @override
+  PlanListState createState() => PlanListState();
 }
 
-class _PlanListState extends State<PlanList> {
+class PlanListState extends State<PlanList> {
   @override
   Widget build(BuildContext context) {
     return Column(

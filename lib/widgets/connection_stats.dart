@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sail_app/constant/app_colors.dart';
-import 'package:sail_app/pages/home/home_page.dart';
+import 'package:sail_app/widgets/home_widget.dart';
 
 // ignore: must_be_immutable
 class ConnectionStats extends StatefulWidget {
   ConnectionStats(this.parent, {Key key}) : super(key: key);
 
-  HomePageState parent;
+  HomeWidgetState parent;
 
   @override
   ConnectionStatsState createState() => ConnectionStatsState();

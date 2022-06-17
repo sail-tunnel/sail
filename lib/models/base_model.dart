@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sail_app/models/page_state.dart';
+import 'package:sail_app/utils/common_util.dart';
 
 class BaseModel extends ChangeNotifier {
   PageState pageState = PageState.loading;
@@ -16,7 +17,7 @@ class BaseModel extends ChangeNotifier {
     }
   }
 
-  errorNotify(String error) {
+  void errorNotify(String error) {
     pageState = PageState.error;
     errorMessage = error;
     notifyListeners();

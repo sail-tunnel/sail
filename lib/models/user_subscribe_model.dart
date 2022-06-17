@@ -7,7 +7,7 @@ import 'package:sail_app/utils/shared_preferences_util.dart';
 class UserSubscribeModel extends BaseModel {
   UserSubscribeEntity _userSubscribeEntity;
 
-  UserService _userService = UserService();
+  final UserService _userService = UserService();
 
   UserSubscribeEntity get userSubscribeEntity => _userSubscribeEntity;
 

@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/models/server_model.dart';
-import 'package:sail_app/pages/home/home_page.dart';
+import 'package:sail_app/widgets/home_widget.dart';
 
 class SelectLocation extends StatefulWidget {
   const SelectLocation(
@@ -12,7 +12,7 @@ class SelectLocation extends StatefulWidget {
     Key key,
   }) : super(key: key);
 
-  final HomePageState parent;
+  final HomeWidgetState parent;
 
   @override
   SelectLocationState createState() => SelectLocationState();
