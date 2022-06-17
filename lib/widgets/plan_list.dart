@@ -63,7 +63,7 @@ class _PlanListState extends State<PlanList> {
         color: widget.isOn
             ? widget.plans[i ~/ 2].id == widget.boughtPlanId
                 ? Colors.white
-                : Color(0x15000000)
+                : const Color(0x15000000)
             : AppColors.darkSurfaceColor,
         child: InkWell(
             borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
