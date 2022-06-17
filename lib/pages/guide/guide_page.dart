@@ -9,11 +9,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class GuidePage extends StatefulWidget {
+  const GuidePage({Key key}) : super(key: key);
+
   @override
-  _GuidePageState createState() => _GuidePageState();
+  GuidePageState createState() => GuidePageState();
 }
 
-class _GuidePageState extends State<GuidePage> {
+class GuidePageState extends State<GuidePage> {
   var guides = [AppImages.guide1, AppImages.guide2, AppImages.guide3];
   var _showButton = false;
 
@@ -32,16 +34,16 @@ class _GuidePageState extends State<GuidePage> {
                 child: Offstage(
                   offstage: !_showButton,
                   child: Center(
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
-                        color: AppColors.themeColor,
-                        textColor: Colors.black87,
-                        onPressed: () {
-                          NavigatorUtil.goHomePage(context);
-                        },
-                        child: Text(AppStrings.openDoor,
-                            style: TextStyle(fontSize: AppDimens.bigTextSize)),
-                      )),
+                      child: TextButton(
+                    style: TextButton.styleFrom(
+                      primary: AppColors.themeColor,
+                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+                    ),
+                    onPressed: () {
+                      NavigatorUtil.goHomePage(context);
+                    },
+                    child: const Text(AppStrings.openDoor, style: TextStyle(fontSize: AppDimens.bigTextSize)),
+                  )),
                 )),
           ],
         ));
@@ -65,7 +67,7 @@ class _GuidePageState extends State<GuidePage> {
       //自动滚动
       loop: false,
       //循环滚动
-      pagination: SwiperPagination(
+      pagination: const SwiperPagination(
           alignment: Alignment.bottomCenter,
           builder: DotSwiperPaginationBuilder(
             activeColor: Color(0xFFFF5722), //选中的颜色

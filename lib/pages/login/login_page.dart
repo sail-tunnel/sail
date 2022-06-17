@@ -7,24 +7,27 @@ import 'package:sail_app/service/user_service.dart';
 import 'package:sail_app/utils/navigator_util.dart';
 import 'package:sail_app/constant/app_strings.dart';
 
-// ignore: must_be_immutable
-class LoginPage extends StatelessWidget {
-  LoginPage({Key key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key key}) : super(key: key);
 
+  @override
+  LoginPageState createState() => LoginPageState();
+}
+
+class LoginPageState extends State<LoginPage> {
   Duration get loginTime => const Duration(milliseconds: 2250);
 
   UserModel _userModel;
   LoginModel _loginModel;
 
-  static String _emailValidator (value) {
-    if (value.isEmpty ||
-        !RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(value)) {
+  static String _emailValidator(value) {
+    if (value.isEmpty || !RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(value)) {
       return '邮箱错误!';
     }
     return null;
   }
 
-  static String _passwordValidator (String value) {
+  static String _passwordValidator(String value) {
     if (value.isEmpty) {
       return '密码不能为空!';
     }
@@ -33,7 +36,6 @@ class LoginPage extends StatelessWidget {
     }
     return null;
   }
-
 
   Future<String> _login(LoginData data) async {
     String result;
@@ -51,8 +53,7 @@ class LoginPage extends StatelessWidget {
     String result;
 
     try {
-      await UserService()
-          .register({'email': data.name, 'password': data.password});
+      await UserService().register({'email': data.name, 'password': data.password});
 
       await _loginModel.login(data.name, data.password);
     } catch (error) {

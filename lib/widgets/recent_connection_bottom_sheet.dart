@@ -14,12 +14,14 @@ const double iconsVerticalSpacing = 24;
 const double iconsHorizontalSpacing = 16;
 
 class RecentConnectionBottomSheet extends StatefulWidget {
+  const RecentConnectionBottomSheet({Key key}) : super(key: key);
+
   @override
-  _RecentConnectionBottomSheetState createState() =>
-      _RecentConnectionBottomSheetState();
+  RecentConnectionBottomSheetState createState() =>
+      RecentConnectionBottomSheetState();
 }
 
-class _RecentConnectionBottomSheetState
+class RecentConnectionBottomSheetState
     extends State<RecentConnectionBottomSheet>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
@@ -52,7 +54,7 @@ class _RecentConnectionBottomSheetState
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 600),
     );
   }
 
@@ -81,7 +83,7 @@ class _RecentConnectionBottomSheetState
             onVerticalDragEnd: _handleDragEnd,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 32),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                     colors: [AppColors.themeColor, Colors.pink],
                     begin: Alignment.topLeft,
@@ -90,7 +92,7 @@ class _RecentConnectionBottomSheetState
               ),
               child: Stack(
                 children: <Widget>[
-                  MenuButton(),
+                  const MenuButton(),
                   SheetHeader(
                     fontSize: headerFontSize,
                     topMargin: headerTopMargin,
@@ -155,12 +157,13 @@ class _RecentConnectionBottomSheetState
 
     final double flingVelocity =
         details.velocity.pixelsPerSecond.dy / maxHeight;
-    if (flingVelocity < 0.0)
+    if (flingVelocity < 0.0) {
       _controller.fling(velocity: math.max(2.0, -flingVelocity));
-    else if (flingVelocity > 0.0)
+    } else if (flingVelocity > 0.0) {
       _controller.fling(velocity: math.min(-2.0, -flingVelocity));
-    else
+    } else {
       _controller.fling(velocity: _controller.value < 0.5 ? -2.0 : 2.0);
+    }
   }
 }
 
@@ -193,13 +196,13 @@ class ExpandedEventItem extends StatelessWidget {
       height: height,
       child: AnimatedOpacity(
         opacity: isVisible ? 1 : 0,
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(borderRadius),
             color: Colors.white,
           ),
-          padding: EdgeInsets.only(left: height).add(EdgeInsets.all(8)),
+          padding: EdgeInsets.only(left: height).add(const EdgeInsets.all(8)),
           child: _buildContent(),
         ),
       ),
@@ -209,8 +212,8 @@ class ExpandedEventItem extends StatelessWidget {
   Widget _buildContent() {
     return Column(
       children: <Widget>[
-        Text(title, style: TextStyle(fontSize: 16)),
-        SizedBox(height: 8),
+        Text(title, style: const TextStyle(fontSize: 16)),
+        const SizedBox(height: 8),
         Row(
           children: <Widget>[
             Text(
@@ -221,10 +224,10 @@ class ExpandedEventItem extends StatelessWidget {
                 color: Colors.grey.shade600,
               ),
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Text(
               date,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w300,
                 fontSize: 12,
                 color: Colors.grey,
@@ -232,7 +235,7 @@ class ExpandedEventItem extends StatelessWidget {
             ),
           ],
         ),
-        Spacer(),
+        const Spacer(),
         Row(
           children: <Widget>[
             Icon(Icons.place, color: Colors.grey.shade400, size: 16),
@@ -286,9 +289,11 @@ class SheetHeader extends StatelessWidget {
 }
 
 class MenuButton extends StatelessWidget {
+  const MenuButton({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Positioned(
+    return const Positioned(
       right: 0,
       bottom: 24,
       child: Icon(

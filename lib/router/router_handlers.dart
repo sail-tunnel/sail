@@ -13,7 +13,7 @@ import 'dart:convert';
 /// 入口
 Handler rootHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
-      return MainPage();
+      return const MainPage();
     });
 
 /// 引导页
@@ -25,7 +25,7 @@ Handler splashHandler = Handler(
 /// 首页
 Handler homeHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
-      return HomePage();
+      return const HomePage();
     });
 
 /// 404页面
@@ -43,13 +43,13 @@ Handler loginHandler = Handler(
 /// 套餐页
 Handler planHandle = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
-      return PlanPage();
+      return const PlanPage();
     });
 
 /// 服务器节点页
 Handler serverListHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
-      return ServerListPage();
+      return const ServerListPage();
     });
 
 /// WebView页
@@ -57,5 +57,5 @@ Handler webViewHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
       var title = jsonDecode(parameters["titleName"].first);
       var url = jsonDecode(parameters["url"].first);
-      return WebViewPage(url, title);
+      return WebViewWidget(url, title);
     });

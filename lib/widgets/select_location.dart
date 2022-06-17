@@ -6,20 +6,19 @@ import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/pages/home/home_page.dart';
 
-// ignore: must_be_immutable
 class SelectLocation extends StatefulWidget {
-  SelectLocation(
+  const SelectLocation(
     this.parent, {
     Key key,
   }) : super(key: key);
 
-  HomePageState parent;
+  final HomePageState parent;
 
   @override
-  _SelectLocationState createState() => _SelectLocationState();
+  SelectLocationState createState() => SelectLocationState();
 }
 
-class _SelectLocationState extends State<SelectLocation> {
+class SelectLocationState extends State<SelectLocation> {
   ServerModel _serverModel;
 
   @override
@@ -27,8 +26,7 @@ class _SelectLocationState extends State<SelectLocation> {
     _serverModel = Provider.of<ServerModel>(context);
 
     return Padding(
-      padding: EdgeInsets.symmetric(
-          vertical: 20, horizontal: ScreenUtil().setWidth(75)),
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: ScreenUtil().setWidth(75)),
       child: Material(
         borderRadius: BorderRadius.circular(20),
         color: Colors.yellow[600],
@@ -44,24 +42,23 @@ class _SelectLocationState extends State<SelectLocation> {
                 color: AppColors.yellowColor.withAlpha(200),
                 blurRadius: 20,
                 spreadRadius: -6,
-                offset: Offset(
+                offset: const Offset(
                   0.0,
                   3.0,
                 ),
               )
             ]),
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
             child: Row(
               children: [
-                Icon(MaterialCommunityIcons.server_network),
-                Padding(
-                    padding: EdgeInsets.only(left: ScreenUtil().setWidth(10))),
+                const Icon(MaterialCommunityIcons.server_network),
+                Padding(padding: EdgeInsets.only(left: ScreenUtil().setWidth(10))),
                 Text(
                   _serverModel.selectServerEntity?.name ?? "选择连接节点",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 Expanded(child: Container()),
-                Icon(Icons.chevron_right)
+                const Icon(Icons.chevron_right)
               ],
             ),
           ),

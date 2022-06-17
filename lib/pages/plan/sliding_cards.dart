@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'dart:math' as math;
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,14 +6,16 @@ import 'package:sail_app/entity/plan_entity.dart';
 import 'package:sail_app/service/plan_service.dart';
 
 class SlidingCardsView extends StatefulWidget {
+  const SlidingCardsView({Key key}) : super(key: key);
+
   @override
-  _SlidingCardsViewState createState() => _SlidingCardsViewState();
+  SlidingCardsViewState createState() => SlidingCardsViewState();
 }
 
-class _SlidingCardsViewState extends State<SlidingCardsView> {
+class SlidingCardsViewState extends State<SlidingCardsView> {
   PageController pageController;
   double pageOffset = 0;
-  List<PlanEntity> _planEntityList = List<PlanEntity>();
+  List<PlanEntity> _planEntityList = [];
 
   @override
   void initState() {
@@ -89,13 +90,13 @@ class SlidingCard extends StatelessWidget {
 
   double lowestPrice() {
     List<double> list = [
-      this.onetimePrice,
-      this.monthPrice,
-      this.quarterPrice,
-      this.halfYearPrice,
-      this.yearPrice,
-      this.twoYearPrice,
-      this.threeYearPrice,
+      onetimePrice,
+      monthPrice,
+      quarterPrice,
+      halfYearPrice,
+      yearPrice,
+      twoYearPrice,
+      threeYearPrice,
     ];
 
     double min;
@@ -115,13 +116,13 @@ class SlidingCard extends StatelessWidget {
     return Transform.translate(
       offset: Offset(-32 * gauss * offset.sign, 0),
       child: Card(
-        margin: EdgeInsets.only(left: 8, right: 8, bottom: 24),
+        margin: const EdgeInsets.only(left: 8, right: 8, bottom: 24),
         elevation: 8,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
         child: Column(
           children: <Widget>[
             ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
               child: Image.asset(
                 'assets/$assetName',
                 height: MediaQuery.of(context).size.height * 0.3,
@@ -129,7 +130,7 @@ class SlidingCard extends StatelessWidget {
                 fit: BoxFit.none,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Expanded(
               child: CardContent(
                 name: name,
@@ -152,11 +153,7 @@ class CardContent extends StatelessWidget {
   final double lowestPrice;
 
   const CardContent(
-      {Key key,
-      @required this.name,
-      @required this.date,
-      @required this.offset,
-      @required this.lowestPrice})
+      {Key key, @required this.name, @required this.date, @required this.offset, @required this.lowestPrice})
       : super(key: key);
 
   @override
@@ -168,49 +165,48 @@ class CardContent extends StatelessWidget {
         children: <Widget>[
           Transform.translate(
             offset: Offset(8 * offset, 0),
-            child: Text(name, style: TextStyle(fontSize: 20)),
+            child: Text(name, style: const TextStyle(fontSize: 20)),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Transform.translate(
             offset: Offset(32 * offset, 0),
             child: Text(
               date,
-              style: TextStyle(color: Colors.grey),
+              style: const TextStyle(color: Colors.grey),
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Row(
             children: <Widget>[
               Transform.translate(
                 offset: Offset(48 * offset, 0),
-                child: RaisedButton(
-                  color: Colors.yellow,
-                  child: Transform.translate(
-                    offset: Offset(24 * offset, 0),
-                    child: Text('购买',
-                        style: TextStyle(
-                            color: Colors.black87,
-                            fontSize: ScreenUtil().setSp(36))),
-                  ),
-                  textColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.yellow,
+                    onPrimary: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32),
+                    ),
                   ),
                   onPressed: () {},
+                  child: Transform.translate(
+                    offset: Offset(24 * offset, 0),
+                    child: Text('购买', style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(36))),
+                  ),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Transform.translate(
                 offset: Offset(32 * offset, 0),
                 child: Text(
                   '¥ $lowestPrice 起',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
             ],
           )
         ],

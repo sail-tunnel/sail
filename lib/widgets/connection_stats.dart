@@ -6,20 +6,20 @@ import 'package:sail_app/pages/home/home_page.dart';
 
 // ignore: must_be_immutable
 class ConnectionStats extends StatefulWidget {
-  ConnectionStats(this.parent);
+  ConnectionStats(this.parent, {Key key}) : super(key: key);
 
   HomePageState parent;
 
   @override
-  _ConnectionStatsState createState() => _ConnectionStatsState();
+  ConnectionStatsState createState() => ConnectionStatsState();
 }
 
-class _ConnectionStatsState extends State<ConnectionStats> {
+class ConnectionStatsState extends State<ConnectionStats> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("00:15:02",
+        const Text("00:15:02",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 40,
@@ -27,12 +27,12 @@ class _ConnectionStatsState extends State<ConnectionStats> {
             )),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(75)),
-          child: FlatButton(
+          child: TextButton(
               onPressed: () {
                 widget.parent.checkHasLogin(() => widget.parent.selectServerNode());
               },
               child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
                 Icon(MaterialCommunityIcons.map_marker,
                     color: AppColors.grayColor, size: 20),
                 Text("其他节点",
@@ -52,16 +52,16 @@ class _ConnectionStatsState extends State<ConnectionStats> {
                 // Download Icon
                 Container(
                   decoration: BoxDecoration(
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                             color: Color(0xffff0000),
                             blurRadius: 13,
                             spreadRadius: -2)
                       ],
-                      color: Color(0xffff0000),
+                      color: const Color(0xffff0000),
                       borderRadius: BorderRadius.circular(13)),
-                  padding: EdgeInsets.all(5),
-                  child: Icon(
+                  padding: const EdgeInsets.all(5),
+                  child: const Icon(
                     Icons.arrow_downward,
                     color: Colors.white,
                   ),
@@ -73,14 +73,14 @@ class _ConnectionStatsState extends State<ConnectionStats> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "下行速度",
                         style: TextStyle(
                             color: AppColors.grayColor,
                             fontWeight: FontWeight.w500),
                       ),
                       RichText(
-                        text: TextSpan(
+                        text: const TextSpan(
                             style: TextStyle(
                                 color: AppColors.grayColor,
                                 fontWeight: FontWeight.w900),
@@ -104,16 +104,16 @@ class _ConnectionStatsState extends State<ConnectionStats> {
                 // Upload Icon
                 Container(
                   decoration: BoxDecoration(
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                             color: Color(0xff03a305),
                             blurRadius: 13,
                             spreadRadius: -2)
                       ],
-                      color: Color(0xff03a305),
+                      color: const Color(0xff03a305),
                       borderRadius: BorderRadius.circular(13)),
-                  padding: EdgeInsets.all(5),
-                  child: Icon(
+                  padding: const EdgeInsets.all(5),
+                  child: const Icon(
                     Icons.arrow_upward,
                     color: Colors.white,
                   ),
@@ -125,14 +125,14 @@ class _ConnectionStatsState extends State<ConnectionStats> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "上行速度",
                         style: TextStyle(
                             color: AppColors.grayColor,
                             fontWeight: FontWeight.w500),
                       ),
                       RichText(
-                        text: TextSpan(
+                        text: const TextSpan(
                             style: TextStyle(
                                 color: AppColors.grayColor,
                                 fontWeight: FontWeight.w900),

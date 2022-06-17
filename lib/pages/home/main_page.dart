@@ -8,21 +8,23 @@ import 'package:provider/provider.dart';
 import 'home_page.dart';
 
 class MainPage extends StatefulWidget {
+  const MainPage({Key key}) : super(key: key);
+
   @override
-  _MainPageState createState() => _MainPageState();
+  MainPageState createState() => MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    UserModel _userViewModel = Provider.of<UserModel>(context);
+    UserModel userViewModel = Provider.of<UserModel>(context);
 
     ScreenUtil.init(context,
         width: AppDimens.maxWidth,
         height: AppDimens.maxHeight,
         allowFontScaling: false);
-    return _userViewModel.isFirst
+    return userViewModel.isFirst
         ? GuidePage()
-        : HomePage();
+        : const HomePage();
   }
 }

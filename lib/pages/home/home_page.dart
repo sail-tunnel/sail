@@ -33,7 +33,7 @@ class HomePageState extends State<HomePage> {
   UserModel _userModel;
   UserSubscribeModel _userSubscribeModel;
   ServerModel _serverModel;
-  List<PlanEntity> _planEntityList = List<PlanEntity>();
+  List<PlanEntity> _planEntityList = [];
   bool isOn;
   int lastConnectedIndex = 1;
   bool _isLoadingData = false;
@@ -188,7 +188,7 @@ class HomePageState extends State<HomePage> {
                                     : SelectLocation(this),
                               ],
                             )))),
-                RecentConnectionBottomSheet()
+                const RecentConnectionBottomSheet()
               ],
             )));
   }

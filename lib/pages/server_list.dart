@@ -6,6 +6,7 @@ import 'package:sail_app/models/server_model.dart';
 import 'package:flutter/material.dart';
 import 'package:sail_app/utils/navigator_util.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:sail_app/utils/common_util.dart';
 
 class ServerListPage extends StatefulWidget {
   const ServerListPage({Key key}) : super(key: key);
@@ -167,7 +168,7 @@ class ServerListPageState extends State<ServerListPage> {
                         ),
                       ),
                     ),
-                    separatorBuilder: (_, index) => SizedBox(height: 10),
+                    separatorBuilder: (_, index) => const SizedBox(height: 10),
                   )
                 ],
               ),

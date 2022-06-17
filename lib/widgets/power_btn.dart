@@ -4,20 +4,20 @@ import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/pages/home/home_page.dart';
 
 class PowerButton extends StatefulWidget {
-  PowerButton(this.parent);
-  HomePageState parent;
+  const PowerButton(this.parent, {Key key}) : super(key: key);
+  final HomePageState parent;
 
   @override
-  _PowerButtonState createState() => _PowerButtonState();
+  PowerButtonState createState() => PowerButtonState();
 }
 
-class _PowerButtonState extends State<PowerButton> {
+class PowerButtonState extends State<PowerButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: widget.parent.isOn? Color(0x20000000): Color(0xff606060),
+        color: widget.parent.isOn? const Color(0x20000000): const Color(0xff606060),
         borderRadius: BorderRadius.circular(ScreenUtil().setWidth(120)),
       ),
       child: Material(

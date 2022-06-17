@@ -1,6 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' as Services;
+import 'package:flutter/services.dart' as services;
 import 'package:sail_app/constant/app_strings.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/models/server_model.dart';
@@ -38,9 +38,9 @@ class SailApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Services.SystemChrome.setPreferredOrientations([
-      Services.DeviceOrientation.portraitUp,
-      Services.DeviceOrientation.portraitDown
+    services.SystemChrome.setPreferredOrientations([
+      services.DeviceOrientation.portraitUp,
+      services.DeviceOrientation.portraitDown
     ]);
 
     return MaterialApp(
