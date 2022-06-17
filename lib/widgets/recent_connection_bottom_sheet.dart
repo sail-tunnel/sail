@@ -277,7 +277,7 @@ class SheetHeader extends StatelessWidget {
     return Positioned(
       top: topMargin,
       child: Text(
-        '最近连接节点',
+        'Most recently connected node',
         style: TextStyle(
           color: Colors.grey[100],
           fontSize: fontSize,

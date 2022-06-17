@@ -33,7 +33,7 @@ class NavigatorUtil {
   static goPlan(BuildContext context) {
     showCupertinoModalBottomSheet(
       context: context,
-      builder: (context) => PlanPage()
+      builder: (context) => const PlanPage()
     );
     // Application.router.navigateTo(context, Routers.plan,
     //     transition: TransitionType.inFromRight);
@@ -42,7 +42,7 @@ class NavigatorUtil {
   static goServerList(BuildContext context) {
     showCupertinoModalBottomSheet(
         context: context,
-        builder: (context) => ServerListPage()
+        builder: (context) => const ServerListPage()
     );
     // Application.router.navigateTo(context, Routers.serverList,
     //     transition: TransitionType.inFromRight);

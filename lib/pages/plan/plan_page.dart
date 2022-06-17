@@ -8,7 +8,7 @@ class PlanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('订阅套餐'),
+        title: const Text('Subscription plan'),
       ),
       backgroundColor: Colors.white,
       body: Stack(
@@ -17,7 +17,7 @@ class PlanPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
+              children: const <Widget>[
                 SlidingCardsView(),
               ],
             ),

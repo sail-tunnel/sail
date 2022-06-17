@@ -199,7 +199,7 @@ class CardContent extends StatelessWidget {
               Transform.translate(
                 offset: Offset(32 * offset, 0),
                 child: Text(
-                  '¥ $lowestPrice 起',
+                  '¥ $lowestPrice rise',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,

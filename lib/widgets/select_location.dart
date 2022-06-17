@@ -54,7 +54,7 @@ class SelectLocationState extends State<SelectLocation> {
                 const Icon(MaterialCommunityIcons.server_network),
                 Padding(padding: EdgeInsets.only(left: ScreenUtil().setWidth(10))),
                 Text(
-                  _serverModel.selectServerEntity?.name ?? "选择连接节点",
+                  _serverModel.selectServerEntity?.name ?? "Select connection node",
                   style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
                 Expanded(child: Container()),

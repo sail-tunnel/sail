@@ -22,17 +22,17 @@ class LoginPageState extends State<LoginPage> {
 
   static String _emailValidator(value) {
     if (value.isEmpty || !RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(value)) {
-      return '邮箱错误!';
+      return 'Email error!';
     }
     return null;
   }
 
   static String _passwordValidator(String value) {
     if (value.isEmpty) {
-      return '密码不能为空!';
+      return 'password can not be blank!';
     }
     if (value.length < 6) {
-      return '密码不能小于6位';
+      return 'Password cannot be less than 6 characters';
     }
     return null;
   }
@@ -43,7 +43,7 @@ class LoginPageState extends State<LoginPage> {
     try {
       await _loginModel.login(data.name, data.password);
     } catch (error) {
-      result = error?.response?.data['message'].toString() ?? '登陆失败，请重试';
+      result = error?.response?.data['message'].toString() ?? 'failed to login，Please try again';
     }
 
     return result;
@@ -57,7 +57,7 @@ class LoginPageState extends State<LoginPage> {
 
       await _loginModel.login(data.name, data.password);
     } catch (error) {
-      result = error?.response?.data['message'].toString() ?? '注册失败，请重试';
+      result = error?.response?.data['message'].toString() ?? 'registration failed，Please try again';
     }
 
     return result;
@@ -79,18 +79,18 @@ class LoginPageState extends State<LoginPage> {
       onLogin: _login,
       onSignup: _register,
       messages: LoginMessages(
-          usernameHint: '邮箱',
-          passwordHint: '密码',
-          confirmPasswordHint: '确认密码',
-          confirmPasswordError: '两次密码不匹配',
-          forgotPasswordButton: '忘记密码？',
-          loginButton: '登陆',
-          signupButton: '注册',
-          recoverPasswordIntro: '重置密码',
-          recoverPasswordButton: '确定',
-          recoverPasswordDescription: '系统将向您的邮箱发送一封重置密码邮件，请注意查收',
-          recoverPasswordSuccess: '发送成功',
-          goBackButton: '返回'),
+          usernameHint: 'Mail',
+          passwordHint: 'password',
+          confirmPasswordHint: 'Confirm Password',
+          confirmPasswordError: 'Password does not match twice',
+          forgotPasswordButton: 'Forgot password？',
+          loginButton: 'login',
+          signupButton: 'register',
+          recoverPasswordIntro: 'reset Password',
+          recoverPasswordButton: 'Sure',
+          recoverPasswordDescription: 'The system will send a reset password email to your mailbox, please pay attention to check',
+          recoverPasswordSuccess: 'Sent successfully',
+          goBackButton: 'return'),
       onSubmitAnimationCompleted: () {
         NavigatorUtil.goHomePage(context);
       },

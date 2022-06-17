@@ -52,7 +52,7 @@ class ServerEntity {
   factory ServerEntity.fromMap(Map<String, dynamic> json) => ServerEntity(
     id: json["id"],
     groupId: List<String>.from(json["group_id"]?.map((x) => x)),
-    parentId: json["parent_id"] == null ? null : json["parent_id"],
+    parentId: json["parent_id"],
     tags: List<String>.from(json["tags"].map((x) => x)),
     name: json["name"],
     rate: json["rate"],
@@ -71,7 +71,7 @@ class ServerEntity {
   Map<String, dynamic> toMap() => {
     "id": id,
     "group_id": List<dynamic>.from(groupId.map((x) => x)),
-    "parent_id": parentId == null ? null : parentId,
+    "parent_id": parentId,
     "tags": List<dynamic>.from(tags.map((x) => x)),
     "name": name,
     "rate": rate,
@@ -114,9 +114,7 @@ class EnumValues<T> {
   EnumValues(this.map);
 
   Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
-    }
+    reverseMap ??= map.map((k, v) => MapEntry(v, k));
     return reverseMap;
   }
 }

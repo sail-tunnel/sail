@@ -23,7 +23,7 @@ class HttpUtil {
     );
     dio = Dio(options);
     dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) async {
-      print("========================请求数据===================");
+      print("========================request data===================");
       print("url=${options.uri.toString()}");
       print("headers=${options.headers}");
       print("params=${options.data}");
@@ -46,7 +46,7 @@ class HttpUtil {
 
       return handler.next(options);
     }, onResponse: (response, handler) {
-      print("========================请求数据===================");
+      print("========================request data===================");
       print("code=${response.statusCode}");
       print("response=${response.data}");
 
@@ -61,7 +61,7 @@ class HttpUtil {
 
       return handler.next(response);
     }, onError: (error, handler) {
-      print("========================请求错误===================");
+      print("========================request error===================");
       print("message =${error.message}");
       print("code=${error.response?.statusCode}");
       print("response=${error.response?.data}");

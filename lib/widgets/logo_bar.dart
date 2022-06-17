@@ -45,7 +45,7 @@ class LogoBar extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                         vertical: ScreenUtil().setWidth(10), horizontal: ScreenUtil().setWidth(30)),
                     child: Text(
-                      "客服",
+                      "customer service",
                       style:
                       TextStyle(fontSize: ScreenUtil().setSp(32), color: Colors.white, fontWeight: FontWeight.w500),
                     ),
@@ -63,7 +63,7 @@ class LogoBar extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                         vertical: ScreenUtil().setWidth(10), horizontal: ScreenUtil().setWidth(30)),
                     child: Text(
-                      userSubscribeModel?.userSubscribeEntity?.email ?? "欢迎光临",
+                      userSubscribeModel?.userSubscribeEntity?.email ?? "welcome",
                       style:
                           TextStyle(fontSize: ScreenUtil().setSp(32), color: Colors.white, fontWeight: FontWeight.w500),
                     ),
@@ -85,7 +85,7 @@ class LogoBar extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               vertical: ScreenUtil().setWidth(10), horizontal: ScreenUtil().setWidth(30)),
                           child: Text(
-                            '退出',
+                            'quit',
                             style: TextStyle(
                                 fontSize: ScreenUtil().setSp(32), color: Colors.white, fontWeight: FontWeight.w500),
                           ),

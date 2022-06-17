@@ -24,7 +24,7 @@ class MainPageState extends State<MainPage> {
         height: AppDimens.maxHeight,
         allowFontScaling: false);
     return userViewModel.isFirst
-        ? GuidePage()
+        ? const GuidePage()
         : const HomePage();
   }
 }

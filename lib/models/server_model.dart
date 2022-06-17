@@ -11,7 +11,7 @@ class ServerModel extends BaseModel {
   ServerEntity _selectServerEntity;
   List<ServerEntity> _selectServerEntityList;
 
-  ServerService _serverService = ServerService();
+  final ServerService _serverService = ServerService();
 
   List<ServerEntity> get serverEntityList => _serverEntityList;
   ServerEntity get selectServerEntity => _selectServerEntity;
@@ -26,7 +26,7 @@ class ServerModel extends BaseModel {
     List<dynamic> newData =
         List.from(data.map((e) => Map<String, dynamic>.from(jsonDecode(e))));
 
-    if (newData == null || newData.length == 0 || forceRefresh) {
+    if (newData == null || newData.isEmpty || forceRefresh) {
       setServerEntityList(await _serverService.server());
     } else {
       _serverEntityList = serverEntityFromList(newData);

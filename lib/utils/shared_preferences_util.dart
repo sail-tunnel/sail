@@ -9,9 +9,7 @@ class SharedPreferencesUtil {
   SharedPreferences sharedPreferences;
 
   static SharedPreferencesUtil getInstance() {
-    if (_instance == null) {
-      _instance = SharedPreferencesUtil._();
-    }
+    _instance ??= SharedPreferencesUtil._();
     return _instance;
   }
 

@@ -18,6 +18,7 @@ class PlanList extends StatefulWidget {
   final HomePageState parent;
   final List<PlanEntity> plans;
 
+  @override
   _PlanListState createState() => _PlanListState();
 }
 
@@ -48,7 +49,7 @@ class _PlanListState extends State<PlanList> {
   }
 
   List<Widget> _buildConnections() {
-    List list = new List<Widget>(widget.plans.length * 2 + 1);
+    List list = List<Widget>(widget.plans.length * 2 + 1);
 
     list[0] = SizedBox(width: ScreenUtil().setWidth(75));
 
@@ -63,7 +64,7 @@ class _PlanListState extends State<PlanList> {
         color: widget.isOn
             ? widget.plans[i ~/ 2].id == widget.boughtPlanId
                 ? Colors.white
-                : Color(0x15000000)
+                : const Color(0x15000000)
             : AppColors.darkSurfaceColor,
         child: InkWell(
             borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
@@ -102,18 +103,18 @@ class _PlanListState extends State<PlanList> {
                                 Icon(
                                   MaterialCommunityIcons.shield_check_outline,
                                   size: ScreenUtil().setWidth(32),
-                                  color: Color(0xFF1abb1d),
+                                  color: const Color(0xFF1abb1d),
                                 ),
                                 Text(
-                                  "已订阅",
+                                  "subscribed",
                                   style: TextStyle(
                                       fontSize: ScreenUtil().setSp(32),
-                                      color: Color(0xFF1abb1d),
+                                      color: const Color(0xFF1abb1d),
                                       fontWeight: FontWeight.bold),
                                 )
                               ],
                             )
-                          : Text("选购",
+                          : Text("choose",
                               style: TextStyle(
                                   fontSize: ScreenUtil().setSp(32),
                                   fontWeight: FontWeight.w500,

@@ -55,14 +55,14 @@ class ServerListPageState extends State<ServerListPage> {
                 children: [
                   RichText(
                       text: TextSpan(
-                          text: '请选择 ',
+                          text: 'please choose ',
                           style: Theme.of(context)
                               .textTheme
                               .subtitle2
                               .copyWith(fontWeight: FontWeight.w700),
                           children: [
                         TextSpan(
-                            text: '节点',
+                            text: 'node',
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle2
@@ -158,7 +158,7 @@ class ServerListPageState extends State<ServerListPage> {
                                       horizontal:
                                       ScreenUtil().setWidth(30)),
                                   child: Text(
-                                    '选择',
+                                    'choose',
                                     style: TextStyle(
                                         color: Colors.yellow[800],
                                         fontWeight: FontWeight.w500),
