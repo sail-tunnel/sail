@@ -1,20 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
+import 'package:sail_app/models/user_model.dart';
+import 'package:sail_app/utils/navigator_util.dart';
 import 'package:sail_app/widgets/home_widget.dart';
 
-// ignore: must_be_immutable
 class ConnectionStats extends StatefulWidget {
-  ConnectionStats(this.parent, {Key key}) : super(key: key);
-
-  HomeWidgetState parent;
+  const ConnectionStats({Key key}) : super(key: key);
 
   @override
   ConnectionStatsState createState() => ConnectionStatsState();
 }
 
 class ConnectionStatsState extends State<ConnectionStats> {
+  UserModel _userModel;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _userModel = Provider.of<UserModel>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,16 +37,14 @@ class ConnectionStatsState extends State<ConnectionStats> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(75)),
           child: TextButton(
-              onPressed: () {
-                widget.parent.checkHasLogin(() => widget.parent.selectServerNode());
-              },
+              onPressed: () => _userModel.checkHasLogin(context, () => NavigatorUtil.goServerList(context)),
               child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
                 Icon(MaterialCommunityIcons.map_marker,
                     color: AppColors.grayColor, size: 20),
                 Text("其他节点",
                     style:
-                        TextStyle(fontSize: 12, color: AppColors.grayColor)),
+                    TextStyle(fontSize: 12, color: AppColors.grayColor)),
                 Icon(Icons.chevron_right, color: AppColors.grayColor, size: 20)
               ])),
         ),
@@ -89,7 +96,7 @@ class ConnectionStatsState extends State<ConnectionStats> {
                               TextSpan(
                                   text: " KB/s",
                                   style:
-                                      TextStyle(fontWeight: FontWeight.normal)),
+                                  TextStyle(fontWeight: FontWeight.normal)),
                             ]),
                       )
                     ],
@@ -141,7 +148,7 @@ class ConnectionStatsState extends State<ConnectionStats> {
                               TextSpan(
                                   text: " KB/s",
                                   style:
-                                      TextStyle(fontWeight: FontWeight.normal)),
+                                  TextStyle(fontWeight: FontWeight.normal)),
                             ]),
                       )
                     ],

@@ -15,12 +15,17 @@ class ServerListPage extends StatefulWidget {
   ServerListPageState createState() => ServerListPageState();
 }
 
-class ServerListPageState extends State<ServerListPage> {
+class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   ServerModel _serverModel;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _serverModel = Provider.of<ServerModel>(context);
   }
 
   Future _onRefresh() async {
@@ -29,150 +34,142 @@ class ServerListPageState extends State<ServerListPage> {
 
   @override
   Widget build(BuildContext context) {
-    _serverModel = Provider.of<ServerModel>(context);
+    super.build(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          '节点列表',
-          style: Theme.of(context)
-              .textTheme
-              .headline6
-              .copyWith(fontWeight: FontWeight.w600),
-        ),
-      ),
-      body: EasyRefresh.custom(
+    return Container(
+      color: Colors.white,
+      child: EasyRefresh.custom(
           header: TaurusHeader(),
           footer: TaurusFooter(),
           onRefresh: _onRefresh,
           slivers: <Widget>[
             SliverToBoxAdapter(
                 child: SingleChildScrollView(
-              padding: EdgeInsets.all(ScreenUtil().setWidth(40)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RichText(
-                      text: TextSpan(
-                          text: '请选择 ',
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle2
-                              .copyWith(fontWeight: FontWeight.w700),
-                          children: [
-                        TextSpan(
-                            text: '节点',
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle2
-                                .copyWith(fontWeight: FontWeight.normal))
-                      ])),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: _serverModel.serverEntityList?.length ?? 0,
-                    itemBuilder: (_, index) => Material(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Theme.of(context).cardColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(7.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
+                  padding: EdgeInsets.all(ScreenUtil().setWidth(40)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                          text: TextSpan(
+                              text: '请选择 ',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  .copyWith(fontWeight: FontWeight.w700),
                               children: [
-                                SizedBox(
-                                  width: ScreenUtil().setWidth(10),
-                                ),
-                                CircleAvatar(
-                                  radius: ScreenUtil().setWidth(10),
-                                  backgroundColor:
-                                  (DateTime.now().microsecondsSinceEpoch /
-                                      1000000 -
-                                      (int.parse(_serverModel
-                                          .serverEntityList[
-                                      index]
-                                          .lastCheckAt) ??
-                                          0) <
-                                      60 * 10)
-                                      ? Colors.green
-                                      : Colors.red,
-                                ),
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  _serverModel.serverEntityList[index].name,
-                                  style:
-                                  Theme.of(context).textTheme.bodyText1,
-                                ),
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                                Tags(
-                                    itemCount: _serverModel
-                                        .serverEntityList[index]
-                                        .tags
-                                        .length,
-                                    // required
-                                    itemBuilder: (int i) {
-                                      final item = _serverModel
-                                          .serverEntityList[index].tags[i];
-
-                                      return ItemTags(
-                                        // Each ItemTags must contain a Key. Keys allow Flutter to
-                                        // uniquely identify widgets.
-                                        index: i,
+                                TextSpan(
+                                    text: '节点',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2
+                                        .copyWith(fontWeight: FontWeight.normal))
+                              ])),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: _serverModel.serverEntityList?.length ?? 0,
+                        itemBuilder: (_, index) => Material(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Theme.of(context).cardColor,
+                          child: Padding(
+                            padding: const EdgeInsets.all(7.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Wrap(
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: ScreenUtil().setWidth(10),
+                                    ),
+                                    CircleAvatar(
+                                      radius: ScreenUtil().setWidth(10),
+                                      backgroundColor:
+                                      (DateTime.now().microsecondsSinceEpoch /
+                                          1000000 -
+                                          (int.parse(_serverModel
+                                              .serverEntityList[
+                                          index]
+                                              .lastCheckAt) ??
+                                              0) <
+                                          60 * 10)
+                                          ? Colors.green
+                                          : Colors.red,
+                                    ),
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
+                                    Text(
+                                      _serverModel.serverEntityList[index].name,
+                                      style:
+                                      Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
+                                    Tags(
+                                        itemCount: _serverModel
+                                            .serverEntityList[index]
+                                            .tags
+                                            .length,
                                         // required
-                                        color: AppColors.themeColor,
-                                        activeColor: AppColors.themeColor,
-                                        textColor: Colors.black87,
-                                        textActiveColor: Colors.black87,
-                                        title: item,
-                                        textStyle: TextStyle(
-                                            fontSize:
-                                            ScreenUtil().setSp(24)),
-                                        onPressed: (item) => print(item),
-                                        onLongPressed: (item) =>
-                                            print(item),
-                                      );
-                                    })
+                                        itemBuilder: (int i) {
+                                          final item = _serverModel
+                                              .serverEntityList[index].tags[i];
+
+                                          return ItemTags(
+                                            // Each ItemTags must contain a Key. Keys allow Flutter to
+                                            // uniquely identify widgets.
+                                            index: i,
+                                            // required
+                                            color: AppColors.themeColor,
+                                            activeColor: AppColors.themeColor,
+                                            textColor: Colors.black87,
+                                            textActiveColor: Colors.black87,
+                                            title: item,
+                                            textStyle: TextStyle(
+                                                fontSize:
+                                                ScreenUtil().setSp(24)),
+                                            onPressed: (item) => print(item),
+                                            onLongPressed: (item) =>
+                                                print(item),
+                                          );
+                                        })
+                                  ],
+                                ),
+                                InkWell(
+                                  borderRadius: BorderRadius.circular(
+                                      ScreenUtil().setWidth(30)),
+                                  onTap: () {
+                                    _serverModel.setSelectServerEntity(
+                                        _serverModel.serverEntityList[index]);
+                                    NavigatorUtil.goBack(context);
+                                  },
+                                  child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: ScreenUtil().setWidth(10),
+                                          horizontal:
+                                          ScreenUtil().setWidth(30)),
+                                      child: Text(
+                                        '选择',
+                                        style: TextStyle(
+                                            color: Colors.yellow[800],
+                                            fontWeight: FontWeight.w500),
+                                      )),
+                                )
                               ],
                             ),
-                            InkWell(
-                              borderRadius: BorderRadius.circular(
-                                  ScreenUtil().setWidth(30)),
-                              onTap: () {
-                                _serverModel.setSelectServerEntity(
-                                    _serverModel.serverEntityList[index]);
-                                NavigatorUtil.goBack(context);
-                              },
-                              child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: ScreenUtil().setWidth(10),
-                                      horizontal:
-                                      ScreenUtil().setWidth(30)),
-                                  child: Text(
-                                    '选择',
-                                    style: TextStyle(
-                                        color: Colors.yellow[800],
-                                        fontWeight: FontWeight.w500),
-                                  )),
-                            )
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                    separatorBuilder: (_, index) => const SizedBox(height: 10),
-                  )
-                ],
-              ),
-            ))
+                        separatorBuilder: (_, index) => const SizedBox(height: 10),
+                      )
+                    ],
+                  ),
+                ))
           ]),
     );
   }

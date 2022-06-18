@@ -1,6 +1,8 @@
 import 'package:sail_app/constant/app_strings.dart';
 import 'package:sail_app/entity/login_entity.dart';
 import 'package:sail_app/entity/user_entity.dart';
+import 'package:sail_app/pages/home/home_page.dart';
+import 'package:sail_app/utils/navigator_util.dart';
 import 'package:sail_app/utils/shared_preferences_util.dart';
 import 'package:sail_app/models/base_model.dart';
 
@@ -16,6 +18,14 @@ class UserModel extends BaseModel {
   UserEntity get userEntity => _userEntity;
   bool get isFirst => _isFirst;
   bool get isLogin => _isLogin;
+
+  Future<void> checkHasLogin(context, Callback callback) async {
+    if (!isLogin) {
+      NavigatorUtil.goLogin(context);
+    } else {
+      return callback();
+    }
+  }
 
   refreshData() async {
     _isFirst =

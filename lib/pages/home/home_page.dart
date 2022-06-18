@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/models/app_model.dart';
+import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/pages/guide/guide_page.dart';
 import 'package:sail_app/pages/plan/plan_page.dart';
 import 'package:sail_app/pages/server_list.dart';
 import 'package:sail_app/widgets/home_widget.dart';
+import 'package:sail_app/widgets/power_btn.dart';
 
 typedef Callback = Future<void> Function();
 
@@ -21,11 +24,13 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   final PageController _pageController = PageController(initialPage: 0);
   AppModel _appModel;
+  ServerModel _serverModel;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _appModel = Provider.of<AppModel>(context);
+    _serverModel = Provider.of<ServerModel>(context);
   }
 
   @override
@@ -33,23 +38,29 @@ class HomePageState extends State<HomePage> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: _appModel.isOn ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
         child: Scaffold(
+            extendBody: true,
             backgroundColor: _appModel.isOn ? AppColors.yellowColor : AppColors.grayColor,
             body: SafeArea(
+              bottom: false,
                 child: PageView(
-              allowImplicitScrolling: true,
+              physics: const NeverScrollableScrollPhysics(),
               controller: _pageController,
-              children: const [HomeWidget(), PlanPage(), ServerListPage(), GuidePage()],
+              children: [
+                HomeWidget(),
+                PlanPage(),
+                ServerListPage(),
+                SingleChildScrollView(
+                  child: Container(
+                    height: ScreenUtil().screenHeight,
+                    child: Center(
+                      child: Text('datadatadata'),
+                    ),
+                  ),
+                )
+              ],
             )),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {},
-              tooltip: 'Increment',
-              elevation: 2.0,
-              child: const Icon(
-                Icons.power_settings_new,
-                color: Colors.white,
-              ),
-            ),
+            floatingActionButton: const PowerButton(),
             bottomNavigationBar: ClipRRect(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(ScreenUtil().setWidth(50)),
@@ -68,7 +79,9 @@ class HomePageState extends State<HomePage> {
                           color: Colors.white,
                         ),
                         onPressed: () {
-                          _pageController.jumpToPage(0);
+                          setState(() {
+                            _pageController.jumpToPage(0);
+                          });
                         },
                       ),
                       IconButton(
@@ -77,7 +90,9 @@ class HomePageState extends State<HomePage> {
                           color: Colors.white,
                         ),
                         onPressed: () {
-                          _pageController.jumpToPage(1);
+                          setState(() {
+                            _pageController.jumpToPage(1);
+                          });
                         },
                       ),
                       SizedBox(
@@ -89,7 +104,9 @@ class HomePageState extends State<HomePage> {
                           color: Colors.white,
                         ),
                         onPressed: () {
-                          _pageController.jumpToPage(2);
+                          setState(() {
+                            _pageController.jumpToPage(2);
+                          });
                         },
                       ),
                       IconButton(
@@ -98,7 +115,9 @@ class HomePageState extends State<HomePage> {
                           color: Colors.white,
                         ),
                         onPressed: () {
-                          _pageController.jumpToPage(3);
+                          setState(() {
+                            _pageController.jumpToPage(3);
+                          });
                         },
                       )
                     ],

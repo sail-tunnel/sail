@@ -22,7 +22,7 @@ class LoginPageState extends State<LoginPage> {
 
   static String _emailValidator(value) {
     if (value.isEmpty || !RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(value)) {
-      return '邮箱错误!';
+      return '请输入正确邮箱!';
     }
     return null;
   }
@@ -49,7 +49,7 @@ class LoginPageState extends State<LoginPage> {
     return result;
   }
 
-  Future<String> _register(LoginData data) async {
+  Future<String> _register(SignupData data) async {
     String result;
 
     try {
@@ -79,7 +79,7 @@ class LoginPageState extends State<LoginPage> {
       onLogin: _login,
       onSignup: _register,
       messages: LoginMessages(
-          usernameHint: '邮箱',
+          userHint: '邮箱',
           passwordHint: '密码',
           confirmPasswordHint: '确认密码',
           confirmPasswordError: '两次密码不匹配',
@@ -95,7 +95,7 @@ class LoginPageState extends State<LoginPage> {
         NavigatorUtil.goHomePage(context);
       },
       onRecoverPassword: _recoverPassword,
-      emailValidator: _emailValidator,
+      userValidator: _emailValidator,
       passwordValidator: _passwordValidator,
     );
   }

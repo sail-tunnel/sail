@@ -20,6 +20,7 @@ void main() async {
   var serverModel = ServerModel();
 
   await userViewModel.refreshData();
+
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<AppModel>.value(value: appModel),
     ChangeNotifierProvider<UserModel>.value(value: userViewModel),

@@ -1,30 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/entity/plan_entity.dart';
+import 'package:sail_app/models/user_model.dart';
+import 'package:sail_app/utils/navigator_util.dart';
 import 'package:sail_app/widgets/home_widget.dart';
 
 class PlanList extends StatefulWidget {
   const PlanList(
-      {Key key,
-        @required this.isOn,
-      @required this.boughtPlanId,
-      @required this.parent, @required this.plans})
+      {Key key, @required this.isOn, @required this.boughtPlanId, @required this.plans})
       : super(key: key);
 
   final bool isOn;
   final int boughtPlanId;
-  final HomeWidgetState parent;
   final List<PlanEntity> plans;
 
   @override
   PlanListState createState() => PlanListState();
 }
 
-class PlanListState extends State<PlanList> {
+class PlanListState extends State<PlanList> with AutomaticKeepAliveClientMixin {
+  UserModel _userModel;
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _userModel = Provider.of<UserModel>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -49,7 +61,7 @@ class PlanListState extends State<PlanList> {
   }
 
   List<Widget> _buildConnections() {
-    List list = new List<Widget>(widget.plans.length * 2 + 1);
+    List list = List<Widget>(widget.plans.length * 2 + 1);
 
     list[0] = SizedBox(width: ScreenUtil().setWidth(75));
 
@@ -70,13 +82,12 @@ class PlanListState extends State<PlanList> {
             borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
             onTap: widget.isOn && widget.plans[i ~/ 2].id == widget.boughtPlanId
                 ? null
-                : () {
-                    widget.parent.checkHasLogin(() => widget.parent.changeBoughtPlanId(widget.plans[(i ~/ 2) - 1].id));
-                  },
+                : () => _userModel.checkHasLogin(context, () => NavigatorUtil.goPlan(context)),
             child: Container(
                 // width: ScreenUtil().setWidth(300),
                 height: ScreenUtil().setWidth(200),
-                padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(40), vertical: ScreenUtil().setWidth(30)),
+                padding:
+                    EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(40), vertical: ScreenUtil().setWidth(30)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,13 +114,13 @@ class PlanListState extends State<PlanList> {
                                 Icon(
                                   MaterialCommunityIcons.shield_check_outline,
                                   size: ScreenUtil().setWidth(32),
-                                  color: Color(0xFF1abb1d),
+                                  color: const Color(0xFF1abb1d),
                                 ),
                                 Text(
                                   "已订阅",
                                   style: TextStyle(
                                       fontSize: ScreenUtil().setSp(32),
-                                      color: Color(0xFF1abb1d),
+                                      color: const Color(0xFF1abb1d),
                                       fontWeight: FontWeight.bold),
                                 )
                               ],
@@ -118,9 +129,7 @@ class PlanListState extends State<PlanList> {
                               style: TextStyle(
                                   fontSize: ScreenUtil().setSp(32),
                                   fontWeight: FontWeight.w500,
-                                  color: widget.isOn
-                                      ? Colors.black
-                                      : Colors.yellow[700])),
+                                  color: widget.isOn ? Colors.black : Colors.yellow[700])),
                     )
                   ],
                 ))),

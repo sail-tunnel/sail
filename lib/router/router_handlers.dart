@@ -19,7 +19,7 @@ Handler rootHandler = Handler(
 /// 引导页
 Handler splashHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
-      return GuidePage();
+      return const GuidePage();
     });
 
 /// 首页
@@ -31,13 +31,13 @@ Handler homeHandler = Handler(
 /// 404页面
 Handler notFindHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
-      return NotFindPage();
+      return const NotFindPage();
     });
 
 /// 登录页
 Handler loginHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
-      return LoginPage();
+      return const LoginPage();
     });
 
 /// 套餐页

@@ -25,7 +25,7 @@ class HomeWidget extends StatefulWidget {
   HomeWidgetState createState() => HomeWidgetState();
 }
 
-class HomeWidgetState extends State<HomeWidget> {
+class HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMixin {
   AppModel _appModel;
   UserModel _userModel;
   UserSubscribeModel _userSubscribeModel;
@@ -45,6 +45,9 @@ class HomeWidgetState extends State<HomeWidget> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
 
@@ -62,40 +65,10 @@ class HomeWidgetState extends State<HomeWidget> {
     }
   }
 
-  Future<void> pressConnectBtn() async {
-    if (_serverModel.selectServerEntity == null) {
-      Fluttertoast.showToast(
-          msg: "请选择服务器节点",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 2,
-          textColor: Colors.white,
-          fontSize: 14.0);
-      return;
-    }
-
-    _appModel.togglePowerButton();
-  }
-
-  Future<void> changeBoughtPlanId(id) async {
-    NavigatorUtil.goPlan(context);
-    // _userSubscribeModel.getUserSubscribe();
-  }
-
-  Future<void> selectServerNode() async {
-    await NavigatorUtil.goServerList(context);
-  }
-
-  Future<void> checkHasLogin(Callback callback) async {
-    if (!_userModel.isLogin) {
-      NavigatorUtil.goLogin(context);
-    } else {
-      return callback();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
@@ -125,7 +98,6 @@ class HomeWidgetState extends State<HomeWidget> {
                     isOn: _appModel.isOn,
                     boughtPlanId: _userSubscribeModel?.userSubscribeEntity?.planId ?? 0,
                     plans: _planEntityList,
-                    parent: this,
                   ),
                 ),
 
@@ -137,13 +109,9 @@ class HomeWidgetState extends State<HomeWidget> {
                         scale: 3,
                         color: _appModel.isOn ? const Color(0x15000000) : AppColors.darkSurfaceColor,
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [PowerButton(this, _appModel.isOn)],
-                      )
                     ])),
 
-                _appModel.isOn ? ConnectionStats(this) : SelectLocation(this),
+                _appModel.isOn ? const ConnectionStats() : const SelectLocation(),
               ],
             )));
   }

@@ -11,7 +11,7 @@ class NotFindPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(AppStrings.appName),
+          title: const Text(AppStrings.appName),
         ),
         body: Container(
           alignment: Alignment.center,
@@ -19,7 +19,7 @@ class NotFindPage extends StatelessWidget {
             AppImages.notFoundPicture,
             width: 200,
             height: 100,
-            color: Color(0xFFff5722),
+            color: const Color(0xFFff5722),
           ),
         ));
   }
