@@ -143,8 +143,8 @@ class HomePageState extends State<HomePage> {
             ),
             bottomNavigationBar: ClipRRect(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(ScreenUtil().setWidth(50)),
-                    topRight: Radius.circular(ScreenUtil().setWidth(50))),
+                    topLeft: Radius.circular(ScreenUtil().setWidth(0)),
+                    topRight: Radius.circular(ScreenUtil().setWidth(0))),
                 child: BottomAppBar(
                   notchMargin: 8,
                   shape: const CircularNotchedRectangle(),

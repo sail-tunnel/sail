@@ -31,7 +31,7 @@ class _PlanListState extends State<PlanList> {
         Padding(
           padding: EdgeInsets.only(left: ScreenUtil().setWidth(75)),
           child: Text(
-            "订阅套餐",
+            "Subscription plan",
             style: TextStyle(
                 fontSize: ScreenUtil().setSp(32),
                 color: widget.isOn ? AppColors.grayColor : Colors.grey[400],

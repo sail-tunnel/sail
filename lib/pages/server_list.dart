@@ -34,7 +34,7 @@ class ServerListPageState extends State<ServerListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '节点列表',
+          'Node list',
           style: Theme.of(context)
               .textTheme
               .headline6
