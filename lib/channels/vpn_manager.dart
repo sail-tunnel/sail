@@ -1,5 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:sail_app/utils/common_util.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_vpn/flutter_vpn.dart';
+import 'package:flutter_vpn/state.dart';
 
 class VpnManager {
   Future<bool> enableVPNManager() async {
@@ -7,7 +10,8 @@ class VpnManager {
     const platform = MethodChannel("com.losgif.sail/vpn_manager");
     bool result = false;
     try {
-      result = await platform.invokeMethod("enableVPNManager");
+      FlutterVpn.prepare();
+      return result = await platform.invokeMethod("enableVPNManager");
     } on PlatformException catch (e) {
       print(e.toString());
     }

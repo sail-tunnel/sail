@@ -25,6 +25,7 @@ class ServerListPageState extends State<ServerListPage> {
 
   Future _onRefresh() async {
     await _serverModel.getServerList(forceRefresh: true);
+    await _serverModel.getSelectServerList()
   }
 
   @override
@@ -34,7 +35,7 @@ class ServerListPageState extends State<ServerListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '节点列表',
+          'Node list',
           style: Theme.of(context)
               .textTheme
               .headline6
@@ -91,15 +92,13 @@ class ServerListPageState extends State<ServerListPage> {
                                 ),
                                 CircleAvatar(
                                   radius: ScreenUtil().setWidth(10),
-                                  backgroundColor:
-                                  (DateTime.now().microsecondsSinceEpoch /
-                                      1000000 -
-                                      (int.parse(_serverModel
-                                          .serverEntityList[
-                                      index]
-                                          .lastCheckAt) ??
-                                          0) <
-                                      60 * 10)
+                                  backgroundColor: (DateTime.now()
+                                                      .microsecondsSinceEpoch /
+                                                  1000000 -
+                                              (int.parse(_serverModel.serverEntityList[index]
+                                                      .lastCheckAt) ??
+                                                  0) <
+                                          60 * 10)
                                       ? Colors.green
                                       : Colors.red,
                                 ),
@@ -108,17 +107,14 @@ class ServerListPageState extends State<ServerListPage> {
                                 ),
                                 Text(
                                   _serverModel.serverEntityList[index].name,
-                                  style:
-                                  Theme.of(context).textTheme.bodyText1,
+                                  style: Theme.of(context).textTheme.bodyText1,
                                 ),
                                 const SizedBox(
                                   width: 15,
                                 ),
                                 Tags(
                                     itemCount: _serverModel
-                                        .serverEntityList[index]
-                                        .tags
-                                        .length,
+                                        .serverEntityList[index].tags.length,
                                     // required
                                     itemBuilder: (int i) {
                                       final item = _serverModel
@@ -135,11 +131,9 @@ class ServerListPageState extends State<ServerListPage> {
                                         textActiveColor: Colors.black87,
                                         title: item,
                                         textStyle: TextStyle(
-                                            fontSize:
-                                            ScreenUtil().setSp(24)),
+                                            fontSize: ScreenUtil().setSp(24)),
                                         onPressed: (item) => print(item),
-                                        onLongPressed: (item) =>
-                                            print(item),
+                                        onLongPressed: (item) => print(item),
                                       );
                                     })
                               ],
@@ -155,8 +149,7 @@ class ServerListPageState extends State<ServerListPage> {
                               child: Container(
                                   padding: EdgeInsets.symmetric(
                                       vertical: ScreenUtil().setWidth(10),
-                                      horizontal:
-                                      ScreenUtil().setWidth(30)),
+                                      horizontal: ScreenUtil().setWidth(30)),
                                   child: Text(
                                     'choose',
                                     style: TextStyle(

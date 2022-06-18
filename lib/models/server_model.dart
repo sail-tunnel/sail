@@ -22,7 +22,7 @@ class ServerModel extends BaseModel {
 
     List<dynamic> data = await SharedPreferencesUtil.getInstance()
             .getList(AppStrings.serverNode) ??
-        List<dynamic>();
+        <dynamic>[];
     List<dynamic> newData =
         List.from(data.map((e) => Map<String, dynamic>.from(jsonDecode(e))));
 
@@ -43,7 +43,7 @@ class ServerModel extends BaseModel {
     bool result = false;
 
     Map<String, dynamic> data = await SharedPreferencesUtil.getInstance()
-        .getMap(AppStrings.selectServer) ?? Map<String, dynamic>();
+        .getMap(AppStrings.selectServer) ?? <String, dynamic>{};
 
     _selectServerEntity = ServerEntity.fromMap(data);
 
@@ -59,7 +59,7 @@ class ServerModel extends BaseModel {
 
     List<dynamic> data = await SharedPreferencesUtil.getInstance()
         .getList(AppStrings.selectServerNode) ??
-        List<dynamic>();
+        <dynamic>[];
     List<dynamic> newData =
     List.from(data.map((e) => Map<String, dynamic>.from(jsonDecode(e))));
 

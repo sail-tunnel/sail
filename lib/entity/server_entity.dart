@@ -26,6 +26,9 @@ class ServerEntity {
     @required this.updatedAt,
     @required this.type,
     @required this.lastCheckAt,
+    @required this.uuid,
+    @required this.allowInsecure,
+    @required  this.flow,
   });
 
   final int id;
@@ -35,8 +38,9 @@ class ServerEntity {
   final String name;
   final String rate;
   final Host host;
+
   final int port;
-  final int serverPort;
+  final int serverPort; // available in all protocols
   final Cipher cipher;
   final int show;
   final int sort;
@@ -44,6 +48,10 @@ class ServerEntity {
   final int updatedAt;
   final Type type;
   final String lastCheckAt;
+
+  final String uuid;
+  final bool allowInsecure;
+  final bool flow;
 
   factory ServerEntity.fromJson(String str) => ServerEntity.fromMap(json.decode(str));
 
@@ -56,9 +64,9 @@ class ServerEntity {
     tags: List<String>.from(json["tags"].map((x) => x)),
     name: json["name"],
     rate: json["rate"],
-    host: hostValues.map[json["host"]],
-    port: json["port"],
-    serverPort: json["server_port"],
+    host: hostValues.map[json["host"]], // host address
+    port: json["port"], // port available
+    serverPort: json["server_port"], // server port available in all
     cipher: cipherValues.map[json["cipher"]],
     show: json["show"],
     sort: json["sort"],
@@ -66,6 +74,11 @@ class ServerEntity {
     updatedAt: json["updated_at"],
     type: typeValues.map[json["type"]],
     lastCheckAt: json["last_check_at"],
+
+    // more server entity
+    uuid : json["uuid"],
+    allowInsecure: json["false"],
+    flow : json["none"] // none for now
   );
 
   Map<String, dynamic> toMap() => {
@@ -85,6 +98,10 @@ class ServerEntity {
     "updated_at": updatedAt,
     "type": typeValues.reverse[type],
     "last_check_at": lastCheckAt,
+
+    "uuid" : "",
+    "allowInsecure" : "",
+    "flow" : ""
   };
 }
 
@@ -101,10 +118,14 @@ final hostValues = EnumValues({
   "anycast.xtcpdns.as4812.com": Host.ANYCAST_XTCPDNS_AS4812_COM
 });
 
-enum Type { SHADOWSOCKS }
+enum Type { SHADOWSOCKS , VMESS , TROJAN , VLESS , SOCKS }
 
 final typeValues = EnumValues({
-  "shadowsocks": Type.SHADOWSOCKS
+  "shadowsocks": Type.SHADOWSOCKS ,
+  "vmess://" : Type.VMESS,
+  "trojan://" :  Type.TROJAN,
+  "vless://" : Type.VLESS,
+  "socks://" : Type.SOCKS
 });
 
 class EnumValues<T> {

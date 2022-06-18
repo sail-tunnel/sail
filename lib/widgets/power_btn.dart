@@ -18,17 +18,17 @@ class PowerButtonState extends State<PowerButton> {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: widget.parent.isOn? const Color(0x20000000): const Color(0xff606060),
-        borderRadius: BorderRadius.circular(ScreenUtil().setWidth(120)),
+        borderRadius: BorderRadius.circular(ScreenUtil().setWidth(80)),
       ),
       child: Material(
-        borderRadius: BorderRadius.circular(ScreenUtil().setWidth(100)),
+        borderRadius: BorderRadius.circular(ScreenUtil().setWidth(80)),
         color: widget.parent.isOn? AppColors.grayColor: Colors.grey,
         child: InkWell(
           splashColor: AppColors.yellowColor,
           onTap: (){
             widget.parent.checkHasLogin(() => widget.parent.pressConnectBtn());
           },
-          borderRadius: BorderRadius.circular(ScreenUtil().setWidth(100)),
+          borderRadius: BorderRadius.circular(ScreenUtil().setWidth(80)),
           child: Container(
             padding: EdgeInsets.all(ScreenUtil().setWidth(40)),
             child: Icon(

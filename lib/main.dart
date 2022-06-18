@@ -35,8 +35,8 @@ class SailApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    services.SystemChrome.setPreferredOrientations(
-        [services.DeviceOrientation.portraitUp, services.DeviceOrientation.portraitDown]);
+    services.SystemChrome.setPreferredOrientations([services.DeviceOrientation.portraitUp,
+      services.DeviceOrientation.portraitDown]);
 
     return MaterialApp(
       // <--- /!\ Add the builder
@@ -44,6 +44,7 @@ class SailApp extends StatelessWidget {
       navigatorKey: Application.navigatorKey,
       debugShowCheckedModeBanner: false,
       onGenerateRoute: Application.router.generator,
+
       localizationsDelegates: const [
         // 本地化的代理类
         GlobalMaterialLocalizations.delegate,

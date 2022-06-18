@@ -31,7 +31,7 @@ class _PlanListState extends State<PlanList> {
         Padding(
           padding: EdgeInsets.only(left: ScreenUtil().setWidth(75)),
           child: Text(
-            "订阅套餐",
+            "Subscription plan",
             style: TextStyle(
                 fontSize: ScreenUtil().setSp(32),
                 color: widget.isOn ? AppColors.grayColor : Colors.grey[400],
@@ -102,13 +102,13 @@ class _PlanListState extends State<PlanList> {
                               children: [
                                 Icon(
                                   MaterialCommunityIcons.shield_check_outline,
-                                  size: ScreenUtil().setWidth(32),
+                                  size: ScreenUtil().setWidth(25),
                                   color: const Color(0xFF1abb1d),
                                 ),
                                 Text(
                                   "subscribed",
                                   style: TextStyle(
-                                      fontSize: ScreenUtil().setSp(32),
+                                      fontSize: ScreenUtil().setSp(25),
                                       color: const Color(0xFF1abb1d),
                                       fontWeight: FontWeight.bold),
                                 )
@@ -116,11 +116,11 @@ class _PlanListState extends State<PlanList> {
                             )
                           : Text("choose",
                               style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(32),
+                                  fontSize: ScreenUtil().setSp(25),
                                   fontWeight: FontWeight.w500,
                                   color: widget.isOn
                                       ? Colors.black
-                                      : Colors.yellow[700])),
+                                      : Colors.yellow[500])),
                     )
                   ],
                 ))),

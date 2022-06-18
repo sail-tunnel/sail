@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_vpn/flutter_vpn.dart';
+import 'package:flutter_vpn/flutter_vpn_platform_interface.dart';
+import 'package:flutter_vpn/state.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/channels/vpn_manager.dart';
@@ -88,6 +91,7 @@ class HomePageState extends State<HomePage> {
     }
 
     await vpnManager.enableVPNManager();
+    vpnManager.enableVPNManager().asStream();
 
     setState(() {
       isOn = !isOn;
@@ -143,10 +147,10 @@ class HomePageState extends State<HomePage> {
             ),
             bottomNavigationBar: ClipRRect(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(ScreenUtil().setWidth(50)),
-                    topRight: Radius.circular(ScreenUtil().setWidth(50))),
+                    topLeft: Radius.circular(ScreenUtil().setWidth(0)),
+                    topRight: Radius.circular(ScreenUtil().setWidth(0))),
                 child: BottomAppBar(
-                  notchMargin: 8,
+                  notchMargin: 4,
                   shape: const CircularNotchedRectangle(),
                   color: isOn ? AppColors.grayColor : AppColors.themeColor,
                   child: Row(
@@ -173,6 +177,7 @@ class HomePageState extends State<HomePage> {
                       ),
                       SizedBox(
                         width: ScreenUtil().setWidth(50),
+                        height: ScreenUtil().setHeight(50),
                       ),
                       IconButton(
                         icon: const Icon(
