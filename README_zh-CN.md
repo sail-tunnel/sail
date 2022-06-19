@@ -14,7 +14,8 @@
 
 ## 截图
 
-<img src="https://user-images.githubusercontent.com/13404752/110204775-dc941180-7eaf-11eb-968b-af8975294368.png" width="300" alt="Screenshot">
+<img src="https://user-images.githubusercontent.com/13404752/174476441-973c2a23-d0fe-4742-8d6c-df5b52635a97.png" width="300" alt="Screenshot">
+<img src="https://user-images.githubusercontent.com/13404752/174476492-0ffbb49e-f903-4663-9b34-79f91c1c33ed.png" width="300" alt="Screenshot">
 <img src="https://user-images.githubusercontent.com/13404752/110204822-1b29cc00-7eb0-11eb-8a95-a7c3ca7aa472.png" width="300" alt="Screenshot">
 
 ## 资源
