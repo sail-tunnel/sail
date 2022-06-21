@@ -40,17 +40,28 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          RichText(
-              text: TextSpan(
-                  text: '请选择 ',
-                  style: Theme.of(context).textTheme.subtitle2.copyWith(
-                      fontWeight: FontWeight.w700, color: _appModel.isOn ? AppColors.grayColor : Colors.white),
-                  children: [
-                TextSpan(
-                    text: '节点',
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              RichText(
+                  text: TextSpan(
+                      text: '请选择 ',
+                      style: Theme.of(context).textTheme.subtitle2.copyWith(
+                          fontWeight: FontWeight.w700, color: _appModel.isOn ? AppColors.grayColor : Colors.white),
+                      children: [
+                    TextSpan(
+                        text: '节点',
+                        style: Theme.of(context).textTheme.subtitle2.copyWith(
+                            fontWeight: FontWeight.normal, color: _appModel.isOn ? AppColors.grayColor : Colors.white))
+                  ])),
+              InkWell(
+                onTap: _serverModel.pingAll,
+                child: Text("Ping",
                     style: Theme.of(context).textTheme.subtitle2.copyWith(
-                        fontWeight: FontWeight.normal, color: _appModel.isOn ? AppColors.grayColor : Colors.white))
-              ])),
+                        fontWeight: FontWeight.normal, color: _appModel.isOn ? AppColors.grayColor : Colors.white)),
+              )
+            ],
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -132,7 +143,10 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
                                       _serverModel.serverEntityList[index].ping.inSeconds > 10
                                           ? '超时'
                                           : "${_serverModel.serverEntityList[index].ping.inMilliseconds}ms",
-                                      style: const TextStyle(color: Colors.green),
+                                      style: TextStyle(
+                                          color: _serverModel.serverEntityList[index].ping.inSeconds > 10
+                                              ? Colors.red
+                                              : Colors.green),
                                     ),
                                   )
                                 : Container(),

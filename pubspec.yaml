@@ -46,6 +46,7 @@ dependencies:
   modal_bottom_sheet: ^2.0.1
   fluttertoast: ^8.0.9
   meta: ^1.7.0
+  flutter_icmp_ping: ^3.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.1

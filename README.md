@@ -29,7 +29,7 @@ recreation of [Mohammad Reza Farahzad's design](https://dribbble.com/shots/14028
  - [ ] Dart ffi with iOS and android to control vpn.
  - [ ] Order page
  - [ ] My settings page
- - [ ] Servers list page support ping action.
+ - [x] Servers list page support ping action.
  - [ ] Refactor colors by material theme.
 
 ## Environment

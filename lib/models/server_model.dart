@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter_icmp_ping/flutter_icmp_ping.dart';
 import 'package:sail_app/constant/app_strings.dart';
 import 'package:sail_app/entity/server_entity.dart';
 import 'package:sail_app/models/base_model.dart';
 import 'package:sail_app/service/server_service.dart';
 import 'package:sail_app/utils/shared_preferences_util.dart';
 import 'package:sail_app/utils/common_util.dart';
+
+enum PingType { ping, tcp }
 
 class ServerModel extends BaseModel {
   List<ServerEntity> _serverEntityList;
@@ -40,7 +43,15 @@ class ServerModel extends BaseModel {
     return result;
   }
 
-  Future<Duration> ping(int index) {
+  void pingAll() async {
+    for (int i = 0; i < _serverEntityList.length; i++) {
+      var duration = const Duration(milliseconds: 300);
+      await Future.delayed(duration);
+      ping(i);
+    }
+  }
+
+  void ping(int index, {PingType type = PingType.tcp}) {
     ServerEntity serverEntity = _serverEntityList[index];
     String host = serverEntity.host;
     int serverPort = serverEntity.port;
@@ -48,31 +59,47 @@ class ServerModel extends BaseModel {
     print("host=$host");
     print("serverPort=$serverPort");
 
-    Stopwatch stopwatch = Stopwatch()..start();
+    switch (type) {
+      case PingType.ping:
+        try {
+          final ping = Ping(host, count: 1, timeout: 1.0, interval: 1.0, ipv6: false);
+          ping.stream.listen((event) {
+            print(event);
+            if (event.error != null) {
+              var duration = const Duration(minutes: 1);
+              _serverEntityList[index].ping = duration;
+            } else if (event.response != null) {
+              _serverEntityList[index].ping = event.response.time;
+            }
+            notifyListeners();
 
-    return Socket.connect(host, serverPort, timeout: const Duration(seconds: 3)).then((socket) {
-      socket.first.then((value) {
-        print("value=$value");
-      });
-      var duration = stopwatch.elapsed;
-      print("duration=${duration.inMilliseconds}");
-      print("socket.address=${socket.address}");
-      print("socket.port=${socket.port}");
-      _serverEntityList[index].ping = duration;
+            ping.stop();
+          });
+        } catch (e) {
+          rethrow;
+        }
+        break;
+      case PingType.tcp:
+        Stopwatch stopwatch = Stopwatch()..start();
 
-      notifyListeners();
+        Socket.connect(host, serverPort, timeout: const Duration(seconds: 3)).then((socket) {
+          socket.destroy();
+          var duration = stopwatch.elapsed;
+          _serverEntityList[index].ping = duration;
 
-      return duration;
-    }).catchError((error) {
-      var duration = stopwatch.elapsed;
-      print("duration=${duration.inMilliseconds}");
-      print("error=${error.toString()}");
-      _serverEntityList[index].ping = duration;
+          notifyListeners();
 
-      notifyListeners();
+          return duration;
+        }).catchError((error) {
+          var duration = const Duration(minutes: 1);
+          _serverEntityList[index].ping = duration;
 
-      return duration;
-    });
+          throw error;
+        });
+        break;
+      default:
+        throw Error();
+    }
   }
 
   getSelectServer() async {
