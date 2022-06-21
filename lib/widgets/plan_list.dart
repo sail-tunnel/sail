@@ -6,7 +6,6 @@ import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/entity/plan_entity.dart';
 import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/utils/navigator_util.dart';
-import 'package:sail_app/widgets/home_widget.dart';
 
 class PlanList extends StatefulWidget {
   const PlanList(

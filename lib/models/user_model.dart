@@ -10,13 +10,13 @@ class UserModel extends BaseModel {
   String _token;
   String _authData;
   UserEntity _userEntity;
-  bool _isFirst;
+  bool _isFirstOpen;
   bool _isLogin = false;
 
   String get token => _token;
   String get authData => _authData;
   UserEntity get userEntity => _userEntity;
-  bool get isFirst => _isFirst;
+  bool get isFirstOpen => _isFirstOpen;
   bool get isLogin => _isLogin;
 
   Future<void> checkHasLogin(context, Callback callback) async {
@@ -28,8 +28,8 @@ class UserModel extends BaseModel {
   }
 
   refreshData() async {
-    _isFirst =
-        await SharedPreferencesUtil.getInstance().getBool(AppStrings.isFirst) ?? true;
+    _isFirstOpen =
+        await SharedPreferencesUtil.getInstance().getBool(AppStrings.isFirstOpen) ?? true;
     String token =
         await SharedPreferencesUtil.getInstance().getString(AppStrings.token) ?? '';
     String authData =
@@ -52,13 +52,13 @@ class UserModel extends BaseModel {
     SharedPreferencesUtil sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
 
     sharedPreferencesUtil.clear();
-    setIsFirst(false);
+    setIsFirstOpen(false);
 
     refreshData();
   }
 
-  _saveIsFirst() {
-    SharedPreferencesUtil.getInstance().setBool(AppStrings.isFirst, _isFirst);
+  _saveIsFirstOpen() {
+    SharedPreferencesUtil.getInstance().setBool(AppStrings.isFirstOpen, _isFirstOpen);
   }
 
   _saveUserToken(LoginEntity loginEntity) async {
@@ -82,10 +82,10 @@ class UserModel extends BaseModel {
         .setMap(AppStrings.userInfo, _userEntity.toMap());
   }
 
-  setIsFirst(bool isFirst){
-    _isFirst = isFirst;
+  setIsFirstOpen(bool isFirstOpen){
+    _isFirstOpen = isFirstOpen;
 
-    _saveIsFirst();
+    _saveIsFirstOpen();
   }
 
   setToken(LoginEntity loginEntity) {

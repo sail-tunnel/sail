@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:sail_app/constant/app_strings.dart';
 import 'package:sail_app/entity/server_entity.dart';
 import 'package:sail_app/models/base_model.dart';
 import 'package:sail_app/service/server_service.dart';
 import 'package:sail_app/utils/shared_preferences_util.dart';
+import 'package:sail_app/utils/common_util.dart';
 
 class ServerModel extends BaseModel {
   List<ServerEntity> _serverEntityList;
@@ -36,6 +38,41 @@ class ServerModel extends BaseModel {
     result = true;
 
     return result;
+  }
+
+  Future<Duration> ping(int index) {
+    ServerEntity serverEntity = _serverEntityList[index];
+    String host = serverEntity.host;
+    int serverPort = serverEntity.port;
+
+    print("host=$host");
+    print("serverPort=$serverPort");
+
+    Stopwatch stopwatch = Stopwatch()..start();
+
+    return Socket.connect(host, serverPort, timeout: const Duration(seconds: 3)).then((socket) {
+      socket.first.then((value) {
+        print("value=$value");
+      });
+      var duration = stopwatch.elapsed;
+      print("duration=${duration.inMilliseconds}");
+      print("socket.address=${socket.address}");
+      print("socket.port=${socket.port}");
+      _serverEntityList[index].ping = duration;
+
+      notifyListeners();
+
+      return duration;
+    }).catchError((error) {
+      var duration = stopwatch.elapsed;
+      print("duration=${duration.inMilliseconds}");
+      print("error=${error.toString()}");
+      _serverEntityList[index].ping = duration;
+
+      notifyListeners();
+
+      return duration;
+    });
   }
 
   getSelectServer() async {

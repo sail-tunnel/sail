@@ -20,7 +20,7 @@ class MainPageState extends State<MainPage> {
     UserModel userViewModel = Provider.of<UserModel>(context);
 
     ScreenUtil.init(context, designSize: const Size(AppDimens.maxWidth, AppDimens.maxHeight));
-    return userViewModel.isFirst
+    return userViewModel.isFirstOpen
         ? const GuidePage()
         : const HomePage();
   }

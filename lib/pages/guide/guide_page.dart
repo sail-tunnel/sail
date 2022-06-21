@@ -21,7 +21,7 @@ class GuidePageState extends State<GuidePage> {
 
   @override
   Widget build(BuildContext context) {
-    UserModel().setIsFirst(false);
+    UserModel().setIsFirstOpen(false);
 
     return Scaffold(
         backgroundColor: Colors.white,

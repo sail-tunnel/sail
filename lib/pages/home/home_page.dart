@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/models/app_model.dart';
 import 'package:sail_app/models/server_model.dart';
-import 'package:sail_app/pages/guide/guide_page.dart';
+import 'package:sail_app/models/user_model.dart';
+import 'package:sail_app/models/user_subscribe_model.dart';
 import 'package:sail_app/pages/plan/plan_page.dart';
 import 'package:sail_app/pages/server_list.dart';
 import 'package:sail_app/widgets/home_widget.dart';
@@ -25,12 +25,26 @@ class HomePageState extends State<HomePage> {
   final PageController _pageController = PageController(initialPage: 0);
   AppModel _appModel;
   ServerModel _serverModel;
+  UserModel _userModel;
+  UserSubscribeModel _userSubscribeModel;
+  bool _isLoadingData = false;
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     super.didChangeDependencies();
+
     _appModel = Provider.of<AppModel>(context);
+    _userModel = Provider.of<UserModel>(context);
+    _userSubscribeModel = Provider.of<UserSubscribeModel>(context);
     _serverModel = Provider.of<ServerModel>(context);
+
+    if (_userModel.isLogin && !_isLoadingData) {
+      _isLoadingData = true;
+      await _userSubscribeModel.getUserSubscribe();
+      await _serverModel.getServerList(forceRefresh: true);
+      await _serverModel.getSelectServer();
+      await _serverModel.getSelectServerList();
+    }
   }
 
   @override
@@ -41,24 +55,24 @@ class HomePageState extends State<HomePage> {
             extendBody: true,
             backgroundColor: _appModel.isOn ? AppColors.yellowColor : AppColors.grayColor,
             body: SafeArea(
-              bottom: false,
+                bottom: false,
                 child: PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: _pageController,
-              children: [
-                HomeWidget(),
-                PlanPage(),
-                ServerListPage(),
-                SingleChildScrollView(
-                  child: Container(
-                    height: ScreenUtil().screenHeight,
-                    child: Center(
-                      child: Text('datadatadata'),
-                    ),
-                  ),
-                )
-              ],
-            )),
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: _pageController,
+                  children: [
+                    const HomeWidget(),
+                    const PlanPage(),
+                    const ServerListPage(),
+                    SingleChildScrollView(
+                      child: SizedBox(
+                        height: ScreenUtil().screenHeight,
+                        child: const Center(
+                          child: Text('datadatadata'),
+                        ),
+                      ),
+                    )
+                  ],
+                )),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             floatingActionButton: const PowerButton(),
             bottomNavigationBar: ClipRRect(

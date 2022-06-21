@@ -6,7 +6,6 @@ import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/models/app_model.dart';
 import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/models/user_model.dart';
-import 'package:sail_app/utils/navigator_util.dart';
 
 class PowerButton extends StatefulWidget {
   const PowerButton({Key key}) : super(key: key);

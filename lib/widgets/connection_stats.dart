@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/utils/navigator_util.dart';
-import 'package:sail_app/widgets/home_widget.dart';
 
 class ConnectionStats extends StatefulWidget {
   const ConnectionStats({Key key}) : super(key: key);

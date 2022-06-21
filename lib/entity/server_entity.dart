@@ -34,15 +34,16 @@ class ServerEntity {
   final List<String> tags;
   final String name;
   final String rate;
-  final Host host;
+  final String host;
   final int port;
   final int serverPort;
-  final Cipher cipher;
+  final String cipher;
   final int show;
   final int sort;
+  Duration ping;
   final int createdAt;
   final int updatedAt;
-  final Type type;
+  final String type;
   final String lastCheckAt;
 
   factory ServerEntity.fromJson(String str) => ServerEntity.fromMap(json.decode(str));
@@ -56,15 +57,15 @@ class ServerEntity {
     tags: List<String>.from(json["tags"].map((x) => x)),
     name: json["name"],
     rate: json["rate"],
-    host: hostValues.map[json["host"]],
+    host: json["host"],
     port: json["port"],
     serverPort: json["server_port"],
-    cipher: cipherValues.map[json["cipher"]],
+    cipher: json["cipher"],
     show: json["show"],
     sort: json["sort"],
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
-    type: typeValues.map[json["type"]],
+    type: json["type"],
     lastCheckAt: json["last_check_at"],
   );
 
@@ -75,46 +76,15 @@ class ServerEntity {
     "tags": List<dynamic>.from(tags.map((x) => x)),
     "name": name,
     "rate": rate,
-    "host": hostValues.reverse[host],
+    "host": host,
     "port": port,
     "server_port": serverPort,
-    "cipher": cipherValues.reverse[cipher],
+    "cipher": cipher,
     "show": show,
     "sort": sort,
     "created_at": createdAt,
     "updated_at": updatedAt,
-    "type": typeValues.reverse[type],
+    "type": type,
     "last_check_at": lastCheckAt,
   };
-}
-
-enum Cipher { AES_256_GCM, AES_128_GCM }
-
-final cipherValues = EnumValues({
-  "aes-128-gcm": Cipher.AES_128_GCM,
-  "aes-256-gcm": Cipher.AES_256_GCM
-});
-
-enum Host { ANYCAST_XTCPDNS_AS4812_COM }
-
-final hostValues = EnumValues({
-  "anycast.xtcpdns.as4812.com": Host.ANYCAST_XTCPDNS_AS4812_COM
-});
-
-enum Type { SHADOWSOCKS }
-
-final typeValues = EnumValues({
-  "shadowsocks": Type.SHADOWSOCKS
-});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap ??= map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }
