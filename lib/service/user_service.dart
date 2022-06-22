@@ -11,6 +11,12 @@ class UserService {
     });
   }
 
+  Future<String> getQuickLoginUrl(Map<String, dynamic> parameters) {
+    return HttpUtil.instance.post(AppUrls.getQuickLoginUrl, parameters: parameters).then((result) {
+      return result['data'];
+    });
+  }
+
   Future<bool> register(parameters) {
     return HttpUtil.instance.post(AppUrls.register, parameters: parameters).then((result) {
       return result['data'];

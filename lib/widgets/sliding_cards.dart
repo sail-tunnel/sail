@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sail_app/constant/app_urls.dart';
 import 'package:sail_app/entity/plan_entity.dart';
 import 'package:sail_app/service/plan_service.dart';
+import 'package:sail_app/service/user_service.dart';
+import 'package:sail_app/utils/navigator_util.dart';
 
 class SlidingCardsView extends StatefulWidget {
   const SlidingCardsView({Key key}) : super(key: key);
@@ -45,6 +48,7 @@ class SlidingCardsViewState extends State<SlidingCardsView> {
       child: PageView(
           controller: pageController,
           children: List.from(_planEntityList.map((e) => SlidingCard(
+              id: e.id,
               name: e.name,
               date: e.createdAt.toIso8601String(),
               onetimePrice: (e.onetimePrice ?? 0.0) / 100,
@@ -61,6 +65,7 @@ class SlidingCardsViewState extends State<SlidingCardsView> {
 }
 
 class SlidingCard extends StatelessWidget {
+  final int id;
   final String name;
   final String date;
   final String assetName;
@@ -75,6 +80,7 @@ class SlidingCard extends StatelessWidget {
 
   const SlidingCard({
     Key key,
+    @required this.id,
     @required this.name,
     @required this.date,
     @required this.assetName,
@@ -133,6 +139,7 @@ class SlidingCard extends StatelessWidget {
             const SizedBox(height: 8),
             Expanded(
               child: CardContent(
+                id: id,
                 name: name,
                 date: date,
                 offset: gauss,
@@ -147,13 +154,14 @@ class SlidingCard extends StatelessWidget {
 }
 
 class CardContent extends StatelessWidget {
+  final int id;
   final String name;
   final String date;
   final double offset;
   final double lowestPrice;
 
   const CardContent(
-      {Key key, @required this.name, @required this.date, @required this.offset, @required this.lowestPrice})
+      {Key key, @required this.id, @required this.name, @required this.date, @required this.offset, @required this.lowestPrice})
       : super(key: key);
 
   @override
@@ -188,7 +196,11 @@ class CardContent extends StatelessWidget {
                       borderRadius: BorderRadius.circular(32),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    UserService().getQuickLoginUrl({'redirect': "/plan/$id"}).then((value) {
+                      NavigatorUtil.goWebView(context, "配置订阅", value);
+                    });
+                  },
                   child: Transform.translate(
                     offset: Offset(24 * offset, 0),
                     child: Text('购买', style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(36))),
