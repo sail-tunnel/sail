@@ -23,6 +23,10 @@
 - [flat flags](https://github.com/wobblecode/flat-flags)
 - [flutter icons](https://pub.dev/packages/flutter_icons)
 
+## 联络我
+
+[Telegram](https://t.me/losgif)
+
 ## 待办事项：
 - [ ] 支持安卓设备。
 - [ ] Dart ffi 与 iOS 和 android 来控制 vpn。

@@ -23,6 +23,9 @@ recreation of [Mohammad Reza Farahzad's design](https://dribbble.com/shots/14028
 - [flat flags](https://github.com/wobblecode/flat-flags)
 - [flutter icons](https://pub.dev/packages/flutter_icons)
 
+## Contact me
+
+[Telegram](https://t.me/losgif)
 
 ## TODOS:
  - [ ] Support android devices.
