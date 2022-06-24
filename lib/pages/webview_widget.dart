@@ -13,6 +13,22 @@ class WebViewWidget extends StatefulWidget {
 }
 
 class WebViewWidgetState extends State<WebViewWidget> {
+  WebViewController controller;
+
+  final String _javaScript = '''
+  const styles = `
+  #page-header {
+    display: none;
+  }
+  #main-container {
+    padding-top: 0 !important;
+  }
+  `
+  const styleSheet = document.createElement("style")
+  styleSheet.innerText = styles
+  document.head.appendChild(styleSheet)
+  ''';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +39,11 @@ class WebViewWidgetState extends State<WebViewWidget> {
       body: WebView(
         initialUrl: widget.url.isEmpty ? AppStrings.appName : widget.url,
         javascriptMode: JavascriptMode.unrestricted,
+        onWebViewCreated: (controller) => this.controller = controller,
+        onPageFinished: (url) {
+          print('url=$url');
+          controller.runJavascript(_javaScript);
+        },
       ),
     );
   }

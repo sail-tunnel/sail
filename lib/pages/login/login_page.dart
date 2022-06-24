@@ -22,7 +22,11 @@ class LoginPageState extends State<LoginPage> {
 
   static String _emailValidator(value) {
     if (value.isEmpty || !RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(value)) {
+<<<<<<< HEAD
       return 'Email error!';
+=======
+      return '请输入正确邮箱!';
+>>>>>>> 380609e44586b1769df0bf5b9eb5acd4e8f5047e
     }
     return null;
   }
@@ -49,7 +53,7 @@ class LoginPageState extends State<LoginPage> {
     return result;
   }
 
-  Future<String> _register(LoginData data) async {
+  Future<String> _register(SignupData data) async {
     String result;
 
     try {
@@ -79,6 +83,7 @@ class LoginPageState extends State<LoginPage> {
       onLogin: _login,
       onSignup: _register,
       messages: LoginMessages(
+<<<<<<< HEAD
           usernameHint: 'Mail',
           passwordHint: 'password',
           confirmPasswordHint: 'Confirm Password',
@@ -91,11 +96,25 @@ class LoginPageState extends State<LoginPage> {
           recoverPasswordDescription: 'The system will send a reset password email to your mailbox, please pay attention to check',
           recoverPasswordSuccess: 'Sent successfully',
           goBackButton: 'return'),
+=======
+          userHint: '邮箱',
+          passwordHint: '密码',
+          confirmPasswordHint: '确认密码',
+          confirmPasswordError: '两次密码不匹配',
+          forgotPasswordButton: '忘记密码？',
+          loginButton: '登陆',
+          signupButton: '注册',
+          recoverPasswordIntro: '重置密码',
+          recoverPasswordButton: '确定',
+          recoverPasswordDescription: '系统将向您的邮箱发送一封重置密码邮件，请注意查收',
+          recoverPasswordSuccess: '发送成功',
+          goBackButton: '返回'),
+>>>>>>> 380609e44586b1769df0bf5b9eb5acd4e8f5047e
       onSubmitAnimationCompleted: () {
         NavigatorUtil.goHomePage(context);
       },
       onRecoverPassword: _recoverPassword,
-      emailValidator: _emailValidator,
+      userValidator: _emailValidator,
       passwordValidator: _passwordValidator,
     );
   }

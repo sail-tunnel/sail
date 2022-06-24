@@ -4,15 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/models/server_model.dart';
-import 'package:sail_app/pages/home/home_page.dart';
+import 'package:sail_app/models/user_model.dart';
+import 'package:sail_app/utils/navigator_util.dart';
 
 class SelectLocation extends StatefulWidget {
-  const SelectLocation(
-    this.parent, {
+  const SelectLocation({
     Key key,
   }) : super(key: key);
-
-  final HomePageState parent;
 
   @override
   SelectLocationState createState() => SelectLocationState();
@@ -20,6 +18,13 @@ class SelectLocation extends StatefulWidget {
 
 class SelectLocationState extends State<SelectLocation> {
   ServerModel _serverModel;
+  UserModel _userModel;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _userModel = Provider.of<UserModel>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +36,7 @@ class SelectLocationState extends State<SelectLocation> {
         borderRadius: BorderRadius.circular(20),
         color: Colors.yellow[600],
         child: InkWell(
-          onTap: () {
-            widget.parent.checkHasLogin(() => widget.parent.selectServerNode());
-          },
+          onTap: () => () => _userModel.checkHasLogin(context, () => NavigatorUtil.goServerList(context)),
           splashColor: Colors.grey,
           borderRadius: BorderRadius.circular(20),
           child: Container(

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/entity/user_subscribe_entity.dart';
-import 'package:sail_app/pages/home/home_page.dart';
 import 'package:sail_app/utils/transfer_util.dart';
 
 class MySubscribe extends StatefulWidget {
@@ -11,13 +10,11 @@ class MySubscribe extends StatefulWidget {
       {Key key,
       @required this.isLogin,
       @required this.isOn,
-      @required this.parent,
       @required this.userSubscribeEntity})
       : super(key: key);
 
   final bool isLogin;
   final bool isOn;
-  final HomePageState parent;
   final UserSubscribeEntity userSubscribeEntity;
 
   @override

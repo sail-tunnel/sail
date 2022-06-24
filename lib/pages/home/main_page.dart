@@ -19,11 +19,16 @@ class MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     UserModel userViewModel = Provider.of<UserModel>(context);
 
+<<<<<<< HEAD
     ScreenUtil.init(context,
         width: AppDimens.maxWidth,
         height: AppDimens.maxHeight,
         allowFontScaling: false);
     return userViewModel.isFirst
+=======
+    ScreenUtil.init(context, designSize: const Size(AppDimens.maxWidth, AppDimens.maxHeight));
+    return userViewModel.isFirstOpen
+>>>>>>> 380609e44586b1769df0bf5b9eb5acd4e8f5047e
         ? const GuidePage()
         : const HomePage();
   }

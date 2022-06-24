@@ -37,16 +37,24 @@ class ServerEntity {
   final List<String> tags;
   final String name;
   final String rate;
+<<<<<<< HEAD
   final Host host;
 
   final int port;
   final int serverPort; // available in all protocols
   final Cipher cipher;
+=======
+  final String host;
+  final int port;
+  final int serverPort;
+  final String cipher;
+>>>>>>> 380609e44586b1769df0bf5b9eb5acd4e8f5047e
   final int show;
   final int sort;
+  Duration ping;
   final int createdAt;
   final int updatedAt;
-  final Type type;
+  final String type;
   final String lastCheckAt;
 
   final String uuid;
@@ -64,15 +72,22 @@ class ServerEntity {
     tags: List<String>.from(json["tags"].map((x) => x)),
     name: json["name"],
     rate: json["rate"],
+<<<<<<< HEAD
     host: hostValues.map[json["host"]], // host address
     port: json["port"], // port available
     serverPort: json["server_port"], // server port available in all
     cipher: cipherValues.map[json["cipher"]],
+=======
+    host: json["host"],
+    port: json["port"],
+    serverPort: json["server_port"],
+    cipher: json["cipher"],
+>>>>>>> 380609e44586b1769df0bf5b9eb5acd4e8f5047e
     show: json["show"],
     sort: json["sort"],
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
-    type: typeValues.map[json["type"]],
+    type: json["type"],
     lastCheckAt: json["last_check_at"],
 
     // more server entity
@@ -88,15 +103,15 @@ class ServerEntity {
     "tags": List<dynamic>.from(tags.map((x) => x)),
     "name": name,
     "rate": rate,
-    "host": hostValues.reverse[host],
+    "host": host,
     "port": port,
     "server_port": serverPort,
-    "cipher": cipherValues.reverse[cipher],
+    "cipher": cipher,
     "show": show,
     "sort": sort,
     "created_at": createdAt,
     "updated_at": updatedAt,
-    "type": typeValues.reverse[type],
+    "type": type,
     "last_check_at": lastCheckAt,
 
     "uuid" : "",
@@ -104,6 +119,7 @@ class ServerEntity {
     "flow" : ""
   };
 }
+<<<<<<< HEAD
 
 enum Cipher { AES_256_GCM, AES_128_GCM }
 
@@ -139,3 +155,5 @@ class EnumValues<T> {
     return reverseMap;
   }
 }
+=======
+>>>>>>> 380609e44586b1769df0bf5b9eb5acd4e8f5047e

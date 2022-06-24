@@ -1,4 +1,4 @@
-import 'package:sail_app/pages/plan/sliding_cards.dart';
+import 'package:sail_app/widgets/sliding_cards.dart';
 import 'package:flutter/material.dart';
 
 class PlanPage extends StatelessWidget {
@@ -6,6 +6,7 @@ class PlanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return Scaffold(
       appBar: AppBar(
         title: const Text('Subscription plan'),
@@ -24,6 +25,14 @@ class PlanPage extends StatelessWidget {
           )
         ],
       ),
+=======
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const <Widget>[
+        SlidingCardsView(),
+      ],
+>>>>>>> 380609e44586b1769df0bf5b9eb5acd4e8f5047e
     );
   }
 }

@@ -1,29 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+<<<<<<< HEAD
 import 'package:flutter_vpn/flutter_vpn.dart';
 import 'package:flutter_vpn/flutter_vpn_platform_interface.dart';
 import 'package:flutter_vpn/state.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+=======
+>>>>>>> 380609e44586b1769df0bf5b9eb5acd4e8f5047e
 import 'package:provider/provider.dart';
-import 'package:sail_app/channels/vpn_manager.dart';
 import 'package:sail_app/constant/app_colors.dart';
-import 'package:sail_app/entity/plan_entity.dart';
+import 'package:sail_app/models/app_model.dart';
 import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/models/user_subscribe_model.dart';
-import 'package:sail_app/pages/guide/guide_page.dart';
 import 'package:sail_app/pages/plan/plan_page.dart';
 import 'package:sail_app/pages/server_list.dart';
-import 'package:sail_app/service/plan_service.dart';
-import 'package:sail_app/utils/common_util.dart';
-import 'package:sail_app/utils/navigator_util.dart';
-import 'package:sail_app/widgets/connection_stats.dart';
-import 'package:sail_app/widgets/logo_bar.dart';
-import 'package:sail_app/widgets/my_subscribe.dart';
-import 'package:sail_app/widgets/plan_list.dart';
+import 'package:sail_app/widgets/home_widget.dart';
 import 'package:sail_app/widgets/power_btn.dart';
-import 'package:sail_app/widgets/select_location.dart';
 
 typedef Callback = Future<void> Function();
 
@@ -36,35 +30,17 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   final PageController _pageController = PageController(initialPage: 0);
+  AppModel _appModel;
+  ServerModel _serverModel;
   UserModel _userModel;
   UserSubscribeModel _userSubscribeModel;
-  ServerModel _serverModel;
-  List<PlanEntity> _planEntityList = [];
-  bool isOn;
-  int lastConnectedIndex = 1;
   bool _isLoadingData = false;
-  VpnManager vpnManager = VpnManager();
-
-  @override
-  void initState() {
-    super.initState();
-    isOn = false;
-
-    PlanService().plan().then((planEntityList) {
-      setState(() {
-        _planEntityList = planEntityList;
-      });
-    });
-  }
 
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
 
-    _onRefresh();
-  }
-
-  Future _onRefresh() async {
+    _appModel = Provider.of<AppModel>(context);
     _userModel = Provider.of<UserModel>(context);
     _userSubscribeModel = Provider.of<UserSubscribeModel>(context);
     _serverModel = Provider.of<ServerModel>(context);
@@ -72,12 +48,13 @@ class HomePageState extends State<HomePage> {
     if (_userModel.isLogin && !_isLoadingData) {
       _isLoadingData = true;
       await _userSubscribeModel.getUserSubscribe();
-      await _serverModel.getServerList();
+      await _serverModel.getServerList(forceRefresh: true);
       await _serverModel.getSelectServer();
       await _serverModel.getSelectServerList();
     }
   }
 
+<<<<<<< HEAD
   Future<void> pressConnectBtn() async {
     if (_serverModel.selectServerEntity == null) {
       Fluttertoast.showToast(
@@ -119,32 +96,36 @@ class HomePageState extends State<HomePage> {
     }
   }
 
+=======
+>>>>>>> 380609e44586b1769df0bf5b9eb5acd4e8f5047e
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-        value: isOn ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
+        value: _appModel.isOn ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
         child: Scaffold(
-            backgroundColor: isOn ? AppColors.yellowColor : AppColors.grayColor,
+            extendBody: true,
+            backgroundColor: _appModel.isOn ? AppColors.yellowColor : AppColors.grayColor,
             body: SafeArea(
+                bottom: false,
                 child: PageView(
+                  physics: const NeverScrollableScrollPhysics(),
                   controller: _pageController,
-              children: [
-                _buildHomePage(),
-                const PlanPage(),
-                const ServerListPage(),
-                const GuidePage()
-              ],
-            )),
+                  children: [
+                    const HomeWidget(),
+                    const PlanPage(),
+                    const ServerListPage(),
+                    SingleChildScrollView(
+                      child: SizedBox(
+                        height: ScreenUtil().screenHeight,
+                        child: const Center(
+                          child: Text('datadatadata'),
+                        ),
+                      ),
+                    )
+                  ],
+                )),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {},
-              tooltip: 'Increment',
-              elevation: 2.0,
-              child: const Icon(
-                Icons.power_settings_new,
-                color: Colors.white,
-              ),
-            ),
+            floatingActionButton: const PowerButton(),
             bottomNavigationBar: ClipRRect(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(ScreenUtil().setWidth(0)),
@@ -152,7 +133,7 @@ class HomePageState extends State<HomePage> {
                 child: BottomAppBar(
                   notchMargin: 4,
                   shape: const CircularNotchedRectangle(),
-                  color: isOn ? AppColors.grayColor : AppColors.themeColor,
+                  color: _appModel.isOn ? AppColors.grayColor : AppColors.themeColor,
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -163,7 +144,9 @@ class HomePageState extends State<HomePage> {
                           color: Colors.white,
                         ),
                         onPressed: () {
-                          _pageController.jumpToPage(0);
+                          setState(() {
+                            _pageController.jumpToPage(0);
+                          });
                         },
                       ),
                       IconButton(
@@ -172,7 +155,9 @@ class HomePageState extends State<HomePage> {
                           color: Colors.white,
                         ),
                         onPressed: () {
-                          _pageController.jumpToPage(1);
+                          setState(() {
+                            _pageController.jumpToPage(1);
+                          });
                         },
                       ),
                       SizedBox(
@@ -185,7 +170,9 @@ class HomePageState extends State<HomePage> {
                           color: Colors.white,
                         ),
                         onPressed: () {
-                          _pageController.jumpToPage(2);
+                          setState(() {
+                            _pageController.jumpToPage(2);
+                          });
                         },
                       ),
                       IconButton(
@@ -194,63 +181,13 @@ class HomePageState extends State<HomePage> {
                           color: Colors.white,
                         ),
                         onPressed: () {
-                          _pageController.jumpToPage(3);
+                          setState(() {
+                            _pageController.jumpToPage(3);
+                          });
                         },
                       )
                     ],
                   ),
                 ))));
-  }
-
-  _buildHomePage() {
-    return SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Container(
-            constraints: BoxConstraints(minHeight: ScreenUtil().setHeight(1920)),
-            child: Column(
-              children: [
-                // Logo bar
-                Padding(
-                  padding: EdgeInsets.only(left: ScreenUtil().setWidth(75), right: ScreenUtil().setWidth(75)),
-                  child: LogoBar(isOn: isOn),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.only(top: ScreenUtil().setWidth(30)),
-                  child: MySubscribe(
-                    isLogin: _userModel.isLogin,
-                    isOn: isOn,
-                    parent: this,
-                    userSubscribeEntity: _userSubscribeModel.userSubscribeEntity,
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(30)),
-                  child: PlanList(
-                    isOn: isOn,
-                    boughtPlanId: _userSubscribeModel?.userSubscribeEntity?.planId ?? 0,
-                    parent: this,
-                    plans: _planEntityList,
-                  ),
-                ),
-
-                Container(
-                    padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(75)),
-                    child: Stack(alignment: Alignment.center, children: [
-                      Image.asset(
-                        "assets/map.png",
-                        scale: 3,
-                        color: isOn ? const Color(0x15000000) : AppColors.darkSurfaceColor,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [PowerButton(this)],
-                      )
-                    ])),
-
-                isOn ? ConnectionStats(this) : SelectLocation(this),
-              ],
-            )));
   }
 }
