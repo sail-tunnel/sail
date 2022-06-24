@@ -10,7 +10,6 @@ class VpnManager {
     const platform = MethodChannel("com.losgif.sail/vpn_manager");
     bool result = false;
     try {
-      FlutterVpn.prepare();
       return result = await platform.invokeMethod("enableVPNManager");
     } on PlatformException catch (e) {
       print(e.toString());
