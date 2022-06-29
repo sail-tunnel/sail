@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_urls.dart';
 import 'package:sail_app/entity/plan_entity.dart';
+import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/service/plan_service.dart';
 import 'package:sail_app/service/user_service.dart';
 import 'package:sail_app/utils/navigator_util.dart';
@@ -153,7 +155,7 @@ class SlidingCard extends StatelessWidget {
   }
 }
 
-class CardContent extends StatelessWidget {
+class CardContent extends StatefulWidget {
   final int id;
   final String name;
   final String date;
@@ -165,6 +167,19 @@ class CardContent extends StatelessWidget {
       : super(key: key);
 
   @override
+  CardContentState createState() => CardContentState();
+}
+
+class CardContentState extends State<CardContent> {
+  UserModel _userModel;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _userModel = Provider.of<UserModel>(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -172,14 +187,14 @@ class CardContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Transform.translate(
-            offset: Offset(8 * offset, 0),
-            child: Text(name, style: const TextStyle(fontSize: 20)),
+            offset: Offset(8 * widget.offset, 0),
+            child: Text(widget.name, style: const TextStyle(fontSize: 20)),
           ),
           const SizedBox(height: 8),
           Transform.translate(
-            offset: Offset(32 * offset, 0),
+            offset: Offset(32 * widget.offset, 0),
             child: Text(
-              date,
+              widget.date,
               style: const TextStyle(color: Colors.grey),
             ),
           ),
@@ -187,7 +202,7 @@ class CardContent extends StatelessWidget {
           Row(
             children: <Widget>[
               Transform.translate(
-                offset: Offset(48 * offset, 0),
+                offset: Offset(48 * widget.offset, 0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.yellow,
@@ -196,22 +211,21 @@ class CardContent extends StatelessWidget {
                       borderRadius: BorderRadius.circular(32),
                     ),
                   ),
-                  onPressed: () {
-                    UserService().getQuickLoginUrl({'redirect': "/plan/$id"}).then((value) {
-                      NavigatorUtil.goWebView(context, "配置订阅", value);
-                    });
-                  },
+                  onPressed: () => _userModel.checkHasLogin(context, () =>
+                      UserService().getQuickLoginUrl({'redirect': "/plan/${widget.id}"}).then((value) {
+                        NavigatorUtil.goWebView(context, "配置订阅", value);
+                      })),
                   child: Transform.translate(
-                    offset: Offset(24 * offset, 0),
+                    offset: Offset(24 * widget.offset, 0),
                     child: Text('购买', style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(36))),
                   ),
                 ),
               ),
               const Spacer(),
               Transform.translate(
-                offset: Offset(32 * offset, 0),
+                offset: Offset(32 * widget.offset, 0),
                 child: Text(
-                  '¥ $lowestPrice 起',
+                  '¥ ${widget.lowestPrice} 起',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
