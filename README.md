@@ -2,6 +2,13 @@ English | [简体中文](./README_zh-CN.md)
 
 # Sail
 
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white)
+![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white)
+![Swift](https://img.shields.io/badge/Swift-FA7343?style=for-the-badge&logo=swift&logoColor=white)  
+![iOS](https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white) 
+
 [![Flutter](https://github.com/losgif/sail/actions/workflows/flutter.yml/badge.svg)](https://github.com/losgif/sail/actions/workflows/flutter.yml)
 
 A flutter application for [V2Board](https://github.com/v2board/v2board) ~~and [SSPanel-Uim](https://github.com/Anankke/SSPanel-Uim)~~
@@ -24,8 +31,8 @@ recreation of [Mohammad Reza Farahzad's design](https://dribbble.com/shots/14028
 - [flutter icons](https://pub.dev/packages/flutter_icons)
 
 ## Contact me
-
-[Telegram](https://t.me/losgif)
+[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/losgif)
+[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:losgif@gmail.com)
 
 ## TODOS:
  - [ ] Support android devices.
