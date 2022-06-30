@@ -36,7 +36,7 @@ class SelectLocationState extends State<SelectLocation> {
         borderRadius: BorderRadius.circular(20),
         color: Colors.yellow[600],
         child: InkWell(
-          onTap: () => () => _userModel.checkHasLogin(context, () => NavigatorUtil.goServerList(context)),
+          onTap: () => _userModel.checkHasLogin(context, () => NavigatorUtil.goServerList(context)),
           splashColor: Colors.grey,
           borderRadius: BorderRadius.circular(20),
           child: Container(
