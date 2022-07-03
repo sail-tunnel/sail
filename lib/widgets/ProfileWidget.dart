@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
   const ProfileWidget({Key key, @required this.userName, @required this.avatar, @required this.onTap})
-      : assert(userName != null),
-        assert(avatar != null),
-        assert(onTap != null),
-        super(key: key);
+      : super(key: key);
 
   final String avatar;
   final String userName;
@@ -18,34 +15,39 @@ class ProfileWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: <Widget>[
-              ClipOval(child: Image(image: NetworkImage(avatar), width: 40, height: 40)),
-              Padding(
-                padding: const EdgeInsets.only(left: 12),
-                child: Text(
+          avatar != null
+              ? Row(
+                  children: <Widget>[
+                    ClipOval(child: Image(image: NetworkImage(avatar), width: 40, height: 40)),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12),
+                      child: Text(
+                        userName,
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
+                      ),
+                    )
+                  ],
+                )
+              : Text(
                   userName,
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
                 ),
-              )
-            ],
-          ),
-          Material(
-            color: const Color(0x66000000),
-            borderRadius: BorderRadius.circular(30),
-            child: InkWell(
-              onTap: onTap,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 5, horizontal: 10),
-                child: const Text(
-                  '退出',
-                  style: TextStyle(
-                      fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500),
-                ),
-              ),
-            ),
-          )
+          avatar != null
+              ? Material(
+                  color: const Color(0x66000000),
+                  borderRadius: BorderRadius.circular(30),
+                  child: InkWell(
+                    onTap: onTap,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      child: const Text(
+                        '退出',
+                        style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                )
+              : Container(),
         ],
       ),
     );

@@ -42,7 +42,7 @@ class MyProfileState extends State<MyProfile> {
             children: <Widget>[
               ProfileWidget(
                 avatar: _userModel.userEntity?.avatarUrl,
-                userName: _userModel?.userEntity?.email ?? "Username",
+                userName: _userModel?.userEntity?.email ?? "欢迎光临",
                 onTap: onLogoutTap,
               ),
               Container(
