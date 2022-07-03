@@ -3,14 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
+import 'package:sail_app/constant/app_strings.dart';
 import 'package:sail_app/models/app_model.dart';
 import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/models/user_subscribe_model.dart';
+import 'package:sail_app/pages/my_profile.dart';
 import 'package:sail_app/pages/plan/plan_page.dart';
 import 'package:sail_app/pages/server_list.dart';
 import 'package:sail_app/widgets/home_widget.dart';
 import 'package:sail_app/widgets/power_btn.dart';
+import 'package:sail_app/widgets/sail_app_bar.dart';
 
 typedef Callback = Future<void> Function();
 
@@ -28,6 +31,14 @@ class HomePageState extends State<HomePage> {
   UserModel _userModel;
   UserSubscribeModel _userSubscribeModel;
   bool _isLoadingData = false;
+  String _appTitle = 'Sail';
+
+  final Map _tabMap = {
+    0: AppStrings.appName,
+    1: '套餐',
+    2: '节点',
+    3: '我的',
+  };
 
   @override
   void didChangeDependencies() async {
@@ -47,11 +58,22 @@ class HomePageState extends State<HomePage> {
     }
   }
 
+  void jumpToPage(int page) {
+    setState(() {
+      _pageController.jumpToPage(page);
+      _appTitle = _tabMap[page];
+      print("_appTitle: $_appTitle");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: _appModel.isOn ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
         child: Scaffold(
+            appBar: SailAppBar(
+              appTitle: _appTitle,
+            ),
             extendBody: true,
             backgroundColor: _appModel.isOn ? AppColors.yellowColor : AppColors.grayColor,
             body: SafeArea(
@@ -59,19 +81,7 @@ class HomePageState extends State<HomePage> {
                 child: PageView(
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _pageController,
-                  children: [
-                    const HomeWidget(),
-                    const PlanPage(),
-                    const ServerListPage(),
-                    SingleChildScrollView(
-                      child: SizedBox(
-                        height: ScreenUtil().screenHeight,
-                        child: const Center(
-                          child: Text('datadatadata'),
-                        ),
-                      ),
-                    )
-                  ],
+                  children: const [HomeWidget(), PlanPage(), ServerListPage(), MyProfile()],
                 )),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             floatingActionButton: const PowerButton(),
@@ -92,22 +102,14 @@ class HomePageState extends State<HomePage> {
                           Icons.home_rounded,
                           color: Colors.white,
                         ),
-                        onPressed: () {
-                          setState(() {
-                            _pageController.jumpToPage(0);
-                          });
-                        },
+                        onPressed: () => jumpToPage(0),
                       ),
                       IconButton(
                         icon: const Icon(
                           Icons.wallet,
                           color: Colors.white,
                         ),
-                        onPressed: () {
-                          setState(() {
-                            _pageController.jumpToPage(1);
-                          });
-                        },
+                        onPressed: () => jumpToPage(1),
                       ),
                       SizedBox(
                         width: ScreenUtil().setWidth(50),
@@ -117,22 +119,14 @@ class HomePageState extends State<HomePage> {
                           Icons.print,
                           color: Colors.white,
                         ),
-                        onPressed: () {
-                          setState(() {
-                            _pageController.jumpToPage(2);
-                          });
-                        },
+                        onPressed: () => jumpToPage(2),
                       ),
                       IconButton(
                         icon: const Icon(
                           Icons.person,
                           color: Colors.white,
                         ),
-                        onPressed: () {
-                          setState(() {
-                            _pageController.jumpToPage(3);
-                          });
-                        },
+                        onPressed: () => jumpToPage(3),
                       )
                     ],
                   ),
