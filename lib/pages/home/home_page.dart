@@ -116,7 +116,7 @@ class HomePageState extends State<HomePage> {
                       ),
                       IconButton(
                         icon: const Icon(
-                          Icons.print,
+                          Icons.cloud_rounded,
                           color: Colors.white,
                         ),
                         onPressed: () => jumpToPage(2),
