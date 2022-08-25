@@ -50,6 +50,7 @@ dependencies:
 
 dev_dependencies:
   flutter_lints: ^2.0.1
+  intl_generator: ^0.3.0
   flutter_test:
     sdk: flutter
 
