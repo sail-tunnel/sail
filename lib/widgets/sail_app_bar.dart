@@ -4,9 +4,8 @@ import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/models/app_model.dart';
 
 class SailAppBar extends AppBar {
-  SailAppBar({Key key, @required this.appTitle})
-      : assert(appTitle != null),
-        super(key: key);
+  SailAppBar({Key? key, required this.appTitle})
+      : super(key: key);
 
   final String appTitle;
 
@@ -15,7 +14,7 @@ class SailAppBar extends AppBar {
 }
 
 class SailAppBarState extends State<SailAppBar> {
-  AppModel _appModel;
+  late AppModel _appModel;
 
   @override
   void didChangeDependencies() {

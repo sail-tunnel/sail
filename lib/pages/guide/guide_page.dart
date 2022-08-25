@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 class GuidePage extends StatefulWidget {
-  const GuidePage({Key key}) : super(key: key);
+  const GuidePage({Key? key}) : super(key: key);
 
   @override
   GuidePageState createState() => GuidePageState();

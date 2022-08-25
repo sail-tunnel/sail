@@ -7,14 +7,14 @@ import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/utils/navigator_util.dart';
 
 class ConnectionStats extends StatefulWidget {
-  const ConnectionStats({Key key}) : super(key: key);
+  const ConnectionStats({Key? key}) : super(key: key);
 
   @override
   ConnectionStatsState createState() => ConnectionStatsState();
 }
 
 class ConnectionStatsState extends State<ConnectionStats> {
-  UserModel _userModel;
+  late UserModel _userModel;
 
   @override
   void didChangeDependencies() {

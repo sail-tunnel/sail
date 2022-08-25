@@ -7,16 +7,16 @@ import 'dart:convert';
 
 class UserSubscribeEntity {
   UserSubscribeEntity({
-    @required this.planId,
-    @required this.token,
-    @required this.expiredAt,
-    @required this.u,
-    @required this.d,
-    @required this.transferEnable,
-    @required this.email,
-    @required this.plan,
-    @required this.subscribeUrl,
-    @required this.resetDay,
+    required this.planId,
+    required this.token,
+    required this.expiredAt,
+    required this.u,
+    required this.d,
+    required this.transferEnable,
+    required this.email,
+    required this.plan,
+    required this.subscribeUrl,
+    required this.resetDay,
   });
 
   final int planId;
@@ -63,25 +63,25 @@ class UserSubscribeEntity {
 
 class Plan {
   Plan({
-    @required this.id,
-    @required this.groupId,
-    @required this.transferEnable,
-    @required this.name,
-    @required this.show,
-    @required this.sort,
-    @required this.renew,
-    @required this.content,
-    @required this.monthPrice,
-    @required this.quarterPrice,
-    @required this.halfYearPrice,
-    @required this.yearPrice,
+    required this.id,
+    required this.groupId,
+    required this.transferEnable,
+    required this.name,
+    required this.show,
+    required this.sort,
+    required this.renew,
+    required this.content,
+    required this.monthPrice,
+    required this.quarterPrice,
+    required this.halfYearPrice,
+    required this.yearPrice,
     @required this.twoYearPrice,
     @required this.threeYearPrice,
     @required this.onetimePrice,
-    @required this.resetPrice,
-    @required this.resetTrafficMethod,
-    @required this.createdAt,
-    @required this.updatedAt,
+    required this.resetPrice,
+    required this.resetTrafficMethod,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   final int id;

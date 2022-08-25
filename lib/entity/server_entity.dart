@@ -2,7 +2,6 @@
 //
 //     final serverEntity = serverEntityFromMap(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 List<ServerEntity> serverEntityFromList(List<dynamic> data) =>
@@ -10,22 +9,22 @@ List<ServerEntity> serverEntityFromList(List<dynamic> data) =>
 
 class ServerEntity {
   ServerEntity({
-    @required this.id,
-    @required this.groupId,
-    @required this.parentId,
-    @required this.tags,
-    @required this.name,
-    @required this.rate,
-    @required this.host,
-    @required this.port,
-    @required this.serverPort,
-    @required this.cipher,
-    @required this.show,
-    @required this.sort,
-    @required this.createdAt,
-    @required this.updatedAt,
-    @required this.type,
-    @required this.lastCheckAt,
+    required this.id,
+    required this.groupId,
+    required this.parentId,
+    required this.tags,
+    required this.name,
+    required this.rate,
+    required this.host,
+    required this.port,
+    required this.serverPort,
+    required this.cipher,
+    required this.show,
+    required this.sort,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.type,
+    required this.lastCheckAt,
   });
 
   final int id;
@@ -40,7 +39,7 @@ class ServerEntity {
   final String cipher;
   final int show;
   final int sort;
-  Duration ping;
+  Duration? ping;
   final int createdAt;
   final int updatedAt;
   final String type;

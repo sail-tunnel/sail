@@ -2,13 +2,12 @@
 //
 //     final loginEntity = loginEntityFromMap(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 class LoginEntity {
   LoginEntity({
-    @required this.token,
-    @required this.authData,
+    required this.token,
+    required this.authData,
   });
 
   final String token;

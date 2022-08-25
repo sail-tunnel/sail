@@ -9,7 +9,7 @@ import 'package:sail_app/utils/navigator_util.dart';
 
 class SelectLocation extends StatefulWidget {
   const SelectLocation({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -17,8 +17,8 @@ class SelectLocation extends StatefulWidget {
 }
 
 class SelectLocationState extends State<SelectLocation> {
-  ServerModel _serverModel;
-  UserModel _userModel;
+  late ServerModel _serverModel;
+  late UserModel _userModel;
 
   @override
   void didChangeDependencies() {

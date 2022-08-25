@@ -30,7 +30,7 @@ void main() async {
 }
 
 class SailApp extends StatelessWidget {
-  SailApp({Key key}) : super(key: key) {
+  SailApp({Key? key}) : super(key: key) {
     final router = FluroRouter();
     Routers.configureRoutes(router);
     Application.router = router;
@@ -47,7 +47,7 @@ class SailApp extends StatelessWidget {
       title: AppStrings.appName,
       navigatorKey: Application.navigatorKey,
       debugShowCheckedModeBanner: false,
-      onGenerateRoute: Application.router.generator,
+      onGenerateRoute: Application.router?.generator,
       localizationsDelegates: const [
         // 本地化的代理类
         GlobalMaterialLocalizations.delegate,

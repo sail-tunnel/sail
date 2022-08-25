@@ -3,17 +3,17 @@ import 'package:sail_app/constant/app_strings.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewWidget extends StatefulWidget {
-  final String url;
-  final String name;
+  final String? url;
+  final String? name;
 
-  const WebViewWidget(this.url, this.name, {Key key}) : super(key: key);
+  const WebViewWidget({Key? key, this.url, this.name}) : super(key: key);
 
   @override
   WebViewWidgetState createState() => WebViewWidgetState();
 }
 
 class WebViewWidgetState extends State<WebViewWidget> {
-  WebViewController controller;
+  late WebViewController controller;
 
   final String _javaScript = '''
   const styles = `
@@ -33,11 +33,11 @@ class WebViewWidgetState extends State<WebViewWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.name),
+        title: Text(widget.name!),
         centerTitle: true,
       ),
       body: WebView(
-        initialUrl: widget.url.isEmpty ? AppStrings.appName : widget.url,
+        initialUrl: widget.url?.isEmpty == true ? AppStrings.appName : widget.url,
         javascriptMode: JavascriptMode.unrestricted,
         onWebViewCreated: (controller) => this.controller = controller,
         onPageFinished: (url) {

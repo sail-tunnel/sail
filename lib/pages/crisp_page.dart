@@ -3,14 +3,14 @@ import 'package:flutter/widgets.dart';
 import 'package:sail_app/constant/app_strings.dart';
 
 class CrispPage extends StatefulWidget {
-  const CrispPage({Key key}) : super(key: key);
+  const CrispPage({Key? key}) : super(key: key);
 
   @override
   CrispPageState createState() => CrispPageState();
 }
 
 class CrispPageState extends State<CrispPage> {
-  CrispMain crispMain;
+  late CrispMain crispMain;
 
   @override
   void initState() {

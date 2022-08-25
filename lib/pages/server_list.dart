@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:sail_app/utils/common_util.dart';
 
 class ServerListPage extends StatefulWidget {
-  const ServerListPage({Key key}) : super(key: key);
+  const ServerListPage({Key? key}) : super(key: key);
 
   @override
   ServerListPageState createState() => ServerListPageState();
@@ -18,9 +18,9 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
   @override
   bool get wantKeepAlive => true;
 
-  AppModel _appModel;
-  ServerModel _serverModel;
-  int _selectIndex;
+  late AppModel _appModel;
+  late ServerModel _serverModel;
+  late int _selectIndex;
 
   @override
   void didChangeDependencies() async {
@@ -48,18 +48,18 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
                 RichText(
                     text: TextSpan(
                         text: '请选择 ',
-                        style: Theme.of(context).textTheme.subtitle2.copyWith(
+                        style: Theme.of(context).textTheme.subtitle2?.copyWith(
                             fontWeight: FontWeight.w700, color: _appModel.isOn ? AppColors.grayColor : Colors.white),
                         children: [
                       TextSpan(
                           text: '节点',
-                          style: Theme.of(context).textTheme.subtitle2.copyWith(
+                          style: Theme.of(context).textTheme.subtitle2?.copyWith(
                               fontWeight: FontWeight.normal, color: _appModel.isOn ? AppColors.grayColor : Colors.white))
                     ])),
                 InkWell(
                   onTap: _serverModel.pingAll,
                   child: Text("Ping",
-                      style: Theme.of(context).textTheme.subtitle2.copyWith(
+                      style: Theme.of(context).textTheme.subtitle2?.copyWith(
                           fontWeight: FontWeight.normal, color: _appModel.isOn ? AppColors.grayColor : Colors.white)),
                 )
               ],
@@ -72,7 +72,7 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
                 itemCount: _serverModel.serverEntityList?.length ?? 0,
                 itemBuilder: (_, index) => InkWell(
                   onTap: () {
-                    _serverModel.setSelectServerEntity(_serverModel.serverEntityList[index]);
+                    _serverModel.setSelectServerEntity(_serverModel.serverEntityList![index]);
                     setState(() => _selectIndex = index);
                   },
                   child: Material(
@@ -93,7 +93,7 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
                               CircleAvatar(
                                 radius: ScreenUtil().setWidth(10),
                                 backgroundColor: (DateTime.now().microsecondsSinceEpoch / 1000000 -
-                                            (int.parse(_serverModel.serverEntityList[index].lastCheckAt ?? '0')) <
+                                            (int.parse(_serverModel.serverEntityList![index].lastCheckAt ?? '0')) <
                                         60 * 10)
                                     ? Colors.green
                                     : Colors.red,
@@ -105,17 +105,17 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    _serverModel.serverEntityList[index].name,
+                                    _serverModel.serverEntityList![index].name,
                                     style: Theme.of(context).textTheme.bodyText1,
                                   ),
                                   const SizedBox(
                                     width: 15,
                                   ),
                                   Tags(
-                                      itemCount: _serverModel.serverEntityList[index].tags.length * 1,
+                                      itemCount: _serverModel.serverEntityList![index].tags.length * 1,
                                       // required
                                       itemBuilder: (int i) {
-                                        final item = _serverModel.serverEntityList[index].tags[i];
+                                        final item = _serverModel.serverEntityList![index].tags[i];
 
                                         return ItemTags(
                                           // Each ItemTags must contain a Key. Keys allow Flutter to
@@ -138,15 +138,15 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
                           ),
                           Row(
                             children: [
-                              _serverModel.serverEntityList[index].ping != null
+                              _serverModel.serverEntityList![index].ping != null
                                   ? Container(
                                       padding: EdgeInsets.only(right: ScreenUtil().setWidth(10)),
                                       child: Text(
-                                        _serverModel.serverEntityList[index].ping.inSeconds > 10
+                                        _serverModel.serverEntityList![index].ping!.inSeconds > 10
                                             ? '超时'
-                                            : "${_serverModel.serverEntityList[index].ping.inMilliseconds}ms",
+                                            : "${_serverModel.serverEntityList![index].ping!.inMilliseconds}ms",
                                         style: TextStyle(
-                                            color: _serverModel.serverEntityList[index].ping.inSeconds > 10
+                                            color: _serverModel.serverEntityList![index].ping!.inSeconds > 10
                                                 ? Colors.red
                                                 : Colors.green),
                                       ),

@@ -3,17 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/utils/navigator_util.dart';
-import 'package:sail_app/widgets/ProfileWidget.dart';
+import 'package:sail_app/widgets/profile_widget.dart';
 
 class MyProfile extends StatefulWidget {
-  const MyProfile({Key key}) : super(key: key);
+  const MyProfile({Key? key}) : super(key: key);
 
   @override
   MyProfileState createState() => MyProfileState();
 }
 
 class MyProfileState extends State<MyProfile> {
-  UserModel _userModel;
+  late UserModel _userModel;
 
   @override
   void didChangeDependencies() {
@@ -42,14 +42,14 @@ class MyProfileState extends State<MyProfile> {
             children: <Widget>[
               ProfileWidget(
                 avatar: _userModel.userEntity?.avatarUrl,
-                userName: _userModel?.userEntity?.email ?? "欢迎光临",
+                userName: _userModel.userEntity?.email ?? "欢迎光临",
                 onTap: onLogoutTap,
               ),
               Container(
                 padding: const EdgeInsets.only(top: 24, bottom: 24),
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.grey[300])),
+                    border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
                   ),
                 ),
               ),
@@ -58,7 +58,7 @@ class MyProfileState extends State<MyProfile> {
                 padding: const EdgeInsets.only(top: 24, bottom: 24),
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.grey[300])),
+                    border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
                   ),
                 ),
               ),
@@ -67,7 +67,7 @@ class MyProfileState extends State<MyProfile> {
                 padding: const EdgeInsets.only(top: 24, bottom: 24),
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.grey[300])),
+                    border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
                   ),
                 ),
               ),
@@ -81,7 +81,7 @@ class MyProfileState extends State<MyProfile> {
 }
 
 class AccountWidget extends StatelessWidget {
-  const AccountWidget({Key key}) : super(key: key);
+  const AccountWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +187,7 @@ class AccountWidget extends StatelessWidget {
 }
 
 class TicketWidget extends StatelessWidget {
-  const TicketWidget({Key key}) : super(key: key);
+  const TicketWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -234,7 +234,7 @@ class TicketWidget extends StatelessWidget {
 }
 
 class StatisticsWidget extends StatelessWidget {
-  const StatisticsWidget({Key key}) : super(key: key);
+  const StatisticsWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

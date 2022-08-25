@@ -8,7 +8,7 @@ import 'package:sail_app/utils/navigator_util.dart';
 import 'package:sail_app/constant/app_strings.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   LoginPageState createState() => LoginPageState();
@@ -17,53 +17,53 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   Duration get loginTime => const Duration(milliseconds: 2250);
 
-  UserModel _userModel;
-  LoginModel _loginModel;
+  late UserModel _userModel;
+  late LoginModel _loginModel;
 
-  static String _emailValidator(value) {
+  static String? _emailValidator(value) {
     if (value.isEmpty || !RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(value)) {
       return '请输入正确邮箱!';
     }
     return null;
   }
 
-  static String _passwordValidator(String value) {
-    if (value.isEmpty) {
+  static String? _passwordValidator(String? value) {
+    if (value?.isEmpty == true) {
       return '密码不能为空!';
     }
-    if (value.length < 6) {
+    if (value?.length == null || value!.length < 6) {
       return '密码不能小于6位';
     }
     return null;
   }
 
-  Future<String> _login(LoginData data) async {
-    String result;
+  Future<String?> _login(LoginData data) async {
+    String? result;
 
     try {
       await _loginModel.login(data.name, data.password);
     } catch (error) {
-      result = error?.response?.data['message'].toString() ?? '登陆失败，请重试';
+      result = '登陆失败，请重试';
     }
 
     return result;
   }
 
-  Future<String> _register(SignupData data) async {
-    String result;
+  Future<String?> _register(SignupData data) async {
+    String? result;
 
     try {
       await UserService().register({'email': data.name, 'password': data.password});
 
       await _loginModel.login(data.name, data.password);
     } catch (error) {
-      result = error?.response?.data['message'].toString() ?? '注册失败，请重试';
+      result = '注册失败，请重试';
     }
 
     return result;
   }
 
-  Future<String> _recoverPassword(String name) {
+  Future<String?> _recoverPassword(String name) {
     return Future.delayed(loginTime).then((_) {
       return null;
     });

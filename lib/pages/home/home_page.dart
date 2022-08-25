@@ -15,10 +15,8 @@ import 'package:sail_app/widgets/home_widget.dart';
 import 'package:sail_app/widgets/power_btn.dart';
 import 'package:sail_app/widgets/sail_app_bar.dart';
 
-typedef Callback = Future<void> Function();
-
 class HomePage extends StatefulWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   HomePageState createState() => HomePageState();
@@ -26,10 +24,10 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   final PageController _pageController = PageController(initialPage: 0);
-  AppModel _appModel;
-  ServerModel _serverModel;
-  UserModel _userModel;
-  UserSubscribeModel _userSubscribeModel;
+  late AppModel _appModel;
+  late ServerModel _serverModel;
+  late UserModel _userModel;
+  late UserSubscribeModel _userSubscribeModel;
   bool _isLoadingData = false;
   String _appTitle = 'Sail';
 

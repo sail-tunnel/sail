@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
-  const ProfileWidget({Key key, @required this.userName, @required this.avatar, @required this.onTap})
-      : super(key: key);
+  const ProfileWidget({Key? key, required this.userName, this.avatar, required this.onTap}) : super(key: key);
 
-  final String avatar;
+  final String? avatar;
   final String userName;
-  final Function onTap;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class ProfileWidget extends StatelessWidget {
           avatar != null
               ? Row(
                   children: <Widget>[
-                    ClipOval(child: Image(image: NetworkImage(avatar), width: 40, height: 40)),
+                    ClipOval(child: Image(image: NetworkImage(avatar!), width: 40, height: 40)),
                     Padding(
                       padding: const EdgeInsets.only(left: 12),
                       child: Text(

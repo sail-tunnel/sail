@@ -11,22 +11,22 @@ import 'package:sail_app/router/routers.dart';
 
 class NavigatorUtil {
   static goMainPage(BuildContext context) {
-    Application.router.navigateTo(context, Routers.root,
+    Application.router?.navigateTo(context, Routers.root,
         transition: TransitionType.inFromRight, replace: true);
   }
 
   static goGuidePage(BuildContext context) {
-    Application.router.navigateTo(context, Routers.guide,
+    Application.router?.navigateTo(context, Routers.guide,
         transition: TransitionType.inFromRight, replace: true);
   }
 
   static goHomePage(BuildContext context) {
-    Application.router.navigateTo(context, Routers.home,
+    Application.router?.navigateTo(context, Routers.home,
         transition: TransitionType.inFromRight, replace: true);
   }
 
   static goLogin(BuildContext context) {
-    Application.router.navigateTo(context, Routers.login,
+    Application.router?.navigateTo(context, Routers.login,
         transition: TransitionType.inFromRight, replace: true);
   }
 
@@ -58,12 +58,12 @@ class NavigatorUtil {
   static goWebView(BuildContext context, String titleName, String url) {
     String encodeUrl = Uri.encodeComponent(jsonEncode(url));
     String encodeTitleName = Uri.encodeComponent(jsonEncode(titleName));
-    return Application.router.navigateTo(
+    return Application.router?.navigateTo(
         context, "${Routers.webView}?titleName=$encodeTitleName&url=$encodeUrl",
         transition: TransitionType.inFromRight);
   }
 
   static goBack(BuildContext context) {
-    Application.router.pop(context);
+    Application.router?.pop(context);
   }
 }

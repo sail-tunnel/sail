@@ -5,7 +5,7 @@ import 'package:sail_app/utils/common_util.dart';
 class BaseModel extends ChangeNotifier {
   PageState pageState = PageState.loading;
   bool _isDispose = false;
-  String errorMessage;
+  late String errorMessage;
 
   bool get isDispose => _isDispose;
 

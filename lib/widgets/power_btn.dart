@@ -8,16 +8,16 @@ import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/models/user_model.dart';
 
 class PowerButton extends StatefulWidget {
-  const PowerButton({Key key}) : super(key: key);
+  const PowerButton({Key? key}) : super(key: key);
 
   @override
   PowerButtonState createState() => PowerButtonState();
 }
 
 class PowerButtonState extends State<PowerButton> {
-  AppModel _appModel;
-  UserModel _userModel;
-  ServerModel _serverModel;
+  late AppModel _appModel;
+  late UserModel _userModel;
+  late ServerModel _serverModel;
 
   @override
   void didChangeDependencies() {

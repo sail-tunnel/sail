@@ -9,14 +9,14 @@ List<PlanEntity> planEntityFromList(List data) => List<PlanEntity>.from(data.map
 
 class PlanEntity {
   PlanEntity({
-    @required this.id,
-    @required this.groupId,
-    @required this.transferEnable,
-    @required this.name,
-    @required this.show,
+    required this.id,
+    required this.groupId,
+    required this.transferEnable,
+    required this.name,
+    required this.show,
     @required this.sort,
-    @required this.renew,
-    @required this.content,
+    required this.renew,
+    required this.content,
     @required this.monthPrice,
     @required this.quarterPrice,
     @required this.halfYearPrice,
@@ -25,8 +25,8 @@ class PlanEntity {
     @required this.threeYearPrice,
     @required this.onetimePrice,
     @required this.resetPrice,
-    @required this.createdAt,
-    @required this.updatedAt,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   final int id;
@@ -45,49 +45,8 @@ class PlanEntity {
   final dynamic threeYearPrice;
   final dynamic onetimePrice;
   final dynamic resetPrice;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-
-  PlanEntity copyWith({
-    int id,
-    int groupId,
-    int transferEnable,
-    String name,
-    int show,
-    dynamic sort,
-    int renew,
-    String content,
-    int monthPrice,
-    int quarterPrice,
-    int halfYearPrice,
-    int yearPrice,
-    dynamic twoYearPrice,
-    dynamic threeYearPrice,
-    dynamic onetimePrice,
-    int resetPrice,
-    DateTime createdAt,
-    DateTime updatedAt,
-  }) =>
-      PlanEntity(
-        id: id ?? this.id,
-        groupId: groupId ?? this.groupId,
-        transferEnable: transferEnable ?? this.transferEnable,
-        name: name ?? this.name,
-        show: show ?? this.show,
-        sort: sort ?? this.sort,
-        renew: renew ?? this.renew,
-        content: content ?? this.content,
-        monthPrice: monthPrice ?? this.monthPrice,
-        quarterPrice: quarterPrice ?? this.quarterPrice,
-        halfYearPrice: halfYearPrice ?? this.halfYearPrice,
-        yearPrice: yearPrice ?? this.yearPrice,
-        twoYearPrice: twoYearPrice ?? this.twoYearPrice,
-        threeYearPrice: threeYearPrice ?? this.threeYearPrice,
-        onetimePrice: onetimePrice ?? this.onetimePrice,
-        resetPrice: resetPrice ?? this.resetPrice,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   factory PlanEntity.fromJson(String str) => PlanEntity.fromMap(json.decode(str));
 
@@ -131,7 +90,7 @@ class PlanEntity {
     "three_year_price": threeYearPrice,
     "onetime_price": onetimePrice,
     "reset_price": resetPrice,
-    "created_at": createdAt == null ? null : createdAt.millisecondsSinceEpoch ~/ 1000,
-    "updated_at": updatedAt == null ? null : updatedAt.millisecondsSinceEpoch ~/ 1000,
+    "created_at": createdAt == null ? null : createdAt!.millisecondsSinceEpoch ~/ 1000,
+    "updated_at": updatedAt == null ? null : updatedAt!.millisecondsSinceEpoch ~/ 1000,
   };
 }

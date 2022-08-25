@@ -8,8 +8,8 @@ import 'package:sail_app/utils/navigator_util.dart';
 
 class LogoBar extends StatelessWidget {
   const LogoBar({
-    Key key,
-    @required this.isOn,
+    Key? key,
+    required this.isOn,
   }) : super(key: key);
 
   final bool isOn;

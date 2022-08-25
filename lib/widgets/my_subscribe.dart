@@ -6,11 +6,7 @@ import 'package:sail_app/entity/user_subscribe_entity.dart';
 import 'package:sail_app/utils/transfer_util.dart';
 
 class MySubscribe extends StatefulWidget {
-  const MySubscribe(
-      {Key key,
-      @required this.isLogin,
-      @required this.isOn,
-      @required this.userSubscribeEntity})
+  const MySubscribe({Key? key, required this.isLogin, required this.isOn, required this.userSubscribeEntity})
       : super(key: key);
 
   final bool isLogin;
@@ -41,9 +37,7 @@ class MySubscribeState extends State<MySubscribe> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(10)),
-          child: widget?.userSubscribeEntity?.plan == null
-              ? _emptyWidget()
-              : _buildConnections(),
+          child: widget?.userSubscribeEntity?.plan == null ? _emptyWidget() : _buildConnections(),
         )
       ],
     );
@@ -53,9 +47,7 @@ class MySubscribeState extends State<MySubscribe> {
     return Container(
       width: ScreenUtil().setWidth(1080),
       height: ScreenUtil().setWidth(200),
-      padding: EdgeInsets.symmetric(
-          horizontal: ScreenUtil().setWidth(75),
-          vertical: ScreenUtil().setWidth(0)),
+      padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(75), vertical: ScreenUtil().setWidth(0)),
       child: Material(
         elevation: widget.isOn ? 3 : 0,
         borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
@@ -63,7 +55,7 @@ class MySubscribeState extends State<MySubscribe> {
         child: Container(
           alignment: Alignment.center,
           child: Text(
-            !widget.isLogin ? '请先登陆' :'请先订阅下方套餐',
+            !widget.isLogin ? '请先登陆' : '请先订阅下方套餐',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: ScreenUtil().setWidth(40),
@@ -78,17 +70,13 @@ class MySubscribeState extends State<MySubscribe> {
     return Container(
         width: ScreenUtil().setWidth(1080),
         height: ScreenUtil().setWidth(240),
-        padding: EdgeInsets.symmetric(
-            horizontal: ScreenUtil().setWidth(75),
-            vertical: ScreenUtil().setWidth(0)),
+        padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(75), vertical: ScreenUtil().setWidth(0)),
         child: Material(
           elevation: widget.isOn ? 3 : 0,
           borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
           color: widget.isOn ? Colors.white : AppColors.darkSurfaceColor,
           child: Container(
-            padding: EdgeInsets.symmetric(
-                vertical: ScreenUtil().setWidth(30),
-                horizontal: ScreenUtil().setWidth(40)),
+            padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(30), horizontal: ScreenUtil().setWidth(40)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -106,9 +94,7 @@ class MySubscribeState extends State<MySubscribe> {
                               fontSize: ScreenUtil().setSp(35),
                               color: widget.isOn ? Colors.black : Colors.white),
                         ),
-                        Padding(
-                            padding: EdgeInsets.only(
-                                left: ScreenUtil().setWidth(15))),
+                        Padding(padding: EdgeInsets.only(left: ScreenUtil().setWidth(15))),
                         Text(
                           widget.userSubscribeEntity?.expiredAt != null
                               ? '${DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.fromMillisecondsSinceEpoch(widget.userSubscribeEntity.expiredAt * 1000))}过期'
@@ -125,21 +111,15 @@ class MySubscribeState extends State<MySubscribe> {
                       children: [
                         Container(
                           width: ScreenUtil().setWidth(480),
-                          padding: EdgeInsets.only(
-                              bottom: ScreenUtil().setWidth(15)),
+                          padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(15)),
                           child: LinearProgressIndicator(
-                            backgroundColor:
-                                widget.isOn ? Colors.black : Colors.white,
-                            valueColor:
-                                AlwaysStoppedAnimation(Colors.yellow[600]),
-                            value: double.parse(((widget
-                                                .userSubscribeEntity.u ??
-                                            0 + widget.userSubscribeEntity.d ??
-                                            0) /
-                                        widget.userSubscribeEntity
-                                            .transferEnable ??
-                                    1)
-                                .toStringAsFixed(2)),
+                            backgroundColor: widget.isOn ? Colors.black : Colors.white,
+                            valueColor: AlwaysStoppedAnimation(Colors.yellow[600]),
+                            value: double.parse(
+                                ((widget.userSubscribeEntity.u ?? 0 + widget.userSubscribeEntity.d ?? 0) /
+                                            widget.userSubscribeEntity.transferEnable ??
+                                        1)
+                                    .toStringAsFixed(2)),
                           ),
                         ),
                         Text(
@@ -165,14 +145,11 @@ class MySubscribeState extends State<MySubscribe> {
                         highlightColor: Colors.yellow[700],
                         colorBrightness: Brightness.dark,
                         splashColor: Colors.grey,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                         onPressed: () {},
                         child: Text(
                           '续费',
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: ScreenUtil().setSp(24)),
+                          style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(24)),
                         ),
                       ),
                     ),
@@ -184,14 +161,11 @@ class MySubscribeState extends State<MySubscribe> {
                         highlightColor: Colors.yellow[700],
                         colorBrightness: Brightness.dark,
                         splashColor: Colors.grey,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                         onPressed: () {},
                         child: Text(
                           '重置',
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: ScreenUtil().setSp(24)),
+                          style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(24)),
                         ),
                       ),
                     )

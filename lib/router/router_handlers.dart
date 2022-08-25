@@ -12,50 +12,50 @@ import 'dart:convert';
 
 /// 入口
 Handler rootHandler = Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
+    handlerFunc: (BuildContext? context, Map<String, List<String>> parameters) {
       return const MainPage();
     });
 
 /// 引导页
 Handler splashHandler = Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
+    handlerFunc: (BuildContext? context, Map<String, List<String>> parameters) {
       return const GuidePage();
     });
 
 /// 首页
 Handler homeHandler = Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
+    handlerFunc: (BuildContext? context, Map<String, List<String>> parameters) {
       return const HomePage();
     });
 
 /// 404页面
 Handler notFindHandler = Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
+    handlerFunc: (BuildContext? context, Map<String, List<String>> parameters) {
       return const NotFindPage();
     });
 
 /// 登录页
 Handler loginHandler = Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
+    handlerFunc: (BuildContext? context, Map<String, List<String>> parameters) {
       return const LoginPage();
     });
 
 /// 套餐页
 Handler planHandle = Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
+    handlerFunc: (BuildContext? context, Map<String, List<String>> parameters) {
       return const PlanPage();
     });
 
 /// 服务器节点页
 Handler serverListHandler = Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
+    handlerFunc: (BuildContext? context, Map<String, List<String>> parameters) {
       return const ServerListPage();
     });
 
 /// WebView页
 Handler webViewHandler = Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> parameters) {
-      var title = jsonDecode(parameters["titleName"].first);
-      var url = jsonDecode(parameters["url"].first);
-      return WebViewWidget(url, title);
+    handlerFunc: (BuildContext? context, Map<String, List<String>> parameters) {
+      var title = jsonDecode(parameters["titleName"]!.first);
+      var url = jsonDecode(parameters["url"]!.first);
+      return WebViewWidget(name: title, url: url);
     });

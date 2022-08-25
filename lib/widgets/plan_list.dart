@@ -8,9 +8,7 @@ import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/utils/navigator_util.dart';
 
 class PlanList extends StatefulWidget {
-  const PlanList(
-      {Key key, @required this.isOn, @required this.boughtPlanId, @required this.plans})
-      : super(key: key);
+  const PlanList({Key? key, required this.isOn, required this.boughtPlanId, required this.plans}) : super(key: key);
 
   final bool isOn;
   final int boughtPlanId;
@@ -21,7 +19,7 @@ class PlanList extends StatefulWidget {
 }
 
 class PlanListState extends State<PlanList> with AutomaticKeepAliveClientMixin {
-  UserModel _userModel;
+  late UserModel _userModel;
 
   @override
   bool get wantKeepAlive => true;
@@ -60,7 +58,7 @@ class PlanListState extends State<PlanList> with AutomaticKeepAliveClientMixin {
   }
 
   List<Widget> _buildConnections() {
-    List list = List<Widget>(widget.plans.length * 2 + 1);
+    List<Widget> list = List.generate(widget.plans.length * 2 + 1, (i) => Container());
 
     list[0] = SizedBox(width: ScreenUtil().setWidth(75));
 

@@ -7,32 +7,32 @@ import 'dart:convert';
 
 class UserEntity {
   UserEntity({
-    @required this.email,
-    @required this.transferEnable,
-    @required this.lastLoginAt,
-    @required this.createdAt,
-    @required this.banned,
-    @required this.remindExpire,
-    @required this.remindTraffic,
-    @required this.expiredAt,
-    @required this.balance,
-    @required this.commissionBalance,
-    @required this.planId,
+    required this.email,
+    required this.transferEnable,
+    required this.lastLoginAt,
+    required this.createdAt,
+    required this.banned,
+    required this.remindExpire,
+    required this.remindTraffic,
+    required this.expiredAt,
+    required this.balance,
+    required this.commissionBalance,
+    required this.planId,
     @required this.discount,
     @required this.commissionRate,
     @required this.telegramId,
-    @required this.uuid,
-    @required this.avatarUrl,
+    required this.uuid,
+    required this.avatarUrl,
   });
 
   final String email;
   final int transferEnable;
-  final DateTime lastLoginAt;
-  final DateTime createdAt;
+  final DateTime? lastLoginAt;
+  final DateTime? createdAt;
   final int banned;
   final int remindExpire;
   final int remindTraffic;
-  final DateTime expiredAt;
+  final DateTime? expiredAt;
   final int balance;
   final int commissionBalance;
   final int planId;
@@ -41,43 +41,6 @@ class UserEntity {
   final dynamic telegramId;
   final String uuid;
   final String avatarUrl;
-
-  UserEntity copyWith({
-    String email,
-    int transferEnable,
-    dynamic lastLoginAt,
-    DateTime createdAt,
-    int banned,
-    int remindExpire,
-    int remindTraffic,
-    int expiredAt,
-    int balance,
-    int commissionBalance,
-    int planId,
-    dynamic discount,
-    dynamic commissionRate,
-    dynamic telegramId,
-    dynamic uuid,
-    String avatarUrl,
-  }) =>
-      UserEntity(
-        email: email ?? this.email,
-        transferEnable: transferEnable ?? this.transferEnable,
-        lastLoginAt: lastLoginAt ?? this.lastLoginAt,
-        createdAt: createdAt ?? this.createdAt,
-        banned: banned ?? this.banned,
-        remindExpire: remindExpire ?? this.remindExpire,
-        remindTraffic: remindTraffic ?? this.remindTraffic,
-        expiredAt: expiredAt ?? this.expiredAt,
-        balance: balance ?? this.balance,
-        commissionBalance: commissionBalance ?? this.commissionBalance,
-        planId: planId ?? this.planId,
-        discount: discount ?? this.discount,
-        commissionRate: commissionRate ?? this.commissionRate,
-        telegramId: telegramId ?? this.telegramId,
-        uuid: uuid ?? this.uuid,
-        avatarUrl: avatarUrl ?? this.avatarUrl,
-      );
 
   factory UserEntity.fromJson(String str) => UserEntity.fromMap(json.decode(str));
 
@@ -105,12 +68,12 @@ class UserEntity {
   Map<String, dynamic> toMap() => {
     "email": email,
     "transfer_enable": transferEnable,
-    "last_login_at": lastLoginAt == null ? null : lastLoginAt.millisecondsSinceEpoch ~/ 1000,
-    "created_at": createdAt == null ? null : createdAt.millisecondsSinceEpoch ~/ 1000,
+    "last_login_at": lastLoginAt == null ? null : lastLoginAt!.millisecondsSinceEpoch ~/ 1000,
+    "created_at": createdAt == null ? null : createdAt!.millisecondsSinceEpoch ~/ 1000,
     "banned": banned,
     "remind_expire": remindExpire,
     "remind_traffic": remindTraffic,
-    "expired_at": expiredAt == null ? null : expiredAt.millisecondsSinceEpoch ~/ 1000,
+    "expired_at": expiredAt == null ? null : expiredAt!.millisecondsSinceEpoch ~/ 1000,
     "balance": balance,
     "commission_balance": commissionBalance,
     "plan_id": planId,

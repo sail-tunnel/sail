@@ -14,40 +14,33 @@ const double iconsVerticalSpacing = 24;
 const double iconsHorizontalSpacing = 16;
 
 class RecentConnectionBottomSheet extends StatefulWidget {
-  const RecentConnectionBottomSheet({Key key}) : super(key: key);
+  const RecentConnectionBottomSheet({Key? key}) : super(key: key);
 
   @override
-  RecentConnectionBottomSheetState createState() =>
-      RecentConnectionBottomSheetState();
+  RecentConnectionBottomSheetState createState() => RecentConnectionBottomSheetState();
 }
 
-class RecentConnectionBottomSheetState
-    extends State<RecentConnectionBottomSheet>
-    with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+class RecentConnectionBottomSheetState extends State<RecentConnectionBottomSheet> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
 
   double get maxHeight => MediaQuery.of(context).size.height;
 
-  double get headerTopMargin =>
-      lerp(20, 20 + MediaQuery.of(context).padding.top);
+  double? get headerTopMargin => lerp(20, 20 + MediaQuery.of(context).padding.top);
 
-  double get headerFontSize => lerp(14, 24);
+  double? get headerFontSize => lerp(14, 24);
 
-  double get itemBorderRadius => lerp(8, 24);
+  double? get itemBorderRadius => lerp(8, 24);
 
-  double get iconLeftBorderRadius => itemBorderRadius;
+  double? get iconLeftBorderRadius => itemBorderRadius;
 
-  double get iconRightBorderRadius => lerp(8, 0);
+  double? get iconRightBorderRadius => lerp(8, 0);
 
-  double get iconSize => lerp(iconStartSize, iconEndSize);
+  double? get iconSize => lerp(iconStartSize, iconEndSize);
 
-  double iconTopMargin(int index) =>
-      lerp(iconStartMarginTop,
-          iconEndMarginTop + index * (iconsVerticalSpacing + iconEndSize)) +
-      headerTopMargin;
+  double? iconTopMargin(int index) =>
+      lerp(iconStartMarginTop, iconEndMarginTop + index * (iconsVerticalSpacing + iconEndSize))! + headerTopMargin!;
 
-  double iconLeftMargin(int index) =>
-      lerp(index * (iconsHorizontalSpacing + iconStartSize), 0);
+  double? iconLeftMargin(int index) => lerp(index * (iconsHorizontalSpacing + iconStartSize), 0);
 
   @override
   void initState() {
@@ -64,8 +57,7 @@ class RecentConnectionBottomSheetState
     super.dispose();
   }
 
-  double lerp(double min, double max) =>
-      lerpDouble(min, max, _controller.value);
+  double? lerp(double min, double max) => lerpDouble(min, max, _controller.value);
 
   @override
   Widget build(BuildContext context) {
@@ -85,9 +77,7 @@ class RecentConnectionBottomSheetState
               padding: const EdgeInsets.symmetric(horizontal: 32),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [AppColors.themeColor, Colors.pink],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight),
+                    colors: [AppColors.themeColor, Colors.pink], begin: Alignment.topLeft, end: Alignment.bottomRight),
                 borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
               ),
               child: Stack(
@@ -117,13 +107,13 @@ class RecentConnectionBottomSheetState
       left: iconLeftMargin(index),
       child: ClipRRect(
         borderRadius: BorderRadius.horizontal(
-          left: Radius.circular(iconLeftBorderRadius),
-          right: Radius.circular(iconRightBorderRadius),
+          left: Radius.circular(iconLeftBorderRadius!),
+          right: Radius.circular(iconRightBorderRadius!),
         ),
         child: Image.asset(
           'assets/${event.assetName}',
           fit: BoxFit.cover,
-          alignment: Alignment(lerp(1, 0), 0),
+          alignment: Alignment(lerp(1, 0)!, 0),
         ),
       ),
     );
@@ -148,15 +138,13 @@ class RecentConnectionBottomSheetState
   }
 
   void _handleDragUpdate(DragUpdateDetails details) {
-    _controller.value -= details.primaryDelta / maxHeight;
+    _controller.value -= details.primaryDelta! / maxHeight;
   }
 
   void _handleDragEnd(DragEndDetails details) {
-    if (_controller.isAnimating ||
-        _controller.status == AnimationStatus.completed) return;
+    if (_controller.isAnimating || _controller.status == AnimationStatus.completed) return;
 
-    final double flingVelocity =
-        details.velocity.pixelsPerSecond.dy / maxHeight;
+    final double flingVelocity = details.velocity.pixelsPerSecond.dy / maxHeight;
     if (flingVelocity < 0.0) {
       _controller.fling(velocity: math.max(2.0, -flingVelocity));
     } else if (flingVelocity > 0.0) {
@@ -168,23 +156,23 @@ class RecentConnectionBottomSheetState
 }
 
 class ExpandedEventItem extends StatelessWidget {
-  final double topMargin;
-  final double leftMargin;
-  final double height;
+  final double? topMargin;
+  final double? leftMargin;
+  final double? height;
   final bool isVisible;
-  final double borderRadius;
+  final double? borderRadius;
   final String title;
   final String date;
 
   const ExpandedEventItem(
-      {Key key,
-      this.topMargin,
-      this.height,
-      this.isVisible,
-      this.borderRadius,
-      this.title,
-      this.date,
-      this.leftMargin})
+      {Key? key,
+      required this.topMargin,
+      required this.height,
+      required this.isVisible,
+      required this.borderRadius,
+      required this.title,
+      required this.date,
+      required this.leftMargin})
       : super(key: key);
 
   @override
@@ -199,10 +187,10 @@ class ExpandedEventItem extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius: BorderRadius.circular(borderRadius!),
             color: Colors.white,
           ),
-          padding: EdgeInsets.only(left: height).add(const EdgeInsets.all(8)),
+          padding: EdgeInsets.only(left: height!).add(const EdgeInsets.all(8)),
           child: _buildContent(),
         ),
       ),
@@ -265,12 +253,10 @@ class Event {
 }
 
 class SheetHeader extends StatelessWidget {
-  final double fontSize;
-  final double topMargin;
+  final double? fontSize;
+  final double? topMargin;
 
-  const SheetHeader(
-      {Key key, @required this.fontSize, @required this.topMargin})
-      : super(key: key);
+  const SheetHeader({Key? key, required this.fontSize, required this.topMargin}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -289,7 +275,7 @@ class SheetHeader extends StatelessWidget {
 }
 
 class MenuButton extends StatelessWidget {
-  const MenuButton({Key key}) : super(key: key);
+  const MenuButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

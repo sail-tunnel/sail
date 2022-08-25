@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:sail_app/constant/app_urls.dart';
 import 'package:sail_app/entity/plan_entity.dart';
 import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/service/plan_service.dart';
@@ -11,14 +10,14 @@ import 'package:sail_app/service/user_service.dart';
 import 'package:sail_app/utils/navigator_util.dart';
 
 class SlidingCardsView extends StatefulWidget {
-  const SlidingCardsView({Key key}) : super(key: key);
+  const SlidingCardsView({Key? key}) : super(key: key);
 
   @override
   SlidingCardsViewState createState() => SlidingCardsViewState();
 }
 
 class SlidingCardsViewState extends State<SlidingCardsView> {
-  PageController pageController;
+  late PageController pageController;
   double pageOffset = 0;
   List<PlanEntity> _planEntityList = [];
 
@@ -27,10 +26,10 @@ class SlidingCardsViewState extends State<SlidingCardsView> {
     super.initState();
     pageController = PageController(viewportFraction: 0.8);
     pageController.addListener(() {
-      setState(() => pageOffset = pageController.page);
+      setState(() => pageOffset = pageController.page!);
     });
 
-    PlanService().plan().then((planEntityList) {
+    PlanService().plan()?.then((planEntityList) {
       setState(() {
         _planEntityList = planEntityList;
       });
@@ -52,7 +51,7 @@ class SlidingCardsViewState extends State<SlidingCardsView> {
           children: List.from(_planEntityList.map((e) => SlidingCard(
               id: e.id,
               name: e.name,
-              date: e.createdAt.toIso8601String(),
+              date: e.createdAt?.toIso8601String(),
               onetimePrice: (e.onetimePrice ?? 0.0) / 100,
               monthPrice: (e.monthPrice ?? 0.0) / 100,
               quarterPrice: (e.quarterPrice ?? 0.0) / 100,
@@ -69,7 +68,7 @@ class SlidingCardsViewState extends State<SlidingCardsView> {
 class SlidingCard extends StatelessWidget {
   final int id;
   final String name;
-  final String date;
+  final String? date;
   final String assetName;
   final double offset;
   final double onetimePrice;
@@ -81,19 +80,19 @@ class SlidingCard extends StatelessWidget {
   final double threeYearPrice;
 
   const SlidingCard({
-    Key key,
-    @required this.id,
-    @required this.name,
-    @required this.date,
-    @required this.assetName,
-    @required this.offset,
-    @required this.onetimePrice,
-    @required this.monthPrice,
-    @required this.quarterPrice,
-    @required this.halfYearPrice,
-    @required this.yearPrice,
-    @required this.twoYearPrice,
-    @required this.threeYearPrice,
+    Key? key,
+    required this.id,
+    required this.name,
+    required this.date,
+    required this.assetName,
+    required this.offset,
+    required this.onetimePrice,
+    required this.monthPrice,
+    required this.quarterPrice,
+    required this.halfYearPrice,
+    required this.yearPrice,
+    required this.twoYearPrice,
+    required this.threeYearPrice,
   }) : super(key: key);
 
   double lowestPrice() {
@@ -107,10 +106,10 @@ class SlidingCard extends StatelessWidget {
       threeYearPrice,
     ];
 
-    double min;
+    double min = double.maxFinite;
 
     for (int i = 0; i < list.length; i++) {
-      if ((min == null || list[i] < min) && list[i] > 0) {
+      if ((list[i] < min) && list[i] > 0) {
         min = list[i];
       }
     }
@@ -158,12 +157,17 @@ class SlidingCard extends StatelessWidget {
 class CardContent extends StatefulWidget {
   final int id;
   final String name;
-  final String date;
+  final String? date;
   final double offset;
   final double lowestPrice;
 
   const CardContent(
-      {Key key, @required this.id, @required this.name, @required this.date, @required this.offset, @required this.lowestPrice})
+      {Key? key,
+      required this.id,
+      required this.name,
+      required this.date,
+      required this.offset,
+      required this.lowestPrice})
       : super(key: key);
 
   @override
@@ -171,7 +175,7 @@ class CardContent extends StatefulWidget {
 }
 
 class CardContentState extends State<CardContent> {
-  UserModel _userModel;
+  late UserModel _userModel;
 
   @override
   void didChangeDependencies() {
@@ -194,7 +198,7 @@ class CardContentState extends State<CardContent> {
           Transform.translate(
             offset: Offset(32 * widget.offset, 0),
             child: Text(
-              widget.date,
+              widget.date!,
               style: const TextStyle(color: Colors.grey),
             ),
           ),
@@ -211,10 +215,11 @@ class CardContentState extends State<CardContent> {
                       borderRadius: BorderRadius.circular(32),
                     ),
                   ),
-                  onPressed: () => _userModel.checkHasLogin(context, () =>
-                      UserService().getQuickLoginUrl({'redirect': "/plan/${widget.id}"}).then((value) {
-                        NavigatorUtil.goWebView(context, "配置订阅", value);
-                      })),
+                  onPressed: () => _userModel.checkHasLogin(
+                      context,
+                      () => UserService().getQuickLoginUrl({'redirect': "/plan/${widget.id}"})?.then((value) {
+                            NavigatorUtil.goWebView(context, "配置订阅", value);
+                          })),
                   child: Transform.translate(
                     offset: Offset(24 * widget.offset, 0),
                     child: Text('购买', style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(36))),

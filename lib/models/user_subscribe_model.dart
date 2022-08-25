@@ -5,17 +5,17 @@ import 'package:sail_app/service/user_service.dart';
 import 'package:sail_app/utils/shared_preferences_util.dart';
 
 class UserSubscribeModel extends BaseModel {
-  UserSubscribeEntity _userSubscribeEntity;
+  late UserSubscribeEntity? _userSubscribeEntity;
 
   final UserService _userService = UserService();
 
-  UserSubscribeEntity get userSubscribeEntity => _userSubscribeEntity;
+  UserSubscribeEntity? get userSubscribeEntity => _userSubscribeEntity;
 
   Future<bool> getUserSubscribe({bool forceRefresh = false}) async {
     bool result = false;
 
-    Map<String, dynamic> data = await SharedPreferencesUtil.getInstance()
-        .getMap(AppStrings.userSubscribe);
+    Map<String, dynamic>? data = await SharedPreferencesUtil.getInstance()
+        ?.getMap(AppStrings.userSubscribe);
 
     if (data == null || data.isEmpty || forceRefresh) {
       setUserSubscribeEntity(await _userService.userSubscribe());
@@ -30,17 +30,17 @@ class UserSubscribeModel extends BaseModel {
     return result;
   }
 
-  setUserSubscribeEntity(UserSubscribeEntity userSubscribeEntity) {
+  setUserSubscribeEntity(UserSubscribeEntity? userSubscribeEntity) {
     _userSubscribeEntity = userSubscribeEntity;
 
     _saveUserSubscribe();
   }
 
   _saveUserSubscribe() async {
-    SharedPreferencesUtil sharedPreferencesUtil =
+    SharedPreferencesUtil? sharedPreferencesUtil =
         SharedPreferencesUtil.getInstance();
 
-    await sharedPreferencesUtil.setMap(
-        AppStrings.userSubscribe, _userSubscribeEntity.toMap());
+    await sharedPreferencesUtil?.setMap(
+        AppStrings.userSubscribe, _userSubscribeEntity?.toMap());
   }
 }

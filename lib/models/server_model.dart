@@ -12,13 +12,13 @@ import 'package:sail_app/utils/common_util.dart';
 enum PingType { ping, tcp }
 
 class ServerModel extends BaseModel {
-  List<ServerEntity> _serverEntityList;
-  ServerEntity _selectServerEntity;
-  List<ServerEntity> _selectServerEntityList;
+  late List<ServerEntity>? _serverEntityList;
+  late ServerEntity _selectServerEntity;
+  late List<ServerEntity> _selectServerEntityList;
 
   final ServerService _serverService = ServerService();
 
-  List<ServerEntity> get serverEntityList => _serverEntityList;
+  List<ServerEntity>? get serverEntityList => _serverEntityList;
 
   ServerEntity get selectServerEntity => _selectServerEntity;
 
@@ -27,10 +27,10 @@ class ServerModel extends BaseModel {
   getServerList({bool forceRefresh = false}) async {
     bool result = false;
 
-    List<dynamic> data = await SharedPreferencesUtil.getInstance().getList(AppStrings.serverNode) ?? [];
+    List<dynamic> data = await SharedPreferencesUtil.getInstance()?.getList(AppStrings.serverNode) ?? [];
     List<dynamic> newData = List.from(data.map((e) => Map<String, dynamic>.from(jsonDecode(e))));
 
-    if (newData == null || newData.isEmpty || forceRefresh) {
+    if (newData.isEmpty || forceRefresh) {
       setServerEntityList(await _serverService.server());
     } else {
       _serverEntityList = serverEntityFromList(newData);
@@ -44,7 +44,7 @@ class ServerModel extends BaseModel {
   }
 
   void pingAll() async {
-    for (int i = 0; i < _serverEntityList.length; i++) {
+    for (int i = 0; i < _serverEntityList!.length; i++) {
       var duration = const Duration(milliseconds: 300);
       await Future.delayed(duration);
       ping(i);
@@ -52,7 +52,7 @@ class ServerModel extends BaseModel {
   }
 
   void ping(int index, {PingType type = PingType.tcp}) {
-    ServerEntity serverEntity = _serverEntityList[index];
+    ServerEntity serverEntity = _serverEntityList![index];
     String host = serverEntity.host;
     int serverPort = serverEntity.port;
 
@@ -67,9 +67,9 @@ class ServerModel extends BaseModel {
             print(event);
             if (event.error != null) {
               var duration = const Duration(minutes: 1);
-              _serverEntityList[index].ping = duration;
+              _serverEntityList![index]?.ping = duration;
             } else if (event.response != null) {
-              _serverEntityList[index].ping = event.response.time;
+              _serverEntityList![index]?.ping = event.response?.time;
             }
             notifyListeners();
 
@@ -85,14 +85,14 @@ class ServerModel extends BaseModel {
         Socket.connect(host, serverPort, timeout: const Duration(seconds: 3)).then((socket) {
           socket.destroy();
           var duration = stopwatch.elapsed;
-          _serverEntityList[index].ping = duration;
+          _serverEntityList![index].ping = duration;
 
           notifyListeners();
 
           return duration;
         }).catchError((error) {
           var duration = const Duration(minutes: 1);
-          _serverEntityList[index].ping = duration;
+          _serverEntityList![index].ping = duration;
 
           throw error;
         });
@@ -106,7 +106,7 @@ class ServerModel extends BaseModel {
     bool result = false;
 
     Map<String, dynamic> data =
-        await SharedPreferencesUtil.getInstance().getMap(AppStrings.selectServer) ?? <String, dynamic>{};
+        await SharedPreferencesUtil.getInstance()?.getMap(AppStrings.selectServer) ?? <String, dynamic>{};
 
     _selectServerEntity = ServerEntity.fromMap(data);
 
@@ -120,7 +120,7 @@ class ServerModel extends BaseModel {
   getSelectServerList() async {
     bool result = false;
 
-    List<dynamic> data = await SharedPreferencesUtil.getInstance().getList(AppStrings.selectServerNode) ?? [];
+    List<dynamic> data = await SharedPreferencesUtil.getInstance()?.getList(AppStrings.selectServerNode) ?? [];
     List<dynamic> newData = List.from(data.map((e) => Map<String, dynamic>.from(jsonDecode(e))));
 
     _selectServerEntityList = serverEntityFromList(newData);
@@ -132,7 +132,7 @@ class ServerModel extends BaseModel {
     return result;
   }
 
-  setServerEntityList(List<ServerEntity> serverEntityList) {
+  setServerEntityList(List<ServerEntity>? serverEntityList) {
     _serverEntityList = serverEntityList;
 
     _saveServerEntityList();
@@ -153,20 +153,20 @@ class ServerModel extends BaseModel {
   }
 
   _saveServerEntityList() async {
-    SharedPreferencesUtil sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
+    SharedPreferencesUtil? sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
 
-    await sharedPreferencesUtil.setList(AppStrings.serverNode, _serverEntityList);
+    await sharedPreferencesUtil?.setList(AppStrings.serverNode, _serverEntityList);
   }
 
   _saveSelectServerEntity() async {
-    SharedPreferencesUtil sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
+    SharedPreferencesUtil? sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
 
-    await sharedPreferencesUtil.setMap(AppStrings.selectServer, _selectServerEntity.toMap());
+    await sharedPreferencesUtil?.setMap(AppStrings.selectServer, _selectServerEntity.toMap());
   }
 
   _saveSelectServerEntityList() async {
-    SharedPreferencesUtil sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
+    SharedPreferencesUtil? sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
 
-    await sharedPreferencesUtil.setList(AppStrings.selectServerNode, _selectServerEntityList);
+    await sharedPreferencesUtil?.setList(AppStrings.selectServerNode, _selectServerEntityList);
   }
 }

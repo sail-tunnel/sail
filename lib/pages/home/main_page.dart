@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'home_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key key}) : super(key: key);
+  const MainPage({Key? key}) : super(key: key);
 
   @override
   MainPageState createState() => MainPageState();

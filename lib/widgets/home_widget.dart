@@ -14,23 +14,23 @@ import 'package:sail_app/widgets/plan_list.dart';
 import 'package:sail_app/widgets/select_location.dart';
 
 class HomeWidget extends StatefulWidget {
-  const HomeWidget({Key key}) : super(key: key);
+  const HomeWidget({Key? key}) : super(key: key);
 
   @override
   HomeWidgetState createState() => HomeWidgetState();
 }
 
 class HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMixin {
-  AppModel _appModel;
-  UserModel _userModel;
-  UserSubscribeModel _userSubscribeModel;
+  late AppModel _appModel;
+  late UserModel _userModel;
+  late UserSubscribeModel _userSubscribeModel;
   List<PlanEntity> _planEntityList = [];
 
   @override
   void initState() {
     super.initState();
 
-    PlanService().plan().then((planEntityList) {
+    PlanService().plan()?.then((planEntityList) {
       setState(() {
         _planEntityList = planEntityList;
       });
@@ -69,7 +69,7 @@ class HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMix
               child: MySubscribe(
                 isLogin: _userModel.isLogin,
                 isOn: _appModel.isOn,
-                userSubscribeEntity: _userSubscribeModel.userSubscribeEntity,
+                userSubscribeEntity: _userSubscribeModel.userSubscribeEntity!,
               ),
             ),
 
@@ -77,7 +77,7 @@ class HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMix
               padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(30)),
               child: PlanList(
                 isOn: _appModel.isOn,
-                boughtPlanId: _userSubscribeModel?.userSubscribeEntity?.planId ?? 0,
+                boughtPlanId: _userSubscribeModel.userSubscribeEntity?.planId ?? 0,
                 plans: _planEntityList,
               ),
             ),
