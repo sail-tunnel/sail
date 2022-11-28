@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
@@ -39,7 +38,7 @@ class ConnectionStatsState extends State<ConnectionStats> {
               onPressed: () => _userModel.checkHasLogin(context, () => NavigatorUtil.goServerList(context)),
               child:
               Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
-                Icon(MaterialCommunityIcons.map_marker,
+                Icon(Icons.map,
                     color: AppColors.grayColor, size: 20),
                 Text("其他节点",
                     style:

@@ -2,9 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:sail_app/router/router_handlers.dart';
 
 class Routers {
-  static String root = "/";
-  static String guide = "/guide";
-  static String home = "/home";
+  static String home = "/";
 
   static String login = "/login";
   static String plan = "/plan";
@@ -13,10 +11,6 @@ class Routers {
 
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = notFindHandler;
-
-    router.define(root, handler: rootHandler);
-
-    router.define(guide, handler: splashHandler);
 
     router.define(home, handler: homeHandler);
 

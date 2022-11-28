@@ -12,17 +12,14 @@ import 'package:sail_app/utils/common_util.dart';
 enum PingType { ping, tcp }
 
 class ServerModel extends BaseModel {
-  late List<ServerEntity>? _serverEntityList;
-  late ServerEntity _selectServerEntity;
-  late List<ServerEntity> _selectServerEntityList;
+  List<ServerEntity>? _serverEntityList;
+  ServerEntity? _selectServerEntity;
 
   final ServerService _serverService = ServerService();
 
   List<ServerEntity>? get serverEntityList => _serverEntityList;
 
-  ServerEntity get selectServerEntity => _selectServerEntity;
-
-  List<ServerEntity> get selectServerEntityList => _selectServerEntityList;
+  ServerEntity? get selectServerEntity => _selectServerEntity;
 
   getServerList({bool forceRefresh = false}) async {
     bool result = false;
@@ -108,22 +105,11 @@ class ServerModel extends BaseModel {
     Map<String, dynamic> data =
         await SharedPreferencesUtil.getInstance()?.getMap(AppStrings.selectServer) ?? <String, dynamic>{};
 
+    if (data.isEmpty) {
+      return null;
+    }
+
     _selectServerEntity = ServerEntity.fromMap(data);
-
-    notifyListeners();
-
-    result = true;
-
-    return result;
-  }
-
-  getSelectServerList() async {
-    bool result = false;
-
-    List<dynamic> data = await SharedPreferencesUtil.getInstance()?.getList(AppStrings.selectServerNode) ?? [];
-    List<dynamic> newData = List.from(data.map((e) => Map<String, dynamic>.from(jsonDecode(e))));
-
-    _selectServerEntityList = serverEntityFromList(newData);
 
     notifyListeners();
 
@@ -136,12 +122,6 @@ class ServerModel extends BaseModel {
     _serverEntityList = serverEntityList;
 
     _saveServerEntityList();
-  }
-
-  setSelectServerEntityList(List<ServerEntity> selectServerEntityList) {
-    _selectServerEntityList = selectServerEntityList;
-
-    _saveSelectServerEntityList();
   }
 
   setSelectServerEntity(ServerEntity selectServerEntity) {
@@ -161,12 +141,6 @@ class ServerModel extends BaseModel {
   _saveSelectServerEntity() async {
     SharedPreferencesUtil? sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
 
-    await sharedPreferencesUtil?.setMap(AppStrings.selectServer, _selectServerEntity.toMap());
-  }
-
-  _saveSelectServerEntityList() async {
-    SharedPreferencesUtil? sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
-
-    await sharedPreferencesUtil?.setList(AppStrings.selectServerNode, _selectServerEntityList);
+    await sharedPreferencesUtil?.setMap(AppStrings.selectServer, _selectServerEntity!.toMap());
   }
 }

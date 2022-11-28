@@ -5,7 +5,7 @@ import 'package:sail_app/service/user_service.dart';
 import 'package:sail_app/utils/shared_preferences_util.dart';
 
 class UserSubscribeModel extends BaseModel {
-  late UserSubscribeEntity? _userSubscribeEntity;
+  UserSubscribeEntity? _userSubscribeEntity;
 
   final UserService _userService = UserService();
 

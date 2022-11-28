@@ -54,8 +54,8 @@ class SailApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('en', 'US'), // 美国英语
-        Locale('zh', 'CN'), // 中文简体
+        Locale('en', 'US'), // 美式英语
+        Locale('zh', 'CN'), // 简体中文
         //其它Locales
       ],
       theme: ThemeData(primarySwatch: AppColors.themeColor, visualDensity: VisualDensity.adaptivePlatformDensity),

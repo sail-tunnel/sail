@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
@@ -54,7 +53,7 @@ class SelectLocationState extends State<SelectLocation> {
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
             child: Row(
               children: [
-                const Icon(MaterialCommunityIcons.server_network),
+                const Icon(Icons.sailing),
                 Padding(padding: EdgeInsets.only(left: ScreenUtil().setWidth(10))),
                 Text(
                   _serverModel.selectServerEntity?.name ?? "选择连接节点",

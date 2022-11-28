@@ -69,7 +69,7 @@ class HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMix
               child: MySubscribe(
                 isLogin: _userModel.isLogin,
                 isOn: _appModel.isOn,
-                userSubscribeEntity: _userSubscribeModel.userSubscribeEntity!,
+                userSubscribeEntity: _userSubscribeModel.userSubscribeEntity,
               ),
             ),
 
@@ -77,7 +77,7 @@ class HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMix
               padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(30)),
               child: PlanList(
                 isOn: _appModel.isOn,
-                boughtPlanId: _userSubscribeModel.userSubscribeEntity?.planId ?? 0,
+                boughtPlanId: _userSubscribeModel.userSubscribeEntity!.expiredAt * 1000 < DateTime.now().millisecondsSinceEpoch ? 0 : _userSubscribeModel.userSubscribeEntity?.planId ?? 0,
                 plans: _planEntityList,
               ),
             ),

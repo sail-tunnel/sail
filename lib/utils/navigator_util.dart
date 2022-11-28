@@ -10,16 +10,6 @@ import 'package:sail_app/router/application.dart';
 import 'package:sail_app/router/routers.dart';
 
 class NavigatorUtil {
-  static goMainPage(BuildContext context) {
-    Application.router?.navigateTo(context, Routers.root,
-        transition: TransitionType.inFromRight, replace: true);
-  }
-
-  static goGuidePage(BuildContext context) {
-    Application.router?.navigateTo(context, Routers.guide,
-        transition: TransitionType.inFromRight, replace: true);
-  }
-
   static goHomePage(BuildContext context) {
     Application.router?.navigateTo(context, Routers.home,
         transition: TransitionType.inFromRight, replace: true);

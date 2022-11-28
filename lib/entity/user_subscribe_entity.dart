@@ -28,7 +28,7 @@ class UserSubscribeEntity {
   final String email;
   final Plan plan;
   final String subscribeUrl;
-  final int resetDay;
+  final int? resetDay;
 
   factory UserSubscribeEntity.fromJson(String str) => UserSubscribeEntity.fromMap(json.decode(str));
 

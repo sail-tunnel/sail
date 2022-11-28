@@ -6,16 +6,14 @@ import 'package:sail_app/utils/navigator_util.dart';
 import 'package:sail_app/utils/shared_preferences_util.dart';
 
 class UserModel extends BaseModel {
-  late String _token;
-  late String _authData;
-  late UserEntity? _userEntity;
-  late bool _isFirstOpen;
+  String? _token;
+  String? _authData;
+  UserEntity? _userEntity;
   bool _isLogin = false;
 
-  String get token => _token;
-  String get authData => _authData;
+  String? get token => _token;
+  String? get authData => _authData;
   UserEntity? get userEntity => _userEntity;
-  bool get isFirstOpen => _isFirstOpen;
   bool get isLogin => _isLogin;
 
   Future<void> checkHasLogin(context, Function callback) async {
@@ -27,8 +25,6 @@ class UserModel extends BaseModel {
   }
 
   refreshData() async {
-    _isFirstOpen =
-        await SharedPreferencesUtil.getInstance()?.getBool(AppStrings.isFirstOpen) ?? true;
     String token =
         await SharedPreferencesUtil.getInstance()?.getString(AppStrings.token) ?? '';
     String authData =
@@ -51,13 +47,8 @@ class UserModel extends BaseModel {
     SharedPreferencesUtil? sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
 
     sharedPreferencesUtil?.clear();
-    setIsFirstOpen(false);
 
     refreshData();
-  }
-
-  _saveIsFirstOpen() {
-    SharedPreferencesUtil.getInstance()?.setBool(AppStrings.isFirstOpen, _isFirstOpen);
   }
 
   _saveUserToken(LoginEntity loginEntity) async {
@@ -79,12 +70,6 @@ class UserModel extends BaseModel {
 
     await sharedPreferencesUtil
         ?.setMap(AppStrings.userInfo, _userEntity?.toMap());
-  }
-
-  setIsFirstOpen(bool isFirstOpen){
-    _isFirstOpen = isFirstOpen;
-
-    _saveIsFirstOpen();
   }
 
   setToken(LoginEntity loginEntity) {

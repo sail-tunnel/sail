@@ -11,7 +11,7 @@ class MySubscribe extends StatefulWidget {
 
   final bool isLogin;
   final bool isOn;
-  final UserSubscribeEntity userSubscribeEntity;
+  final UserSubscribeEntity? userSubscribeEntity;
 
   @override
   MySubscribeState createState() => MySubscribeState();
@@ -37,10 +37,22 @@ class MySubscribeState extends State<MySubscribe> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(10)),
-          child: widget?.userSubscribeEntity?.plan == null ? _emptyWidget() : _buildConnections(),
+          child: _contentWidget(),
         )
       ],
     );
+  }
+
+  Widget _contentWidget () {
+    if (widget.userSubscribeEntity?.plan == null) {
+      return _emptyWidget();
+    }
+
+    if (widget.userSubscribeEntity!.expiredAt * 1000 < DateTime.now().millisecondsSinceEpoch) {
+      return _timeOutWidget();
+    }
+
+    return _buildConnections();
   }
 
   Widget _emptyWidget() {
@@ -56,6 +68,29 @@ class MySubscribeState extends State<MySubscribe> {
           alignment: Alignment.center,
           child: Text(
             !widget.isLogin ? '请先登陆' : '请先订阅下方套餐',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: ScreenUtil().setWidth(40),
+                color: widget.isOn ? Colors.black : Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _timeOutWidget() {
+    return Container(
+      width: ScreenUtil().setWidth(1080),
+      height: ScreenUtil().setWidth(200),
+      padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(75), vertical: ScreenUtil().setWidth(0)),
+      child: Material(
+        elevation: widget.isOn ? 3 : 0,
+        borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
+        color: widget.isOn ? Colors.white : AppColors.darkSurfaceColor,
+        child: Container(
+          alignment: Alignment.center,
+          child: Text(
+            '套餐已过期，请重新订阅',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: ScreenUtil().setWidth(40),
@@ -88,7 +123,7 @@ class MySubscribeState extends State<MySubscribe> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.userSubscribeEntity.plan.name,
+                          widget.userSubscribeEntity!.plan.name,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: ScreenUtil().setSp(35),
@@ -97,7 +132,7 @@ class MySubscribeState extends State<MySubscribe> {
                         Padding(padding: EdgeInsets.only(left: ScreenUtil().setWidth(15))),
                         Text(
                           widget.userSubscribeEntity?.expiredAt != null
-                              ? '${DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.fromMillisecondsSinceEpoch(widget.userSubscribeEntity.expiredAt * 1000))}过期'
+                              ? '${DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.fromMillisecondsSinceEpoch(widget.userSubscribeEntity!.expiredAt * 1000))}过期'
                               : '长期有效',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -116,14 +151,14 @@ class MySubscribeState extends State<MySubscribe> {
                             backgroundColor: widget.isOn ? Colors.black : Colors.white,
                             valueColor: AlwaysStoppedAnimation(Colors.yellow[600]),
                             value: double.parse(
-                                ((widget.userSubscribeEntity.u ?? 0 + widget.userSubscribeEntity.d ?? 0) /
-                                            widget.userSubscribeEntity.transferEnable ??
+                                ((widget.userSubscribeEntity!.u ?? 0 + widget.userSubscribeEntity!.d ?? 0) /
+                                            widget.userSubscribeEntity!.transferEnable ??
                                         1)
                                     .toStringAsFixed(2)),
                           ),
                         ),
                         Text(
-                          '已用 ${TransferUtil().toHumanReadable(widget.userSubscribeEntity.u + widget.userSubscribeEntity.d)} / 总计 ${TransferUtil().toHumanReadable(widget.userSubscribeEntity.transferEnable)}',
+                          '已用 ${TransferUtil().toHumanReadable(widget.userSubscribeEntity!.u + widget.userSubscribeEntity!.d)} / 总计 ${TransferUtil().toHumanReadable(widget.userSubscribeEntity!.transferEnable)}',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: ScreenUtil().setSp(26),
@@ -140,28 +175,33 @@ class MySubscribeState extends State<MySubscribe> {
                       width: ScreenUtil().setWidth(160),
                       height: ScreenUtil().setWidth(75),
                       margin: EdgeInsets.only(right: ScreenUtil().setWidth(10)),
-                      child: FlatButton(
-                        color: Colors.yellow,
-                        highlightColor: Colors.yellow[700],
-                        colorBrightness: Brightness.dark,
-                        splashColor: Colors.grey,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-                        onPressed: () {},
-                        child: Text(
-                          '续费',
-                          style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(24)),
-                        ),
-                      ),
+                      child:
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.yellow,
+                              foregroundColor: Colors.yellow[700],
+                              disabledForegroundColor: Colors.black,
+                              disabledBackgroundColor: Colors.grey,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                            ),
+                            onPressed: () {},
+                            child: Text(
+                              '续费',
+                              style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(24)),
+                            ),
+                          ),
                     ),
                     SizedBox(
                       width: ScreenUtil().setWidth(160),
                       height: ScreenUtil().setWidth(75),
-                      child: FlatButton(
-                        color: Colors.yellow,
-                        highlightColor: Colors.yellow[700],
-                        colorBrightness: Brightness.dark,
-                        splashColor: Colors.grey,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.yellow,
+                          foregroundColor: Colors.yellow[700],
+                          disabledForegroundColor: Colors.black,
+                          disabledBackgroundColor: Colors.grey,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                        ),
                         onPressed: () {},
                         child: Text(
                           '重置',

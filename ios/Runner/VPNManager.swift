@@ -26,6 +26,10 @@ public class VPNManager {
     }
 
     public init() {}
+    
+    public func getStatus() -> NEVPNStatus {
+        return manager.connection.status
+    }
 
     public func loadVPNPreference(completion: @escaping (Error?) -> Void) {
         NETunnelProviderManager.loadAllFromPreferences() { managers, error in

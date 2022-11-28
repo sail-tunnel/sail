@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
@@ -109,7 +108,7 @@ class PlanListState extends State<PlanList> with AutomaticKeepAliveClientMixin {
                           ? Row(
                               children: [
                                 Icon(
-                                  MaterialCommunityIcons.shield_check_outline,
+                                  Icons.shield,
                                   size: ScreenUtil().setWidth(32),
                                   color: const Color(0xFF1abb1d),
                                 ),

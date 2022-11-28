@@ -1,5 +1,6 @@
 import UIKit
 import Flutter
+import NetworkExtension
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -16,29 +17,39 @@ import Flutter
 
     vpnManagerChannel.setMethodCallHandler({
         (call: FlutterMethodCall, result: FlutterResult) -> Void in
-        guard call.method == "enableVPNManager" else {
-          result(FlutterMethodNotImplemented)
-          return
-        }
 
-        manager.loadVPNPreference() { error in
-            guard error == nil else {
-                fatalError("load VPN preference failed: \(error.debugDescription)")
-            }
-
-            manager.enableVPNManager() { error in
+        switch call.method {
+        case "toggle":
+            manager.loadVPNPreference() { error in
                 guard error == nil else {
-                    fatalError("enable VPN failed: \(error.debugDescription)")
+                    fatalError("load VPN preference failed: \(error.debugDescription)")
                 }
-                manager.toggleVPNConnection() { error in
+
+                manager.enableVPNManager() { error in
                     guard error == nil else {
-                        fatalError("toggle VPN connection failed: \(error.debugDescription)")
+                        fatalError("enable VPN failed: \(error.debugDescription)")
+                    }
+                    manager.toggleVPNConnection() { error in
+                        guard error == nil else {
+                            fatalError("toggle VPN connection failed: \(error.debugDescription)")
+                        }
                     }
                 }
             }
-        }
 
-        result(true)
+            result(true)
+            break
+        case "getStatus":
+            if (manager.getStatus() != NEVPNStatus.connected) {
+                result(0)
+            } else {
+                result(1)
+            }
+            break
+        default:
+            result(FlutterMethodNotImplemented)
+            return
+        }
       })
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)

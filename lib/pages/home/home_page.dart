@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
-import 'package:sail_app/constant/app_strings.dart';
+import 'package:sail_app/constant/app_dimens.dart';
 import 'package:sail_app/models/app_model.dart';
 import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/models/user_model.dart';
@@ -22,21 +22,34 @@ class HomePage extends StatefulWidget {
   HomePageState createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> {
-  final PageController _pageController = PageController(initialPage: 0);
+class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late AppModel _appModel;
   late ServerModel _serverModel;
   late UserModel _userModel;
   late UserSubscribeModel _userSubscribeModel;
   bool _isLoadingData = false;
-  String _appTitle = 'Sail';
+  bool _hasGetStatus = false;
 
-  final Map _tabMap = {
-    0: AppStrings.appName,
-    1: '套餐',
-    2: '节点',
-    3: '我的',
-  };
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print('state = $state');
+
+    if (state == AppLifecycleState.resumed) {
+      _appModel.getStatus();
+    }
+  }
 
   @override
   void didChangeDependencies() async {
@@ -52,25 +65,23 @@ class HomePageState extends State<HomePage> {
       await _userSubscribeModel.getUserSubscribe();
       await _serverModel.getServerList(forceRefresh: true);
       await _serverModel.getSelectServer();
-      await _serverModel.getSelectServerList();
     }
-  }
 
-  void jumpToPage(int page) {
-    setState(() {
-      _pageController.jumpToPage(page);
-      _appTitle = _tabMap[page];
-      print("_appTitle: $_appTitle");
-    });
+    if (!_hasGetStatus) {
+      _hasGetStatus = true;
+      _appModel.getStatus();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, designSize: const Size(AppDimens.maxWidth, AppDimens.maxHeight));
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: _appModel.isOn ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
         child: Scaffold(
             appBar: SailAppBar(
-              appTitle: _appTitle,
+              appTitle: _appModel.appTitle,
             ),
             extendBody: true,
             backgroundColor: _appModel.isOn ? AppColors.yellowColor : AppColors.grayColor,
@@ -78,7 +89,7 @@ class HomePageState extends State<HomePage> {
                 bottom: false,
                 child: PageView(
                   physics: const NeverScrollableScrollPhysics(),
-                  controller: _pageController,
+                  controller: _appModel.pageController,
                   children: const [HomeWidget(), PlanPage(), ServerListPage(), MyProfile()],
                 )),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -100,14 +111,14 @@ class HomePageState extends State<HomePage> {
                           Icons.home_rounded,
                           color: Colors.white,
                         ),
-                        onPressed: () => jumpToPage(0),
+                        onPressed: () => _appModel.jumpToPage(0),
                       ),
                       IconButton(
                         icon: const Icon(
                           Icons.wallet,
                           color: Colors.white,
                         ),
-                        onPressed: () => jumpToPage(1),
+                        onPressed: () => _appModel.jumpToPage(1),
                       ),
                       SizedBox(
                         width: ScreenUtil().setWidth(50),
@@ -117,14 +128,14 @@ class HomePageState extends State<HomePage> {
                           Icons.cloud_rounded,
                           color: Colors.white,
                         ),
-                        onPressed: () => jumpToPage(2),
+                        onPressed: () => _appModel.jumpToPage(2),
                       ),
                       IconButton(
                         icon: const Icon(
                           Icons.person,
                           color: Colors.white,
                         ),
-                        onPressed: () => jumpToPage(3),
+                        onPressed: () => _appModel.jumpToPage(3),
                       )
                     ],
                   ),

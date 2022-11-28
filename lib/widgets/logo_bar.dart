@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
+import 'package:sail_app/models/app_model.dart';
 import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/models/user_subscribe_model.dart';
 import 'package:sail_app/utils/navigator_util.dart';
@@ -16,6 +17,7 @@ class LogoBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppModel appModel = Provider.of<AppModel>(context);
     UserModel userModel = Provider.of<UserModel>(context);
     UserSubscribeModel userSubscribeModel = Provider.of<UserSubscribeModel>(context);
 
@@ -58,7 +60,7 @@ class LogoBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
-                  onTap: () {},
+                  onTap: () => appModel.jumpToPage(3),
                   child: Container(
                     padding: EdgeInsets.symmetric(
                         vertical: ScreenUtil().setWidth(10), horizontal: ScreenUtil().setWidth(30)),
