@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as services;
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/constant/app_strings.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,8 @@ import 'package:sail_app/models/user_subscribe_model.dart';
 import 'package:sail_app/router/application.dart';
 import 'package:sail_app/router/routers.dart';
 import 'package:sail_app/models/user_model.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,7 +52,9 @@ class SailApp extends StatelessWidget {
       onGenerateRoute: Application.router?.generator,
       localizationsDelegates: const [
         // 本地化的代理类
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: const [
