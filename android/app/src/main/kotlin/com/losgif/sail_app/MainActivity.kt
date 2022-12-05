@@ -1,4 +1,4 @@
-package com.losgif.sail_app
+package com.sail-tunnel.sail_app
 
 import io.flutter.embedding.android.FlutterActivity
 

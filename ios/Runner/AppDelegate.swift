@@ -11,7 +11,7 @@ import NetworkExtension
     GeneratedPluginRegistrant.register(with: self)
 
     let controller : FlutterViewController = window?.rootViewController as! FlutterViewController;
-    let vpnManagerChannel = FlutterMethodChannel.init(name: "com.losgif.sail/vpn_manager",
+    let vpnManagerChannel = FlutterMethodChannel.init(name: "com.sail-tunnel.sail/vpn_manager",
                                                    binaryMessenger: controller.binaryMessenger);
     let manager = VPNManager.shared()
 
