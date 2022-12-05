@@ -6,6 +6,7 @@ import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/constant/app_strings.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/models/app_model.dart';
+import 'package:sail_app/models/plan_model.dart';
 import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/models/user_subscribe_model.dart';
 import 'package:sail_app/router/application.dart';
@@ -20,6 +21,7 @@ void main() async {
   var userViewModel = UserModel();
   var userSubscribeModel = UserSubscribeModel();
   var serverModel = ServerModel();
+  var planModel = PlanModel();
 
   await userViewModel.refreshData();
 
@@ -28,6 +30,7 @@ void main() async {
     ChangeNotifierProvider<UserModel>.value(value: userViewModel),
     ChangeNotifierProvider<UserSubscribeModel>.value(value: userSubscribeModel),
     ChangeNotifierProvider<ServerModel>.value(value: serverModel),
+    ChangeNotifierProvider<PlanModel>.value(value: planModel)
   ], child: SailApp()));
 }
 

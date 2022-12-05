@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/constant/app_dimens.dart';
 import 'package:sail_app/models/app_model.dart';
+import 'package:sail_app/models/plan_model.dart';
 import 'package:sail_app/models/server_model.dart';
 import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/models/user_subscribe_model.dart';
@@ -27,8 +28,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late ServerModel _serverModel;
   late UserModel _userModel;
   late UserSubscribeModel _userSubscribeModel;
+  late PlanModel _planModel;
   bool _isLoadingData = false;
-  bool _hasGetStatus = false;
+  bool _initialStatus = false;
 
   @override
   void initState() {
@@ -59,6 +61,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     _userModel = Provider.of<UserModel>(context);
     _userSubscribeModel = Provider.of<UserSubscribeModel>(context);
     _serverModel = Provider.of<ServerModel>(context);
+    _planModel = Provider.of<PlanModel>(context);
 
     if (_userModel.isLogin && !_isLoadingData) {
       _isLoadingData = true;
@@ -67,9 +70,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       await _serverModel.getSelectServer();
     }
 
-    if (!_hasGetStatus) {
-      _hasGetStatus = true;
+    if (!_initialStatus) {
+      _initialStatus = true;
       _appModel.getStatus();
+      _planModel.fetchPlanList();
     }
   }
 

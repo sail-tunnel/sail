@@ -14,12 +14,13 @@ enum PingType { ping, tcp }
 class ServerModel extends BaseModel {
   List<ServerEntity>? _serverEntityList;
   ServerEntity? _selectServerEntity;
+  int _selectServerIndex = 0;
 
   final ServerService _serverService = ServerService();
 
   List<ServerEntity>? get serverEntityList => _serverEntityList;
-
   ServerEntity? get selectServerEntity => _selectServerEntity;
+  int get selectServerIndex => _selectServerIndex;
 
   getServerList({bool forceRefresh = false}) async {
     bool result = false;
@@ -104,12 +105,14 @@ class ServerModel extends BaseModel {
 
     Map<String, dynamic> data =
         await SharedPreferencesUtil.getInstance()?.getMap(AppStrings.selectServer) ?? <String, dynamic>{};
+    int index = int.parse(await SharedPreferencesUtil.getInstance()?.getString(AppStrings.selectServerIndex) ?? '0');
 
     if (data.isEmpty) {
       return null;
     }
 
     _selectServerEntity = ServerEntity.fromMap(data);
+    _selectServerIndex = index;
 
     notifyListeners();
 
@@ -132,6 +135,14 @@ class ServerModel extends BaseModel {
     notifyListeners();
   }
 
+  setSelectServerIndex(int index) {
+    _selectServerIndex = index;
+
+    _saveSelectServerIndex();
+
+    notifyListeners();
+  }
+
   _saveServerEntityList() async {
     SharedPreferencesUtil? sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
 
@@ -142,5 +153,11 @@ class ServerModel extends BaseModel {
     SharedPreferencesUtil? sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
 
     await sharedPreferencesUtil?.setMap(AppStrings.selectServer, _selectServerEntity!.toMap());
+  }
+
+  _saveSelectServerIndex() async {
+    SharedPreferencesUtil? sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
+
+    await sharedPreferencesUtil?.setString(AppStrings.selectServerIndex, _selectServerIndex.toString());
   }
 }

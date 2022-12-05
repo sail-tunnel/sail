@@ -27,11 +27,10 @@ class SailAppBarState extends State<SailAppBar> {
     return AppBar(
         title: Text(
           widget.appTitle,
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(color: _appModel.isOn ? Colors.black : Colors.white, fontWeight: FontWeight.w900),
         ),
-        backgroundColor: _appModel.isOn ? AppColors.grayColor : AppColors.themeColor,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(25), bottomLeft: Radius.circular(25)),
-        ));
+        elevation: 0,
+        backgroundColor: _appModel.isOn ? AppColors.yellowColor : AppColors.grayColor
+);
   }
 }

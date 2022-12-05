@@ -48,7 +48,6 @@ class HttpUtil {
     }, onResponse: (response, handler) {
       print("========================请求数据===================");
       print("code=${response.statusCode}");
-      print("response=${response.data}");
 
       if (response.statusCode! < 200 || response.statusCode! >= 300) {
         if (response.statusCode == 403) {
@@ -64,7 +63,6 @@ class HttpUtil {
       print("========================请求错误===================");
       print("message =${error.message}");
       print("code=${error.response?.statusCode}");
-      print("response=${error.response?.data}");
 
       return handler.next(error);
     }));

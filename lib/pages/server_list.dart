@@ -20,7 +20,6 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
 
   late AppModel _appModel;
   late ServerModel _serverModel;
-  late int _selectIndex;
 
   @override
   void didChangeDependencies() async {
@@ -119,11 +118,11 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
       itemBuilder: (_, index) => InkWell(
         onTap: () {
           _serverModel.setSelectServerEntity(_serverModel.serverEntityList![index]);
-          setState(() => _selectIndex = index);
+          _serverModel.setSelectServerIndex(index);
         },
         child: Material(
           borderRadius: BorderRadius.circular(10),
-          color: _selectIndex == index ? Theme.of(context).highlightColor : Theme.of(context).cardColor,
+          color: _serverModel.selectServerIndex == index ? Theme.of(context).highlightColor : Theme.of(context).cardColor,
           child: Padding(
             padding: const EdgeInsets.all(7.0),
             child: Row(

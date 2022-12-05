@@ -29,7 +29,7 @@ class ServerEntity {
 
   final int id;
   final List<String> groupId;
-  final int parentId;
+  final int? parentId;
   final List<String> tags;
   final String name;
   final String rate;

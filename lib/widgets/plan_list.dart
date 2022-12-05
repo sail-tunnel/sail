@@ -3,14 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sail_app/constant/app_colors.dart';
 import 'package:sail_app/entity/plan_entity.dart';
+import 'package:sail_app/entity/user_subscribe_entity.dart';
 import 'package:sail_app/models/user_model.dart';
 import 'package:sail_app/utils/navigator_util.dart';
 
 class PlanList extends StatefulWidget {
-  const PlanList({Key? key, required this.isOn, required this.boughtPlanId, required this.plans}) : super(key: key);
+  const PlanList({Key? key, required this.isOn, required this.userSubscribeEntity, required this.plans})
+      : super(key: key);
 
   final bool isOn;
-  final int boughtPlanId;
+  final UserSubscribeEntity? userSubscribeEntity;
   final List<PlanEntity> plans;
 
   @override
@@ -57,6 +59,14 @@ class PlanListState extends State<PlanList> with AutomaticKeepAliveClientMixin {
   }
 
   List<Widget> _buildConnections() {
+    if (widget.userSubscribeEntity == null) {
+      return [Container()];
+    }
+
+    int boughtPlanId = widget.userSubscribeEntity!.expiredAt * 1000 < DateTime.now().millisecondsSinceEpoch
+        ? 0
+        : widget.userSubscribeEntity?.planId ?? 0;
+
     List<Widget> list = List.generate(widget.plans.length * 2 + 1, (i) => Container());
 
     list[0] = SizedBox(width: ScreenUtil().setWidth(75));
@@ -64,19 +74,19 @@ class PlanListState extends State<PlanList> with AutomaticKeepAliveClientMixin {
     for (var i = 1; i < list.length; i++) {
       list[i] = Material(
         elevation: widget.isOn
-            ? widget.plans[i ~/ 2].id == widget.boughtPlanId
+            ? widget.plans[i ~/ 2].id == boughtPlanId
                 ? 3
                 : 0
             : 0,
         borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
         color: widget.isOn
-            ? widget.plans[i ~/ 2].id == widget.boughtPlanId
+            ? widget.plans[i ~/ 2].id == boughtPlanId
                 ? Colors.white
                 : const Color(0x15000000)
             : AppColors.darkSurfaceColor,
         child: InkWell(
             borderRadius: BorderRadius.circular(ScreenUtil().setWidth(30)),
-            onTap: widget.isOn && widget.plans[i ~/ 2].id == widget.boughtPlanId
+            onTap: widget.isOn && widget.plans[i ~/ 2].id == boughtPlanId
                 ? null
                 : () => _userModel.checkHasLogin(context, () => NavigatorUtil.goPlan(context)),
             child: Container(
@@ -95,7 +105,7 @@ class PlanListState extends State<PlanList> with AutomaticKeepAliveClientMixin {
                           fontWeight: FontWeight.bold,
                           fontSize: ScreenUtil().setSp(32),
                           color: widget.isOn
-                              ? widget.plans[i ~/ 2].id == widget.boughtPlanId
+                              ? widget.plans[i ~/ 2].id == boughtPlanId
                                   ? Colors.black
                                   : AppColors.grayColor
                               : Colors.white),
@@ -104,7 +114,7 @@ class PlanListState extends State<PlanList> with AutomaticKeepAliveClientMixin {
                     // Connection status
                     Padding(
                       padding: EdgeInsets.only(top: ScreenUtil().setWidth(40)),
-                      child: widget.plans[i ~/ 2].id == widget.boughtPlanId
+                      child: widget.plans[i ~/ 2].id == boughtPlanId
                           ? Row(
                               children: [
                                 Icon(
@@ -133,6 +143,7 @@ class PlanListState extends State<PlanList> with AutomaticKeepAliveClientMixin {
 
       list[++i] = SizedBox(width: ScreenUtil().setWidth(30));
     }
+
     return list;
   }
 }
