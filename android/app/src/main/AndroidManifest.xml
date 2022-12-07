@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sail-tunnel.sail_app">
+    package="com.sail_tunnel.sail">
     <application
         android:name="${applicationName}"
-        android:label="sail_app"
+        android:label="sail"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name="io.flutter.embedding.android.FlutterActivity"

@@ -1,10 +1,10 @@
 import 'package:flutter/services.dart';
-import 'package:sail_app/utils/common_util.dart';
+import 'package:sail/utils/common_util.dart';
 
 class VpnManager {
   Future<int> getStatus() async {
     // Native channel
-    const platform = MethodChannel("com.sail-tunnel.sail/vpn_manager");
+    const platform = MethodChannel("com.sail_tunnel.sail/vpn_manager");
     int result;
     try {
       result = await platform.invokeMethod("getStatus");
@@ -18,10 +18,24 @@ class VpnManager {
 
   Future<bool> toggle() async {
     // Native channel
-    const platform = MethodChannel("com.sail-tunnel.sail/vpn_manager");
+    const platform = MethodChannel("com.sail_tunnel.sail/vpn_manager");
     bool result = false;
     try {
       result = await platform.invokeMethod("toggle");
+    } on PlatformException catch (e) {
+      print(e.toString());
+
+      rethrow;
+    }
+    return result;
+  }
+
+  Future<String> getTunnelConfiguration() async {
+    // Native channel
+    const platform = MethodChannel("com.sail_tunnel.sail/vpn_manager");
+    String result;
+    try {
+      result = await platform.invokeMethod("getTunnelConfiguration");
     } on PlatformException catch (e) {
       print(e.toString());
 

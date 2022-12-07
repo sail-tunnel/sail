@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sail_app/channels/vpn_manager.dart';
-import 'package:sail_app/constant/app_strings.dart';
-import 'package:sail_app/models/base_model.dart';
+import 'package:sail/channels/vpn_manager.dart';
+import 'package:sail/constant/app_strings.dart';
+import 'package:sail/models/base_model.dart';
+import 'package:sail/utils/common_util.dart';
 
 class AppModel extends BaseModel {
   VpnManager vpnManager = VpnManager();
@@ -38,5 +39,11 @@ class AppModel extends BaseModel {
     isOn = !isOn;
 
     notifyListeners();
+  }
+
+  void getTunnelConfiguration() async {
+    var conf = await vpnManager.getTunnelConfiguration();
+
+    print("config: $conf");
   }
 }

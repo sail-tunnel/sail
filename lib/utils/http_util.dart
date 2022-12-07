@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:sail_app/constant/app_strings.dart';
-import 'package:sail_app/router/application.dart';
-import 'package:sail_app/router/routers.dart';
-import 'package:sail_app/utils/common_util.dart';
-import 'package:sail_app/utils/shared_preferences_util.dart';
+import 'package:sail/constant/app_strings.dart';
+import 'package:sail/router/application.dart';
+import 'package:sail/router/routers.dart';
+import 'package:sail/utils/common_util.dart';
+import 'package:sail/utils/shared_preferences_util.dart';
 
 class HttpUtil {
   // 工厂模式

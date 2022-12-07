@@ -1,4 +1,4 @@
-name: sail_app
+name: sail
 description: a proxy client application.
 
 # The following line prevents the package from being accidentally published to

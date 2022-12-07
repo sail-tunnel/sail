@@ -1,11 +1,11 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:sail_app/pages/home/home_page.dart';
-import 'package:sail_app/pages/404/not_find_page.dart';
-import 'package:sail_app/pages/login/login_page.dart';
-import 'package:sail_app/pages/plan/plan_page.dart';
-import 'package:sail_app/pages/server_list.dart';
-import 'package:sail_app/pages/webview_widget.dart';
+import 'package:sail/pages/home/home_page.dart';
+import 'package:sail/pages/404/not_find_page.dart';
+import 'package:sail/pages/login/login_page.dart';
+import 'package:sail/pages/plan/plan_page.dart';
+import 'package:sail/pages/server_list.dart';
+import 'package:sail/pages/webview_widget.dart';
 import 'dart:convert';
 
 /// 入口

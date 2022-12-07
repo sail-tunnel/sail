@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sail_app/constant/app_strings.dart';
+import 'package:sail/constant/app_strings.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewWidget extends StatefulWidget {

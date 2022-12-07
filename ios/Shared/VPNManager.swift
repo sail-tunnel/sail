@@ -1,5 +1,6 @@
 import Foundation
 import NetworkExtension
+import LeafFFI
 
 extension NEVPNStatus: CustomStringConvertible {
     public var description: String {
@@ -10,6 +11,7 @@ extension NEVPNStatus: CustomStringConvertible {
         case .connecting: return "Connecting"
         case .disconnecting: return "Disconnecting"
         case .reasserting: return "Reasserting"
+        default: return "Unknowed"
         }
     }
 }

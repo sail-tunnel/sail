@@ -1,37 +1,12 @@
 import NetworkExtension
-
-var conf = """
-[General]
-loglevel = trace
-dns-server = 223.5.5.5, 114.114.114.114
-tun-fd = {{tunFd}}
-routing-domain-resolve = true
-
-[Proxy]
-Direct = direct
-
-[Rule]
-EXTERNAL, site:cn, Direct
-FINAL, Direct
-"""
+import LeafFFI
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
-
-    private static let leafId: UInt16 = 666
-
-    var tunnelFd: Int32? {
-        var buf = [CChar](repeating: 0, count: Int(IFNAMSIZ))
-
-        for fd: Int32 in 0 ... 1024 {
-            var len = socklen_t(buf.count)
-
-            if getsockopt(fd, 2 /* IGMP */, 2, &buf, &len) == 0 && String(cString: buf).hasPrefix("utun") {
-                return fd
-            }
-        }
-
-        return packetFlow.value(forKey: "socket.fileDescriptor") as? Int32
-    }
+    
+    private lazy var adapter: LeafAdapater = {
+        LeafAdapater.setPacketTunnelProvider(with: self)
+        return LeafAdapater.shared()
+    }()
 
     override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         let ipv4 = NEIPv4Settings(addresses: ["192.168.20.2"], subnetMasks: ["255.255.255.0"])
@@ -53,29 +28,25 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         settings.proxySettings = nil
         settings.mtu = 1500
 
+        self.adapter.start(completionHandler: completionHandler)
+        
         setTunnelNetworkSettings(settings) { error in
             if let error = error {
                 return completionHandler(error)
             }
 
-            DispatchQueue.global(qos: .userInteractive).async {
-                signal(SIGPIPE, SIG_IGN)
-
-                let tunFd = self.tunnelFd != nil ? String(self.tunnelFd!) : nil
-
-                conf = conf
-                    .replacingOccurrences(of: "{{tunFd}}", with: tunFd ?? "")
-
-                leaf_run_with_config_string(PacketTunnelProvider.leafId, conf)
-            }
             completionHandler(nil)
         }
     }
 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
-        leaf_shutdown(PacketTunnelProvider.leafId)
-        // Add code here to start the process of stopping the tunnel.
-        completionHandler()
+        self.adapter.stop { error in
+            if let error = error {
+                Logger.log(error.localizedDescription, to: Logger.vpnLogFile)
+            }
+            
+            completionHandler()
+        }
     }
 
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {

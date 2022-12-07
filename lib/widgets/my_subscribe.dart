@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:sail_app/constant/app_colors.dart';
-import 'package:sail_app/entity/user_subscribe_entity.dart';
-import 'package:sail_app/utils/transfer_util.dart';
+import 'package:provider/provider.dart';
+import 'package:sail/constant/app_colors.dart';
+import 'package:sail/entity/user_subscribe_entity.dart';
+import 'package:sail/models/app_model.dart';
+import 'package:sail/utils/transfer_util.dart';
 
 class MySubscribe extends StatefulWidget {
   const MySubscribe({Key? key, required this.isLogin, required this.isOn, required this.userSubscribeEntity})
@@ -18,6 +20,14 @@ class MySubscribe extends StatefulWidget {
 }
 
 class MySubscribeState extends State<MySubscribe> {
+  late AppModel _appModel;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _appModel = Provider.of<AppModel>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -202,10 +212,12 @@ class MySubscribeState extends State<MySubscribe> {
                           disabledBackgroundColor: Colors.grey,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          _appModel.getTunnelConfiguration();
+                        },
                         child: Text(
                           '重置',
-                          style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(24)),
+                          style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(48)),
                         ),
                       ),
                     )

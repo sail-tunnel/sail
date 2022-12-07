@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:sail_app/constant/app_colors.dart';
-import 'package:sail_app/models/app_model.dart';
-import 'package:sail_app/models/server_model.dart';
-import 'package:sail_app/models/user_model.dart';
+import 'package:sail/constant/app_colors.dart';
+import 'package:sail/models/app_model.dart';
+import 'package:sail/models/server_model.dart';
+import 'package:sail/models/user_model.dart';
 
 class PowerButton extends StatefulWidget {
   const PowerButton({Key? key}) : super(key: key);

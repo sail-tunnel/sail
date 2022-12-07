@@ -1,6 +1,7 @@
 import UIKit
 import Flutter
 import NetworkExtension
+import os
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -11,12 +12,12 @@ import NetworkExtension
     GeneratedPluginRegistrant.register(with: self)
 
     let controller : FlutterViewController = window?.rootViewController as! FlutterViewController;
-    let vpnManagerChannel = FlutterMethodChannel.init(name: "com.sail-tunnel.sail/vpn_manager",
+    let vpnManagerChannel = FlutterMethodChannel.init(name: "com.sail_tunnel.sail/vpn_manager",
                                                    binaryMessenger: controller.binaryMessenger);
     let manager = VPNManager.shared()
 
     vpnManagerChannel.setMethodCallHandler({
-        (call: FlutterMethodCall, result: FlutterResult) -> Void in
+        (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
 
         switch call.method {
         case "toggle":
@@ -46,6 +47,21 @@ import NetworkExtension
                 result(1)
             }
             break
+        case "getTunnelConfiguration":
+            LeafAdapater.shared().getRuntimeConfiguration { conf in
+                guard conf != nil else {
+                    fatalError("get runtime VPN configuratioin failed")
+                }
+                
+                result(conf)
+            }
+            break
+        case "setRuntimeConfiguration":
+            LeafAdapater.shared().setRuntimeConfiguration(tunnelConfiguration: call.arguments as! TunnelConfiguration) { error in
+                guard error == nil else {
+                    fatalError("set runtime configuration failed: \(error.debugDescription)")
+                }
+            }
         default:
             result(FlutterMethodNotImplemented)
             return
