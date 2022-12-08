@@ -52,6 +52,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    namespace 'com.sail_tunnel.sail'
 }
 
 flutter {

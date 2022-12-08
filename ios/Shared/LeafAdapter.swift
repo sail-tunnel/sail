@@ -18,6 +18,9 @@ public enum LeafAdapterError: Error {
 
     /// Failure to set network settings.
     case setNetworkSettings(Error)
+    
+    /// Failure to set tunnel configuration
+    case setTunnelConfiguration(Int32)
 
     /// Failure to start Leaf FFI.
     case startLeafFFI
@@ -109,18 +112,23 @@ public class LeafAdapater {
         }
     }
     
-    public func setRuntimeConfiguration(tunnelConfiguration: TunnelConfiguration, completionHandler: @escaping (LeafAdapterError?) -> Void) {
-        let conf = tunnelConfiguration.content
-        guard conf != nil else {
+    public func setRuntimeConfiguration(conf: String?, completionHandler: @escaping (LeafAdapterError?) -> Void) {
+        guard let conf = conf else {
             completionHandler(.startLeafFFI)
             return
         }
         
         let file = FileManager.default.leafConfFile
 
-        try! conf!.write(to: file!, atomically: true, encoding: .utf8)
+        try! conf.write(to: file!, atomically: true, encoding: .utf8)
         
         setenv("LOG_NO_COLOR", "true", 1)
+        
+        let result = leaf_test_config(file?.path)
+        guard result == 0 else {
+            completionHandler(.setTunnelConfiguration(result))
+            return
+        }
         
         completionHandler(nil)
     }
@@ -162,13 +170,12 @@ public class LeafAdapater {
             FileManager.default.leafLogFile?.truncate()
 
             let fm = FileManager.default
-            var conf = fm.leafConfTemplateFile?.contents ?? ""
+            let file = fm.leafConfFile
+            var conf = file?.contents ?? ""
             
             conf = conf
-                .replacingOccurrences(of: "{{leafLogFile}}", with: FileManager.default.leafLogFile?.path ?? "")
+                .replacingOccurrences(of: "{{leafLogFile}}", with: fm.leafLogFile?.path ?? "")
                 .replacingOccurrences(of: "{{tunFd}}", with: tunFd ?? "")
-            
-            let file = FileManager.default.leafConfFile
 
             try! conf.write(to: file!, atomically: true, encoding: .utf8)
 
@@ -211,7 +218,7 @@ public class LeafAdapater {
     /// - Parameters:
     ///   - tunnelConfiguration: tunnel configuration.
     ///   - completionHandler: completion handler.
-    public func update(tunnelConfiguration: TunnelConfiguration, completionHandler: @escaping (LeafAdapterError?) -> Void) {
+    public func update(conf: String?, completionHandler: @escaping (LeafAdapterError?) -> Void) {
         workQueue.async {
             if case .stopped = self.state {
                 completionHandler(.invalidState)
@@ -227,7 +234,7 @@ public class LeafAdapater {
 
             switch self.state {
             case .started:
-                self.setRuntimeConfiguration(tunnelConfiguration: tunnelConfiguration, completionHandler: completionHandler)
+                self.setRuntimeConfiguration(conf: conf, completionHandler: completionHandler)
                 
                 leaf_reload(LeafAdapater.leafId)
 

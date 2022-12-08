@@ -15,6 +15,7 @@ import 'package:sail/pages/server_list.dart';
 import 'package:sail/widgets/home_widget.dart';
 import 'package:sail/widgets/power_btn.dart';
 import 'package:sail/widgets/sail_app_bar.dart';
+import 'package:sail/utils/common_util.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -68,6 +69,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       await _userSubscribeModel.getUserSubscribe();
       await _serverModel.getServerList(forceRefresh: true);
       await _serverModel.getSelectServer();
+      _appModel.setConfigProxies(_userModel, _serverModel);
     }
 
     if (!_initialStatus) {

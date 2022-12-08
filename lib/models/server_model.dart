@@ -19,14 +19,19 @@ class ServerModel extends BaseModel {
   final ServerService _serverService = ServerService();
 
   List<ServerEntity>? get serverEntityList => _serverEntityList;
+
   ServerEntity? get selectServerEntity => _selectServerEntity;
+
   int get selectServerIndex => _selectServerIndex;
 
   getServerList({bool forceRefresh = false}) async {
     bool result = false;
 
-    List<dynamic> data = await SharedPreferencesUtil.getInstance()?.getList(AppStrings.serverNode) ?? [];
-    List<dynamic> newData = List.from(data.map((e) => Map<String, dynamic>.from(jsonDecode(e))));
+    List<dynamic> data = await SharedPreferencesUtil.getInstance()
+            ?.getList(AppStrings.serverNode) ??
+        [];
+    List<dynamic> newData =
+        List.from(data.map((e) => Map<String, dynamic>.from(jsonDecode(e))));
 
     if (newData.isEmpty || forceRefresh) {
       setServerEntityList(await _serverService.server());
@@ -60,14 +65,15 @@ class ServerModel extends BaseModel {
     switch (type) {
       case PingType.ping:
         try {
-          final ping = Ping(host, count: 1, timeout: 1.0, interval: 1.0, ipv6: false);
+          final ping =
+              Ping(host, count: 1, timeout: 1.0, interval: 1.0, ipv6: false);
           ping.stream.listen((event) {
             print(event);
             if (event.error != null) {
               var duration = const Duration(minutes: 1);
-              _serverEntityList![index]?.ping = duration;
+              _serverEntityList![index].ping = duration;
             } else if (event.response != null) {
-              _serverEntityList![index]?.ping = event.response?.time;
+              _serverEntityList![index].ping = event.response?.time;
             }
             notifyListeners();
 
@@ -80,7 +86,8 @@ class ServerModel extends BaseModel {
       case PingType.tcp:
         Stopwatch stopwatch = Stopwatch()..start();
 
-        Socket.connect(host, serverPort, timeout: const Duration(seconds: 3)).then((socket) {
+        Socket.connect(host, serverPort, timeout: const Duration(seconds: 3))
+            .then((socket) {
           socket.destroy();
           var duration = stopwatch.elapsed;
           _serverEntityList![index].ping = duration;
@@ -101,11 +108,12 @@ class ServerModel extends BaseModel {
   }
 
   getSelectServer() async {
-    bool result = false;
-
-    Map<String, dynamic> data =
-        await SharedPreferencesUtil.getInstance()?.getMap(AppStrings.selectServer) ?? <String, dynamic>{};
-    int index = int.parse(await SharedPreferencesUtil.getInstance()?.getString(AppStrings.selectServerIndex) ?? '0');
+    Map<String, dynamic> data = await SharedPreferencesUtil.getInstance()
+            ?.getMap(AppStrings.selectServer) ??
+        <String, dynamic>{};
+    int index = int.parse(await SharedPreferencesUtil.getInstance()
+            ?.getString(AppStrings.selectServerIndex) ??
+        '0');
 
     if (data.isEmpty) {
       return null;
@@ -116,9 +124,7 @@ class ServerModel extends BaseModel {
 
     notifyListeners();
 
-    result = true;
-
-    return result;
+    return _selectServerEntity;
   }
 
   setServerEntityList(List<ServerEntity>? serverEntityList) {
@@ -144,20 +150,26 @@ class ServerModel extends BaseModel {
   }
 
   _saveServerEntityList() async {
-    SharedPreferencesUtil? sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
+    SharedPreferencesUtil? sharedPreferencesUtil =
+        SharedPreferencesUtil.getInstance();
 
-    await sharedPreferencesUtil?.setList(AppStrings.serverNode, _serverEntityList);
+    await sharedPreferencesUtil?.setList(
+        AppStrings.serverNode, _serverEntityList);
   }
 
   _saveSelectServerEntity() async {
-    SharedPreferencesUtil? sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
+    SharedPreferencesUtil? sharedPreferencesUtil =
+        SharedPreferencesUtil.getInstance();
 
-    await sharedPreferencesUtil?.setMap(AppStrings.selectServer, _selectServerEntity!.toMap());
+    await sharedPreferencesUtil?.setMap(
+        AppStrings.selectServer, _selectServerEntity!.toMap());
   }
 
   _saveSelectServerIndex() async {
-    SharedPreferencesUtil? sharedPreferencesUtil = SharedPreferencesUtil.getInstance();
+    SharedPreferencesUtil? sharedPreferencesUtil =
+        SharedPreferencesUtil.getInstance();
 
-    await sharedPreferencesUtil?.setString(AppStrings.selectServerIndex, _selectServerIndex.toString());
+    await sharedPreferencesUtil?.setString(
+        AppStrings.selectServerIndex, _selectServerIndex.toString());
   }
 }

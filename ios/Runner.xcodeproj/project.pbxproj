@@ -11,6 +11,7 @@
 		2FD21F1125A363E300F556E0 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD21F1025A363E300F556E0 /* PacketTunnelProvider.swift */; };
 		2FD21F1625A363E300F556E0 /* PacketTunnel.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2FD21F0D25A363E300F556E0 /* PacketTunnel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2FD21F2425A364B700F556E0 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FD21EF825A363AA00F556E0 /* NetworkExtension.framework */; };
+		31DA31B2DE002F172285FB1C /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9C0075B77637136AF52D8B /* Pods_Runner.framework */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		3E06F985293FACBB00E04D92 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD21F1025A363E300F556E0 /* PacketTunnelProvider.swift */; };
 		3E06F986293FAD1C00E04D92 /* libleaf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA6B288293FA83000B2BABC /* libleaf.a */; };
@@ -18,7 +19,6 @@
 		3E06F98A293FAFC600E04D92 /* LeafAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E06F988293FAFC600E04D92 /* LeafAdapter.swift */; };
 		3E06F98C293FB8F600E04D92 /* TunnelConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E06F98B293FB8F600E04D92 /* TunnelConfiguration.swift */; };
 		3E06F98D293FB8F600E04D92 /* TunnelConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E06F98B293FB8F600E04D92 /* TunnelConfiguration.swift */; };
-		3E06F98E2940975D00E04D92 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A9C0075B77637136AF52D8B /* Pods_Runner.framework */; };
 		3EA6B274293F185700B2BABC /* FileManager+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6B273293F185700B2BABC /* FileManager+Helpers.swift */; };
 		3EA6B276293F1AC500B2BABC /* template.conf in Resources */ = {isa = PBXBuildFile; fileRef = 3EA6B275293F1AC500B2BABC /* template.conf */; };
 		3EA6B278293F1D1600B2BABC /* URL+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6B277293F1D1600B2BABC /* URL+Helpers.swift */; };
@@ -114,7 +114,6 @@
 			files = (
 				7A31DD8228420C0B00E82EE1 /* NetworkExtension.framework in Frameworks */,
 				3EA6B289293FA83E00B2BABC /* libleaf.a in Frameworks */,
-				3E06F98E2940975D00E04D92 /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +124,7 @@
 				3E06F986293FAD1C00E04D92 /* libleaf.a in Frameworks */,
 				2FD21F2425A364B700F556E0 /* NetworkExtension.framework in Frameworks */,
 				DBC6F25A26C78B1D91884CE1 /* Pods_Runner.framework in Frameworks */,
+				31DA31B2DE002F172285FB1C /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

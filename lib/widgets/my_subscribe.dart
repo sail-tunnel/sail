@@ -194,7 +194,9 @@ class MySubscribeState extends State<MySubscribe> {
                               disabledBackgroundColor: Colors.grey,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              _appModel.getTunnelLog();
+                            },
                             child: Text(
                               '续费',
                               style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(24)),

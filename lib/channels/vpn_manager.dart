@@ -30,12 +30,40 @@ class VpnManager {
     return result;
   }
 
+  Future<String> getTunnelLog() async {
+    // Native channel
+    const platform = MethodChannel("com.sail_tunnel.sail/vpn_manager");
+    String result;
+    try {
+      result = await platform.invokeMethod("getTunnelLog");
+    } on PlatformException catch (e) {
+      print(e.toString());
+
+      rethrow;
+    }
+    return result;
+  }
+
   Future<String> getTunnelConfiguration() async {
     // Native channel
     const platform = MethodChannel("com.sail_tunnel.sail/vpn_manager");
     String result;
     try {
       result = await platform.invokeMethod("getTunnelConfiguration");
+    } on PlatformException catch (e) {
+      print(e.toString());
+
+      rethrow;
+    }
+    return result;
+  }
+
+  Future<String> setTunnelConfiguration(String conf) async {
+    // Native channel
+    const platform = MethodChannel("com.sail_tunnel.sail/vpn_manager");
+    String result;
+    try {
+      result = await platform.invokeMethod("setTunnelConfiguration", conf);
     } on PlatformException catch (e) {
       print(e.toString());
 

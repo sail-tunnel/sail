@@ -47,6 +47,15 @@ import os
                 result(1)
             }
             break
+        case "getTunnelLog":
+            let fm = FileManager.default
+
+            guard let conf = fm.leafLogFile?.contents else {
+                fatalError("get leaf log file contents fail")
+            }
+            
+            result(conf)
+            break
         case "getTunnelConfiguration":
             LeafAdapater.shared().getRuntimeConfiguration { conf in
                 guard conf != nil else {
@@ -56,10 +65,23 @@ import os
                 result(conf)
             }
             break
-        case "setRuntimeConfiguration":
-            LeafAdapater.shared().setRuntimeConfiguration(tunnelConfiguration: call.arguments as! TunnelConfiguration) { error in
+        case "setTunnelConfiguration":
+            guard let conf = call.arguments as? String else {
+                fatalError("call arguments is empty")
+            }
+            LeafAdapater.shared().setRuntimeConfiguration(conf: conf) { error in
                 guard error == nil else {
                     fatalError("set runtime configuration failed: \(error.debugDescription)")
+                }
+            }
+        case "update":
+            guard let conf = call.arguments as? String else {
+                fatalError("call arguments is empty")
+            }
+            
+            LeafAdapater.shared().update(conf: conf) { error in
+                guard error == nil else {
+                    fatalError("update tunnel failed: \(error.debugDescription)")
                 }
             }
         default:

@@ -129,7 +129,8 @@ class SlidingCard extends StatelessWidget {
         child: Column(
           children: <Widget>[
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(32)),
               child: Image.asset(
                 'assets/$assetName',
                 height: MediaQuery.of(context).size.height * 0.3,
@@ -209,20 +210,25 @@ class CardContentState extends State<CardContent> {
                 offset: Offset(48 * widget.offset, 0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.yellow,
-                    onPrimary: Colors.white,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.yellow,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32),
                     ),
                   ),
                   onPressed: () => _userModel.checkHasLogin(
                       context,
-                      () => UserService().getQuickLoginUrl({'redirect': "/plan/${widget.id}"})?.then((value) {
+                      () => UserService().getQuickLoginUrl({
+                            'redirect': "/plan/${widget.id}"
+                          })?.then((value) {
                             NavigatorUtil.goWebView(context, "配置订阅", value);
                           })),
                   child: Transform.translate(
                     offset: Offset(24 * widget.offset, 0),
-                    child: Text('购买', style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(36))),
+                    child: Text('购买',
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: ScreenUtil().setSp(36))),
                   ),
                 ),
               ),

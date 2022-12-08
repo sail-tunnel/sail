@@ -119,6 +119,7 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
         onTap: () {
           _serverModel.setSelectServerEntity(_serverModel.serverEntityList![index]);
           _serverModel.setSelectServerIndex(index);
+          _appModel.setConfigRule(_serverModel.serverEntityList![index].name);
         },
         child: Material(
           borderRadius: BorderRadius.circular(10),
