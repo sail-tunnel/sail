@@ -57,8 +57,8 @@ class SlidingCardsViewState extends State<SlidingCardsView> {
               quarterPrice: (e.quarterPrice ?? 0.0) / 100,
               halfYearPrice: (e.halfYearPrice ?? 0.0) / 100,
               yearPrice: (e.yearPrice ?? 0.0) / 100,
-              twoYearPrice: (e.twoYearPrice) ?? 0.0 / 100,
-              threeYearPrice: (e.threeYearPrice) ?? 0.0 / 100,
+              twoYearPrice: (e.twoYearPrice ?? 0.0) / 100,
+              threeYearPrice: (e.threeYearPrice ?? 0.0) / 100,
               assetName: 'steve-johnson.jpeg',
               offset: pageOffset)))),
     );

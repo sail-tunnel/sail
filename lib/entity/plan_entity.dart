@@ -14,17 +14,17 @@ class PlanEntity {
     required this.transferEnable,
     required this.name,
     required this.show,
-    @required this.sort,
+    required this.sort,
     required this.renew,
     required this.content,
-    @required this.monthPrice,
-    @required this.quarterPrice,
-    @required this.halfYearPrice,
-    @required this.yearPrice,
-    @required this.twoYearPrice,
-    @required this.threeYearPrice,
-    @required this.onetimePrice,
-    @required this.resetPrice,
+    required this.monthPrice,
+    required this.quarterPrice,
+    required this.halfYearPrice,
+    required this.yearPrice,
+    required this.twoYearPrice,
+    required this.threeYearPrice,
+    required this.onetimePrice,
+    required this.resetPrice,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -36,15 +36,15 @@ class PlanEntity {
   final int show;
   final dynamic sort;
   final int renew;
-  final String content;
-  final dynamic monthPrice;
-  final dynamic quarterPrice;
-  final dynamic halfYearPrice;
-  final dynamic yearPrice;
-  final dynamic twoYearPrice;
-  final dynamic threeYearPrice;
-  final dynamic onetimePrice;
-  final dynamic resetPrice;
+  final String? content;
+  final int? monthPrice;
+  final int? quarterPrice;
+  final int? halfYearPrice;
+  final int? yearPrice;
+  final int? twoYearPrice;
+  final int? threeYearPrice;
+  final int? onetimePrice;
+  final int? resetPrice;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 

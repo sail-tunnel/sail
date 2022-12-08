@@ -75,9 +75,9 @@ class Plan {
     required this.quarterPrice,
     required this.halfYearPrice,
     required this.yearPrice,
-    @required this.twoYearPrice,
-    @required this.threeYearPrice,
-    @required this.onetimePrice,
+    required this.twoYearPrice,
+    required this.threeYearPrice,
+    required this.onetimePrice,
     required this.resetPrice,
     required this.resetTrafficMethod,
     required this.createdAt,
@@ -91,18 +91,18 @@ class Plan {
   final int show;
   final int sort;
   final int renew;
-  final String content;
-  final int monthPrice;
-  final int quarterPrice;
-  final int halfYearPrice;
-  final int yearPrice;
-  final dynamic twoYearPrice;
-  final dynamic threeYearPrice;
-  final dynamic onetimePrice;
-  final int resetPrice;
-  final int resetTrafficMethod;
-  final int createdAt;
-  final int updatedAt;
+  final String? content;
+  final int? monthPrice;
+  final int? quarterPrice;
+  final int? halfYearPrice;
+  final int? yearPrice;
+  final int? twoYearPrice;
+  final int? threeYearPrice;
+  final int? onetimePrice;
+  final int? resetPrice;
+  final int? resetTrafficMethod;
+  final int? createdAt;
+  final int? updatedAt;
 
   factory Plan.fromJson(String str) => Plan.fromMap(json.decode(str));
 

@@ -183,7 +183,7 @@ class MySubscribeState extends State<MySubscribe> {
                   children: [
                     Container(
                       width: ScreenUtil().setWidth(160),
-                      height: ScreenUtil().setWidth(75),
+                      height: ScreenUtil().setWidth(90),
                       margin: EdgeInsets.only(right: ScreenUtil().setWidth(10)),
                       child:
                           TextButton(
@@ -199,13 +199,13 @@ class MySubscribeState extends State<MySubscribe> {
                             },
                             child: Text(
                               '续费',
-                              style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(24)),
+                              style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(36)),
                             ),
                           ),
                     ),
                     SizedBox(
                       width: ScreenUtil().setWidth(160),
-                      height: ScreenUtil().setWidth(75),
+                      height: ScreenUtil().setWidth(90),
                       child: TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.yellow,
@@ -219,7 +219,7 @@ class MySubscribeState extends State<MySubscribe> {
                         },
                         child: Text(
                           '重置',
-                          style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(48)),
+                          style: TextStyle(color: Colors.black87, fontSize: ScreenUtil().setSp(36)),
                         ),
                       ),
                     )
