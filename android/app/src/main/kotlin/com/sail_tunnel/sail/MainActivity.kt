@@ -1,7 +1,10 @@
 package com.sail_tunnel.sail
 
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.VpnService
+import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -13,17 +16,37 @@ class MainActivity: FlutterActivity() {
         return Intent(this, TunnelService::class.java)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Core.init(this, MainActivity::class)
+    }
+
+    private fun getVPNConnectionStatus(): Boolean? {
+        val context = this@MainActivity
+        val connectivityManager =
+            context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = connectivityManager.activeNetwork
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
+
+        return networkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+    }
+
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel).setMethodCallHandler {
             call, result ->
             // This method is invoked on the main thread.
             if (call.method == "getStatus") {
-                result.success(1)
+                result.success(getVPNConnectionStatus())
             } else if (call.method == "toggle") {
-                val intent: Intent = VpnService.prepare(this@MainActivity)
-                startActivityForResult(intent, 0)
-                result.success(true)
+                val intent = VpnService.prepare(this)
+                if (intent != null) {
+                    startActivityForResult(intent, 0)
+                    result.success(false)
+                } else {
+                    startService(getServiceIntent())
+                    result.success(true)
+                }
             } else if (call.method == "getTunnelLog") {
                 //
             } else if (call.method == "getTunnelConfiguration") {

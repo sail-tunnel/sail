@@ -2,10 +2,10 @@ import 'package:flutter/services.dart';
 import 'package:sail/utils/common_util.dart';
 
 class VpnManager {
-  Future<int> getStatus() async {
+  Future<bool> getStatus() async {
     // Native channel
     const platform = MethodChannel("com.sail_tunnel.sail/vpn_manager");
-    int result;
+    bool result;
     try {
       result = await platform.invokeMethod("getStatus");
     } on PlatformException catch (e) {

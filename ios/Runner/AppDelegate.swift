@@ -42,9 +42,9 @@ import os
             break
         case "getStatus":
             if (manager.getStatus() != NEVPNStatus.connected) {
-                result(0)
+                result(false)
             } else {
-                result(1)
+                result(true)
             }
             break
         case "getTunnelLog":

@@ -45,10 +45,9 @@ class AppModel extends BaseModel {
   }
 
   void getStatus() async {
-    int status = await vpnManager.getStatus();
+    isOn = await vpnManager.getStatus();
 
-    print("status: $status");
-    isOn = status == 1;
+    print("status: $isOn");
 
     notifyListeners();
   }
