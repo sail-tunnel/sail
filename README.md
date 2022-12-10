@@ -34,10 +34,10 @@ recreation of [Mohammad Reza Farahzad's design](https://dribbble.com/shots/14028
 [![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:sail-tunnel@gmail.com)
 
 ## TODOS:
- - [ ] Support android devices.
+ - [x] Support android devices.
  - [ ] Dart ffi with iOS and android to control vpn.
- - [ ] Order page
- - [ ] My settings page
+ - [x] Order page
+ - [x] My settings page
  - [x] Servers list page support ping action.
  - [ ] Refactor colors by material theme.
 

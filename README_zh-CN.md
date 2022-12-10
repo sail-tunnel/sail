@@ -34,10 +34,10 @@
 [![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:sail-tunnel@gmail.com)
 
 ## 待办事项：
-- [ ] 支持安卓设备。
+- [x] 支持安卓设备。
 - [ ] Dart ffi 与 iOS 和 android 来控制 vpn。
-- [ ] 订单页面
-- [ ] 我的设置页面
+- [x] 订单页面
+- [x] 我的设置页面
 - [x] 服务器列表页面支持 ping 操作。
 - [ ] 按Material主题重构颜色。
 
