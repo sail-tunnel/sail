@@ -5,9 +5,11 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.VpnService
 import android.os.Bundle
+import com.sail_tunnel.sail.services.VpnState
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import java.io.File
 
 class MainActivity: FlutterActivity() {
     private val channel = "com.sail_tunnel.sail/vpn_manager"
@@ -48,11 +50,22 @@ class MainActivity: FlutterActivity() {
                     result.success(true)
                 }
             } else if (call.method == "getTunnelLog") {
-                //
+                val context = Core.deviceStorage
+                val configRoot = context.noBackupFilesDir
+                val config = File(configRoot, VpnState.LEAF_LOG_FILE).readText()
+
+                result.success(config)
             } else if (call.method == "getTunnelConfiguration") {
-                result.success("")
+                val context = Core.deviceStorage
+                val configRoot = context.noBackupFilesDir
+                val config = File(configRoot, VpnState.CONFIG_FILE).readText()
+
+                result.success(config)
             } else if (call.method == "setTunnelConfiguration") {
-                //
+                val context = Core.deviceStorage
+                val configRoot = context.noBackupFilesDir
+
+                File(configRoot, VpnState.CONFIG_FILE).writeText(call.arguments as String)
             } else if (call.method == "update") {
                 //
             } else {

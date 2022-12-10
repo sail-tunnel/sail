@@ -35,7 +35,7 @@ class TunnelService : VpnService() {
         else startService(Intent(this, javaClass))
     }
 
-    private var tunFd: ParcelFileDescriptor? = null
+    private var pfd: ParcelFileDescriptor? = null
     private var active = false
     private var metered = false
 
@@ -66,12 +66,10 @@ class TunnelService : VpnService() {
 
         active = false
         scope.launch { DefaultNetworkListener.stop(this) }
-        tunFd?.close()
-        tunFd = null
+        pfd?.close()
+        pfd = null
     }
 
-    @Suppress("OPT_IN_IS_NOT_ENABLED")
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val data = data
         if (data.state != VpnState.State.Stopped) return Service.START_NOT_STICKY
@@ -116,13 +114,13 @@ class TunnelService : VpnService() {
             .setMtu(VPN_MTU)
             .addAddress(PRIVATE_VLAN4_CLIENT, 24)
             .addDnsServer(PRIVATE_VLAN4_ROUTER)
+            .addRoute("0.0.0.0", 0)
 
         active = true   // possible race condition here?
         builder.setUnderlyingNetworks(underlyingNetworks)
         if (Build.VERSION.SDK_INT >= 29) builder.setMetered(metered)
 
-        val tunFd = builder.establish() ?: throw NullConnectionException()
-        this.tunFd = tunFd
+        this.pfd = builder.establish() ?: throw NullConnectionException()
 
         val context = Core.deviceStorage
         val configRoot = context.noBackupFilesDir
@@ -133,9 +131,7 @@ class TunnelService : VpnService() {
         val configContent = configFile
             .readText()
             .replace("{{leafLogFile}}", File(configRoot, VpnState.LEAF_LOG_FILE).absolutePath)
-            .replace("{{tunFd}}", this.tunFd?.fd?.toLong().toString())
-
-        println(configContent)
+            .replace("{{tunFd}}", this.pfd?.fd?.toLong().toString())
 
         configFile.writeText(configContent)
 
@@ -146,18 +142,15 @@ class TunnelService : VpnService() {
         )
     }
 
-    @Suppress("OPT_IN_IS_NOT_ENABLED")
-    @OptIn(DelicateCoroutinesApi::class)
     private fun stopRunner(restart: Boolean = false, msg: String? = null) {
         if (data.state == VpnState.State.Stopping) return
         // channge the state
         data.changeState(VpnState.State.Stopping)
         GlobalScope.launch(Dispatchers.Main.immediate) {
             data.connectingJob?.cancelAndJoin() // ensure stop connecting first
-            this as Service
             // we use a coroutineScope here to allow clean-up in parallel
             coroutineScope {
-                killProcesses(this)
+                killProcesses(GlobalScope)
             }
 
             // change the state

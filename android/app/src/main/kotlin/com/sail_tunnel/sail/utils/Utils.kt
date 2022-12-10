@@ -17,8 +17,6 @@ val Throwable.readableMessage: String get() = localizedMessage ?: javaClass.name
 private val getInt = FileDescriptor::class.java.getDeclaredMethod("getInt$")
 val FileDescriptor.int get() = getInt.invoke(this) as Int
 
-@Suppress("OPT_IN_IS_NOT_ENABLED")
-@OptIn(DelicateCoroutinesApi::class)
 suspend fun <T> HttpURLConnection.useCancellable(block: suspend HttpURLConnection.() -> T): T {
     return suspendCancellableCoroutine { cont ->
         cont.invokeOnCancellation {

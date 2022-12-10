@@ -29,6 +29,7 @@ object DefaultNetworkListener {
         class Update(val network: Network) : NetworkMessage()
         class Lost(val network: Network) : NetworkMessage()
     }
+
     private val networkActor = GlobalScope.actor<NetworkMessage>(Dispatchers.Unconfined) {
         val listeners = mutableMapOf<Any, (Network?) -> Unit>()
         var network: Network? = null
