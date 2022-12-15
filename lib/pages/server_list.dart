@@ -1,5 +1,5 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_tags/flutter_tags.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:sail/constant/app_colors.dart';
 import 'package:sail/models/app_model.dart';
@@ -43,7 +43,7 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
   }
 
   Widget _contentWidget() {
-    if (_serverModel.serverEntityList?.length == 0) {
+    if (_serverModel.serverEntityList.isEmpty) {
       return _emptyWidget();
     }
 
@@ -89,11 +89,11 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
                     style: Theme.of(context).textTheme.subtitle2?.copyWith(
                         fontWeight: FontWeight.w700, color: _appModel.isOn ? AppColors.grayColor : Colors.white),
                     children: [
-                      TextSpan(
-                          text: '节点',
-                          style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                              fontWeight: FontWeight.normal, color: _appModel.isOn ? AppColors.grayColor : Colors.white))
-                    ])),
+                  TextSpan(
+                      text: '节点',
+                      style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                          fontWeight: FontWeight.normal, color: _appModel.isOn ? AppColors.grayColor : Colors.white))
+                ])),
             InkWell(
               onTap: _serverModel.pingAll,
               child: Text("Ping",
@@ -112,18 +112,51 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
     );
   }
 
+  Widget _tagsWidget(List<String>? tags) {
+    if (tags == null || tags.isEmpty) {
+      return Container();
+    }
+
+    for (var i = 0; i < tags.length; i++) {
+      tags[i] = tags[i].replaceAll(' ', '');
+      if (tags[i].isEmpty) {
+        tags.removeAt(i);
+      }
+    }
+
+    var tagsWidget = tags
+        .map((tag) => Chip(
+            backgroundColor: AppColors.themeColor,
+            padding: const EdgeInsets.all(5),
+            label: Text(
+              tag,
+              style: const TextStyle(
+                color: Colors.black87,
+                fontSize: 12,
+              ),
+            )))
+        .toList();
+
+    return Row(
+      children: tagsWidget,
+    );
+  }
+
   Widget _serverListWidget() {
     return ListView.separated(
-      itemCount: _serverModel.serverEntityList?.length ?? 0,
+      controller: ModalScrollController.of(context),
+      physics: const ClampingScrollPhysics(),
+      itemCount: _serverModel.serverEntityList.length,
       itemBuilder: (_, index) => InkWell(
         onTap: () {
-          _serverModel.setSelectServerEntity(_serverModel.serverEntityList![index]);
+          _serverModel.setSelectServerEntity(_serverModel.serverEntityList[index]);
           _serverModel.setSelectServerIndex(index);
-          _appModel.setConfigRule(_serverModel.serverEntityList![index].name);
+          _appModel.setConfigRule(_serverModel.serverEntityList[index].name);
         },
         child: Material(
           borderRadius: BorderRadius.circular(10),
-          color: _serverModel.selectServerIndex == index ? Theme.of(context).highlightColor : Theme.of(context).cardColor,
+          color:
+          _serverModel.selectServerIndex == index ? Theme.of(context).highlightColor : Theme.of(context).cardColor,
           child: Padding(
             padding: const EdgeInsets.all(7.0),
             child: Row(
@@ -139,7 +172,7 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
                     CircleAvatar(
                       radius: ScreenUtil().setWidth(10),
                       backgroundColor: (DateTime.now().microsecondsSinceEpoch / 1000000 -
-                          (int.parse(_serverModel.serverEntityList![index].lastCheckAt ?? '0')) <
+                          (int.parse(_serverModel.serverEntityList[index].lastCheckAt)) <
                           60 * 10)
                           ? Colors.green
                           : Colors.red,
@@ -151,48 +184,28 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          _serverModel.serverEntityList![index].name,
+                          _serverModel.serverEntityList[index].name,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         const SizedBox(
                           width: 15,
                         ),
-                        Tags(
-                            itemCount: _serverModel.serverEntityList![index].tags.length * 1,
-                            // required
-                            itemBuilder: (int i) {
-                              final item = _serverModel.serverEntityList![index].tags[i];
-
-                              return ItemTags(
-                                // Each ItemTags must contain a Key. Keys allow Flutter to
-                                // uniquely identify widgets.
-                                index: i,
-                                // required
-                                color: AppColors.themeColor,
-                                activeColor: AppColors.themeColor,
-                                textColor: Colors.black87,
-                                textActiveColor: Colors.black87,
-                                title: item,
-                                textStyle: TextStyle(fontSize: ScreenUtil().setSp(24)),
-                                onPressed: (item) => print(item),
-                                onLongPressed: (item) => print(item),
-                              );
-                            })
+                        _tagsWidget(_serverModel.serverEntityList[index].tags),
                       ],
                     )
                   ],
                 ),
                 Row(
                   children: [
-                    _serverModel.serverEntityList![index].ping != null
+                    _serverModel.serverEntityList[index].ping != null
                         ? Container(
                       padding: EdgeInsets.only(right: ScreenUtil().setWidth(10)),
                       child: Text(
-                        _serverModel.serverEntityList![index].ping!.inSeconds > 10
+                        _serverModel.serverEntityList[index].ping!.inSeconds > 10
                             ? '超时'
-                            : "${_serverModel.serverEntityList![index].ping!.inMilliseconds}ms",
+                            : "${_serverModel.serverEntityList[index].ping!.inMilliseconds}ms",
                         style: TextStyle(
-                            color: _serverModel.serverEntityList![index].ping!.inSeconds > 10
+                            color: _serverModel.serverEntityList[index].ping!.inSeconds > 10
                                 ? Colors.red
                                 : Colors.green),
                       ),

@@ -44,6 +44,8 @@ class SailApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    AppModel appModel = Provider.of<AppModel>(context);
+
     services.SystemChrome.setPreferredOrientations(
         [services.DeviceOrientation.portraitUp, services.DeviceOrientation.portraitDown]);
 
@@ -65,7 +67,7 @@ class SailApp extends StatelessWidget {
         Locale('zh', 'CN'), // 简体中文
         //其它Locales
       ],
-      theme: ThemeData(primarySwatch: AppColors.themeColor, visualDensity: VisualDensity.adaptivePlatformDensity),
+      theme: appModel.themeData,
     );
   }
 }

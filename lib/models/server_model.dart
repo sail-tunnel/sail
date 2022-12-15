@@ -12,13 +12,13 @@ import 'package:sail/utils/common_util.dart';
 enum PingType { ping, tcp }
 
 class ServerModel extends BaseModel {
-  List<ServerEntity>? _serverEntityList;
+  List<ServerEntity> _serverEntityList = [];
   ServerEntity? _selectServerEntity;
   int _selectServerIndex = 0;
 
   final ServerService _serverService = ServerService();
 
-  List<ServerEntity>? get serverEntityList => _serverEntityList;
+  List<ServerEntity> get serverEntityList => _serverEntityList;
 
   ServerEntity? get selectServerEntity => _selectServerEntity;
 
@@ -47,7 +47,7 @@ class ServerModel extends BaseModel {
   }
 
   void pingAll() async {
-    for (int i = 0; i < _serverEntityList!.length; i++) {
+    for (int i = 0; i < _serverEntityList.length; i++) {
       var duration = const Duration(milliseconds: 300);
       await Future.delayed(duration);
       ping(i);
@@ -55,7 +55,7 @@ class ServerModel extends BaseModel {
   }
 
   void ping(int index, {PingType type = PingType.tcp}) {
-    ServerEntity serverEntity = _serverEntityList![index];
+    ServerEntity serverEntity = _serverEntityList[index];
     String host = serverEntity.host;
     int serverPort = serverEntity.port;
 
@@ -71,9 +71,9 @@ class ServerModel extends BaseModel {
             print(event);
             if (event.error != null) {
               var duration = const Duration(minutes: 1);
-              _serverEntityList![index].ping = duration;
+              _serverEntityList[index].ping = duration;
             } else if (event.response != null) {
-              _serverEntityList![index].ping = event.response?.time;
+              _serverEntityList[index].ping = event.response?.time;
             }
             notifyListeners();
 
@@ -90,14 +90,14 @@ class ServerModel extends BaseModel {
             .then((socket) {
           socket.destroy();
           var duration = stopwatch.elapsed;
-          _serverEntityList![index].ping = duration;
+          _serverEntityList[index].ping = duration;
 
           notifyListeners();
 
           return duration;
         }).catchError((error) {
           var duration = const Duration(minutes: 1);
-          _serverEntityList![index].ping = duration;
+          _serverEntityList[index].ping = duration;
 
           throw error;
         });
@@ -127,7 +127,7 @@ class ServerModel extends BaseModel {
     return _selectServerEntity;
   }
 
-  setServerEntityList(List<ServerEntity>? serverEntityList) {
+  setServerEntityList(List<ServerEntity> serverEntityList) {
     _serverEntityList = serverEntityList;
 
     _saveServerEntityList();

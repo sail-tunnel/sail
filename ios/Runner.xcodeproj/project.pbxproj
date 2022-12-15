@@ -548,6 +548,8 @@
 					"$(PROJECT_DIR)/Flutter",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Sail;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -557,6 +559,7 @@
 					"$(PROJECT_DIR)/Flutter",
 					"$(PROJECT_DIR)/LeafFFI",
 				);
+				MARKETING_VERSION = 1.0.2;
 				MODULEMAP_FILE = "${PROJECT_DIR}/LeafFFI/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sail-tunnel.sail";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -832,6 +835,8 @@
 					"$(PROJECT_DIR)/Flutter",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Sail;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -841,6 +846,7 @@
 					"$(PROJECT_DIR)/Flutter",
 					"$(PROJECT_DIR)/LeafFFI",
 				);
+				MARKETING_VERSION = 1.0.2;
 				MODULEMAP_FILE = "${PROJECT_DIR}/LeafFFI/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sail-tunnel.sail";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -872,6 +878,8 @@
 					"$(PROJECT_DIR)/Flutter",
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Sail;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -881,6 +889,7 @@
 					"$(PROJECT_DIR)/Flutter",
 					"$(PROJECT_DIR)/LeafFFI",
 				);
+				MARKETING_VERSION = 1.0.2;
 				MODULEMAP_FILE = "${PROJECT_DIR}/LeafFFI/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sail-tunnel.sail";
 				PRODUCT_NAME = "$(TARGET_NAME)";

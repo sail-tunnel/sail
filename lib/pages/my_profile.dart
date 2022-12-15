@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sail/models/user_model.dart';
 import 'package:sail/service/user_service.dart';
 import 'package:sail/utils/navigator_util.dart';
+import 'package:sail/widgets/bottom_block.dart';
 import 'package:sail/widgets/profile_widget.dart';
 
 class MyProfile extends StatefulWidget {
@@ -35,48 +36,54 @@ class MyProfileState extends State<MyProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(
-          right: ScreenUtil().setWidth(32),
-          left: ScreenUtil().setWidth(32),
-          top: ScreenUtil().setHeight(32),
-          bottom: ScreenUtil().setHeight(32)),
-      child: Material(
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 24, bottom: 24),
-          child: Column(
-            children: <Widget>[
-              ProfileWidget(
-                avatar: _userModel.userEntity?.avatarUrl,
-                userName: _userModel.userEntity?.email ?? "欢迎光临",
-                onTap: onLogoutTap,
-              ),
-              Container(
+    return Scrollbar(
+        child: SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.only(
+                right: ScreenUtil().setWidth(32),
+                left: ScreenUtil().setWidth(32),
+                top: ScreenUtil().setHeight(32),
+                bottom: ScreenUtil().setHeight(32)),
+            child: Material(
+              borderRadius: BorderRadius.circular(16),
+              child: Padding(
                 padding: const EdgeInsets.only(top: 24, bottom: 24),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(color: Colors.grey[300]!)),
-                  ),
+                child: Column(
+                  children: <Widget>[
+                    ProfileWidget(
+                      avatar: _userModel.userEntity?.avatarUrl,
+                      userName: _userModel.userEntity?.email ?? "欢迎光临",
+                      onTap: onLogoutTap,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 24, bottom: 24),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+                        ),
+                      ),
+                    ),
+                    FinanceWidget(onWebLinkTap: onWebLinkTap),
+                    Container(
+                      padding: const EdgeInsets.only(top: 24, bottom: 24),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(bottom: BorderSide(color: Colors.grey[300]!)),
+                        ),
+                      ),
+                    ),
+                    AccountWidget(onWebLinkTap: onWebLinkTap),
+                  ],
                 ),
               ),
-              FinanceWidget(onWebLinkTap: onWebLinkTap),
-              Container(
-                padding: const EdgeInsets.only(top: 24, bottom: 24),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(color: Colors.grey[300]!)),
-                  ),
-                ),
-              ),
-              AccountWidget(onWebLinkTap: onWebLinkTap),
-            ],
+            ),
           ),
-        ),
+          const BottomBlock(),
+        ],
       ),
-    );
+    ));
   }
 }
 
@@ -232,7 +239,6 @@ class FinanceWidget extends StatelessWidget {
               ),
             ),
           )
-
         ],
       ),
     );

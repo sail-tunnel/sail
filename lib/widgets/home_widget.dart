@@ -6,11 +6,13 @@ import 'package:sail/models/app_model.dart';
 import 'package:sail/models/plan_model.dart';
 import 'package:sail/models/user_model.dart';
 import 'package:sail/models/user_subscribe_model.dart';
+import 'package:sail/widgets/bottom_block.dart';
 import 'package:sail/widgets/connection_stats.dart';
 import 'package:sail/widgets/logo_bar.dart';
 import 'package:sail/widgets/my_subscribe.dart';
 import 'package:sail/widgets/plan_list.dart';
 import 'package:sail/widgets/select_location.dart';
+import 'package:sail/utils/common_util.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key? key}) : super(key: key);
@@ -28,6 +30,24 @@ class HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMix
   @override
   bool get wantKeepAlive => true;
 
+  final ScrollController _controller = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller.addListener(() {
+      print(_controller.offset);
+    });
+  }
+
+  @override
+  void dispose() {
+    //为了避免内存泄露，需要调用_controller.dispose
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -42,6 +62,7 @@ class HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMix
     super.build(context);
 
     return SingleChildScrollView(
+        controller: _controller,
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
@@ -63,7 +84,7 @@ class HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMix
             ),
 
             Padding(
-              padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(30)),
+              padding: EdgeInsets.only(top: ScreenUtil().setWidth(30)),
               child: PlanList(
                 isOn: _appModel.isOn,
                 userSubscribeEntity: _userSubscribeModel.userSubscribeEntity,
@@ -71,8 +92,9 @@ class HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMix
               ),
             ),
 
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(75)),
+            Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: ScreenUtil().setWidth(75), vertical: ScreenUtil().setWidth(30)),
                 child: Stack(alignment: Alignment.center, children: [
                   Image.asset(
                     "assets/map.png",
@@ -82,6 +104,7 @@ class HomeWidgetState extends State<HomeWidget> with AutomaticKeepAliveClientMix
                 ])),
 
             _appModel.isOn ? const ConnectionStats() : const SelectLocation(),
+            const BottomBlock(),
           ],
         ));
   }

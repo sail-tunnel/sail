@@ -6,15 +6,9 @@ import 'package:sail/utils/common_util.dart';
 import 'package:sail/utils/shared_preferences_util.dart';
 
 class HttpUtil {
-  // 工厂模式
-  static HttpUtil? get instance => _getInstance();
-  static HttpUtil? _httpUtil;
+  static HttpUtil get instance => _httpUtil;
+  static final HttpUtil _httpUtil = HttpUtil();
   late Dio dio;
-
-  static HttpUtil? _getInstance() {
-    _httpUtil ??= HttpUtil();
-    return _httpUtil;
-  }
 
   HttpUtil() {
     BaseOptions options = BaseOptions(

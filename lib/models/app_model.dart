@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sail/adapters/leaf_ffi/config.dart';
 import 'package:sail/channels/vpn_manager.dart';
+import 'package:sail/constant/app_colors.dart';
 import 'package:sail/constant/app_strings.dart';
 import 'package:sail/models/base_model.dart';
 import 'package:sail/models/server_model.dart';
@@ -11,8 +12,12 @@ class AppModel extends BaseModel {
   VpnManager vpnManager = VpnManager();
   bool isOn = false;
   PageController pageController = PageController(initialPage: 0);
-  String appTitle = 'Sail';
+  String appTitle = AppStrings.appName;
   Config config = Config();
+  ThemeData themeData = ThemeData(
+    primarySwatch: AppColors.themeColor,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+  );
 
   AppModel() {
     General general = General(
@@ -77,7 +82,7 @@ class AppModel extends BaseModel {
     List<ProxyGroup> proxyGroups = [];
     List<String> actors = [];
 
-    serverModel.serverEntityList?.forEach((server) {
+    for (var server in serverModel.serverEntityList) {
       Proxy proxy = Proxy(
           tag: server.name,
           protocol: server.type,
@@ -87,7 +92,7 @@ class AppModel extends BaseModel {
           password: userModel.userEntity!.uuid);
       proxies.add(proxy);
       actors.add(server.name);
-    });
+    }
 
     if (actors.isNotEmpty) {
       proxyGroups.add(ProxyGroup(
