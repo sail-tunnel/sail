@@ -61,7 +61,7 @@ class ServerEntity {
     serverPort: json["server_port"],
     cipher: json["cipher"],
     show: json["show"],
-    sort: json["sort"],
+    sort: json["sort"] == null ? 0 : json["sort"],
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
     type: json["type"],
