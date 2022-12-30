@@ -18,7 +18,7 @@ jobs:
     - run: flutter pub get
     - run: flutter build ios --release --no-codesign
     - name: Upload Artifact
-    - uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: silversabres.${{ github.sha }}.ios
         path: build/ios/iphoneos/Runner.app
