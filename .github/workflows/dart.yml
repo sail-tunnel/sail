@@ -7,7 +7,7 @@ on:
     branches: [ main, master ]
 
 jobs:
-  build—_ios:
+  build_ios:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
