@@ -23,15 +23,15 @@ jobs:
     needs: check_commit_msg
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: actions/setup-java@v1
       with:
         java-version: '12.x'
     - uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.0.1'
-    - run: dart --version
+        channel: 'stable'
     - run: flutter --version
+    - run: dart --version
     - run: flutter pub get
     - run: flutter build apk
     - name: Upload Artifact
@@ -44,13 +44,14 @@ jobs:
     needs: check_commit_msg
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: actions/setup-java@v1
       with:
         java-version: '12.x'
     - uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.0.1'
+        channel: 'stable'
+    - run: flutter --version
     - run: dart --version
     - run: flutter --version
     - run: flutter pub get
