@@ -21,4 +21,4 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: silversabres.${{ github.sha }}.ios
-        path: /Users/runner/work/sail/sail/build/ios/iphoneos/Runner.app
+        path: build/ios/iphoneos/Runner.app
