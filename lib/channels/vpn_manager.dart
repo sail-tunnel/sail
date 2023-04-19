@@ -1,11 +1,24 @@
 import 'package:flutter/services.dart';
 import 'package:sail/utils/common_util.dart';
 
+enum VpnStatus {
+  connected(code: 2),
+  connecting(code: 1),
+  reasserting(code: 4),
+  disconnecting(code: 5),
+  disconnected(code: 0),
+  invalid(code: 3);
+
+  const VpnStatus({required this.code});
+
+  final int code;
+}
+
 class VpnManager {
-  Future<bool> getStatus() async {
+  Future<VpnStatus> getStatus() async {
     // Native channel
     const platform = MethodChannel("com.sail_tunnel.sail/vpn_manager");
-    bool result;
+    int result;
     try {
       result = await platform.invokeMethod("getStatus");
     } on PlatformException catch (e) {
@@ -13,7 +26,21 @@ class VpnManager {
 
       rethrow;
     }
-    return result;
+    return VpnStatus.values.firstWhere((e) => e.code == result);
+  }
+
+  Future<DateTime> getConnectedDate() async {
+    // Native channel
+    const platform = MethodChannel("com.sail_tunnel.sail/vpn_manager");
+    double result;
+    try {
+      result = await platform.invokeMethod("getConnectedDate");
+    } on PlatformException catch (e) {
+      print(e.toString());
+
+      rethrow;
+    }
+    return DateTime.fromMillisecondsSinceEpoch((result * 1000).toInt());
   }
 
   Future<bool> toggle() async {

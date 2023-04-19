@@ -2,17 +2,17 @@ import NetworkExtension
 import LeafFFI
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
-    
+
     private lazy var adapter: LeafAdapater = {
         LeafAdapater.setPacketTunnelProvider(with: self)
         return LeafAdapater.shared()
     }()
 
     override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
-        let ipv4 = NEIPv4Settings(addresses: ["192.168.20.2"], subnetMasks: ["255.255.255.0"])
+        let ipv4 = NEIPv4Settings(addresses: ["198.18.20.20"], subnetMasks: ["255.255.255.0"])
         ipv4.includedRoutes = [NEIPv4Route.default()]
 
-        let ipv6 = NEIPv6Settings(addresses: ["FC00::0001"], networkPrefixLengths: [7])
+        let ipv6 = NEIPv6Settings(addresses: ["FD00::9999:9999"], networkPrefixLengths: [7])
         ipv6.includedRoutes = [NEIPv6Route.default()]
 
         let dns = NEDNSSettings(servers: ["1.1.1.1"])
@@ -21,7 +21,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         // resolve requests immediately.
         dns.matchDomains = ["", "onion", "exit"]
 
-        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: "192.168.20.20")
+        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: "198.18.20.200")
         settings.ipv4Settings = ipv4
         settings.ipv6Settings = ipv6
         settings.dnsSettings = dns
@@ -29,7 +29,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         settings.mtu = 1500
 
         self.adapter.start(completionHandler: completionHandler)
-        
+
         setTunnelNetworkSettings(settings) { error in
             if let error = error {
                 return completionHandler(error)
@@ -44,7 +44,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             if let error = error {
                 Logger.log(error.localizedDescription, to: Logger.vpnLogFile)
             }
-            
+
             completionHandler()
         }
     }

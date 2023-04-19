@@ -86,18 +86,18 @@ class ServerListPageState extends State<ServerListPage> with AutomaticKeepAliveC
             RichText(
                 text: TextSpan(
                     text: '请选择 ',
-                    style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w700, color: _appModel.isOn ? AppColors.grayColor : Colors.white),
                     children: [
                   TextSpan(
                       text: '节点',
-                      style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.normal, color: _appModel.isOn ? AppColors.grayColor : Colors.white))
                 ])),
             InkWell(
               onTap: _serverModel.pingAll,
               child: Text("Ping",
-                  style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.normal, color: _appModel.isOn ? AppColors.grayColor : Colors.white)),
             )
           ],

@@ -41,7 +41,7 @@ dependencies:
   intl: ^0.17.0
   path_provider: ^2.0.10
   crisp: ^0.3.1
-  modal_bottom_sheet: ^2.0.1
+  modal_bottom_sheet: ^3.0.0-pre
   fluttertoast: ^8.0.9
   meta: ^1.7.0
   flutter_icmp_ping: ^3.1.0

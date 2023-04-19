@@ -41,11 +41,28 @@ import os
             result(true)
             break
         case "getStatus":
-            if (manager.getStatus() != NEVPNStatus.connected) {
-                result(false)
-            } else {
-                result(true)
+            let status = manager.getStatus()
+            
+            switch status {
+            case NEVPNStatus.disconnected:
+                result(0)
+            case NEVPNStatus.connecting:
+                result(1)
+            case NEVPNStatus.reasserting:
+                result(4)
+            case NEVPNStatus.disconnecting:
+                result(5)
+            case NEVPNStatus.connected:
+                result(2)
+            default:
+                result(3)
             }
+            
+            break
+        case "getConnectedDate":
+            let connectedDate = manager.getConnectedDate()
+            
+            result(connectedDate?.timeIntervalSince1970)
             break
         case "getTunnelLog":
             let fm = FileManager.default

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sail/adapters/leaf_ffi/config.dart';
 import 'package:sail/channels/vpn_manager.dart';
 import 'package:sail/constant/app_colors.dart';
@@ -10,7 +11,9 @@ import 'package:sail/utils/common_util.dart';
 
 class AppModel extends BaseModel {
   VpnManager vpnManager = VpnManager();
+  VpnStatus vpnStatus = VpnStatus.disconnected;
   bool isOn = false;
+  DateTime? connectedDate;
   PageController pageController = PageController(initialPage: 0);
   String appTitle = AppStrings.appName;
   Config config = Config();
@@ -50,17 +53,59 @@ class AppModel extends BaseModel {
   }
 
   void getStatus() async {
-    isOn = await vpnManager.getStatus();
+    vpnStatus = await vpnManager.getStatus();
 
-    print("status: $isOn");
+    if (vpnStatus == VpnStatus.connected) {
+      isOn = true;
 
-    notifyListeners();
+      getConnectedDate();
+      notifyListeners();
+    } else if (vpnStatus == VpnStatus.disconnected) {
+      isOn = false;
+      notifyListeners();
+    }
+  }
+
+  void getConnectedDate() async {
+    var date = await vpnManager.getConnectedDate();
+
+    print("date: $date");
+
+    connectedDate = date;
   }
 
   void togglePowerButton() async {
-    await vpnManager.toggle();
+    if (vpnStatus == VpnStatus.connecting) {
+      Fluttertoast.showToast(
+          msg: "正在连接中，请稍后...",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 2,
+          textColor: Colors.white,
+          fontSize: 14.0);
+      return;
+    }
 
-    isOn = !isOn;
+    if (vpnStatus == VpnStatus.disconnecting) {
+      Fluttertoast.showToast(
+          msg: "正在断开中，请稍后...",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 2,
+          textColor: Colors.white,
+          fontSize: 14.0);
+      return;
+    }
+
+    if (vpnStatus == VpnStatus.connected) {
+      vpnStatus = VpnStatus.disconnecting;
+    }
+
+    if (vpnStatus == VpnStatus.disconnected) {
+      vpnStatus = VpnStatus.connecting;
+    }
+
+    await vpnManager.toggle();
 
     notifyListeners();
   }

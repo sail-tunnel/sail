@@ -17,7 +17,7 @@ extension NEVPNStatus: CustomStringConvertible {
 }
 
 public class VPNManager {
-    public var manager = NEVPNManager.shared()
+    public var manager = NETunnelProviderManager.shared()
 
     private static var sharedVPNManager: VPNManager = {
         return VPNManager()
@@ -31,6 +31,10 @@ public class VPNManager {
     
     public func getStatus() -> NEVPNStatus {
         return manager.connection.status
+    }
+    
+    public func getConnectedDate() -> Date? {
+        return manager.connection.connectedDate
     }
 
     public func loadVPNPreference(completion: @escaping (Error?) -> Void) {

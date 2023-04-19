@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,17 +34,30 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late PlanModel _planModel;
   bool _isLoadingData = false;
   bool _initialStatus = false;
+  late Timer _timer;
 
   @override
   void initState() {
-    WidgetsBinding.instance.addObserver(this);
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    createTimer();
   }
 
   @override
   void dispose() {
+    cancelTimer();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  void createTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      _appModel.getStatus();
+    });
+  }
+
+  void cancelTimer() {
+    _timer.cancel();
   }
 
   @override
@@ -50,7 +65,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     print('state = $state');
 
     if (state == AppLifecycleState.resumed) {
-      _appModel.getStatus();
+      _planModel.fetchPlanList();
     }
   }
 
@@ -74,7 +89,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
     if (!_initialStatus) {
       _initialStatus = true;
-      _appModel.getStatus();
       _planModel.fetchPlanList();
     }
   }

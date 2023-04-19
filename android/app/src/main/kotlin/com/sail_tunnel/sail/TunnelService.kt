@@ -19,7 +19,7 @@ class TunnelService : VpnService() {
     companion object {
         private const val CORE_NAME = "leaf"
         private const val VPN_MTU = 1500
-        private const val PRIVATE_VLAN4_CLIENT = "192.168.20.2"
+        private const val PRIVATE_VLAN4_CLIENT = "198.18.20.20"
         private const val PRIVATE_VLAN4_ROUTER = "1.1.1.1"
     }
 
