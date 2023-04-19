@@ -39,15 +39,15 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
     }
 
-    override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
-        self.adapter.stop { error in
-            if let error = error {
-                Logger.log(error.localizedDescription, to: Logger.vpnLogFile)
-            }
-
-            completionHandler()
-        }
-    }
+//    override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+//        self.adapter.stop { error in
+//            if let error = error {
+//                Logger.log(error.localizedDescription, to: Logger.vpnLogFile)
+//            }
+//
+//            completionHandler()
+//        }
+//    }
 
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
         // Add code here to handle the message.
