@@ -29,7 +29,7 @@ jobs:
         java-version: '12.x'
     - uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.0.1'
+        flutter-version: '3.7.11'
     - run: dart --version
     - run: flutter --version
     - run: flutter pub get
@@ -37,9 +37,9 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: silversabres.${{ github.sha }}.android
+        name: sail.${{ github.sha }}.android
         path: build/app/outputs/flutter-apk/app-release.apk
-    
+
   build_ios:
     needs: check_commit_msg
     runs-on: macos-latest
@@ -50,7 +50,7 @@ jobs:
         java-version: '12.x'
     - uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.0.1'
+        flutter-version: '3.7.11'
     - run: dart --version
     - run: flutter --version
     - run: flutter pub get
@@ -58,5 +58,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: silversabres.${{ github.sha }}.ios
+        name: sail.${{ github.sha }}.ios
         path: build/ios/iphoneos/Runner.app
