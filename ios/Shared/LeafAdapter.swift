@@ -181,7 +181,7 @@ public class LeafAdapater {
 
             setenv("LOG_NO_COLOR", "true", 1)
 
-            leaf_run(LeafAdapater.leafId, file?.path)
+            leaf_run_with_options(LeafAdapater.leafId, file?.path, true, true, true, 8, 1024 * 32)
             
             self.state = .started
             self.networkMonitor = networkMonitor

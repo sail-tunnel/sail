@@ -9,7 +9,7 @@ import Foundation
 
 extension FileManager {
     static var appGroupId = "group.com.sail-tunnel.sail"
-    
+
     private var sharedFolderURL: URL? {
         let appGroupId = FileManager.appGroupId
         guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupId) else {
@@ -33,5 +33,9 @@ extension FileManager {
 
     var leafConfTemplateFile: URL? {
         Bundle.main.url(forResource: "template", withExtension: "conf")
+    }
+    
+    var leafSiteDataFile: URL? {
+        Bundle.main.url(forResource: "site", withExtension: "dat", subdirectory: "Shared")
     }
 }

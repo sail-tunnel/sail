@@ -30,11 +30,19 @@ class AppModel extends BaseModel {
         tunFd: '{{tunFd}}',
         routingDomainResolve: true);
 
+    List<Proxy> proxies = [];
+
+    proxies.add(Proxy(tag: 'Direct', protocol: 'direct'));
+    proxies.add(Proxy(tag: 'Reject', protocol: 'reject'));
+
     List<Rule> rules = [];
-    // rules.add(Rule(typeField: 'EXTERNAL', target: 'Direct', filter: 'site:cn'));
+
+    rules.add(Rule(typeField: 'EXTERNAL', target: 'Direct', filter: 'site:geolocation-!cn'));
+    rules.add(Rule(typeField: 'EXTERNAL', target: 'Direct', filter: 'site:cn'));
     rules.add(Rule(typeField: 'FINAL', target: 'Direct'));
 
     config.general = general;
+    config.proxies = proxies;
     config.rules = rules;
   }
 
@@ -123,7 +131,7 @@ class AppModel extends BaseModel {
   }
 
   void setConfigProxies(UserModel userModel, ServerModel serverModel) async {
-    List<Proxy> proxies = [];
+    List<Proxy> proxies = config.proxies!;
     List<ProxyGroup> proxyGroups = [];
     List<String> actors = [];
 
@@ -145,8 +153,14 @@ class AppModel extends BaseModel {
           protocol: 'url-test',
           actors: actors,
           checkInterval: 600));
+    }
 
-      config.rules?.last.target = "UrlTest";
+    if (serverModel.selectServerEntity != null) {
+      config.rules?.first.target = serverModel.selectServerEntity!.name;
+    } else if (proxyGroups.isNotEmpty) {
+      config.rules?.first.target = 'UrlTest';
+    } else {
+      config.rules?.first.target = 'Direct';
     }
 
     config.proxies = proxies;
@@ -160,18 +174,20 @@ class AppModel extends BaseModel {
   }
 
   void setConfigRule(String tag) async {
-    // var proxy = config.proxies?.where((proxies) => proxies.tag == tag);
-    //
-    // if (proxy == null || proxy.isEmpty) {
-    //   return;
-    // }
-    //
-    // config.rules?.last.target = tag;
-    //
-    // print("-----------------config-----------------");
-    // print(config);
-    // print("-----------------config-----------------");
-    //
-    // vpnManager.setTunnelConfiguration(config.toString());
+    var proxy = config.proxies?.where((proxies) => proxies.tag == tag);
+    print("proxy: $proxy");
+
+    if (proxy == null || proxy.isEmpty) {
+      // TODO: 弹窗提示
+      return;
+    }
+
+    config.rules?.first.target = tag;
+
+    print("-----------------config-----------------");
+    print(config);
+    print("-----------------config-----------------");
+
+    vpnManager.setTunnelConfiguration(config.toString());
   }
 }
