@@ -10,5 +10,5 @@ class AppStrings {
   static const String selectServerNode = 'SELECT_SERVER_NODE';
   static const String isFirstOpen = "IS_FIRST_OPEN";
   static const String openDoor = '开启加速服务';
-  static const String crispWebsiteId = 'b7b8fcd4-9857-42b7-a39d-51fb4930130d';
+  static const String crispWebsiteId = 'a7bd3dc0-6bab-4f12-b9ac-e1997a97f4ca';
 }
