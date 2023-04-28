@@ -1,5 +1,5 @@
 class AppStrings {
-  static const String appName = 'Sail';
+  static const String appName = '云中漫步';
   static const String token = 'token';
   static const String authData = 'auth_data';
   static const String userInfo = 'USER_INFO';
