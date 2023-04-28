@@ -17,7 +17,7 @@ enum VpnStatus {
 class VpnManager {
   Future<VpnStatus> getStatus() async {
     // Native channel
-    const platform = MethodChannel("com.prosfinityx.ang/vpn_manager");
+    const platform = MethodChannel("com.sail_tunnel.sail/vpn_manager");
 
     if (!Platform.isIOS) {
       bool? result = await platform.invokeMethod("getStatus");
