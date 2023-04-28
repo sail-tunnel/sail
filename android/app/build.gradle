@@ -63,6 +63,9 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
 }
 
 flutter {
