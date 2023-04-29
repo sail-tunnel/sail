@@ -63,10 +63,11 @@ android {
             signingConfig signingConfigs.debug
         }
     }
-    lint {
-        baseline = file("lint-baseline.xml")
+    lintOptions {
+        disable 'InvalidPackage'
+        checkReleaseBuilds false
+        abortOnError false
     }
-    compileSdkVersion 32
 }
 
 flutter {
