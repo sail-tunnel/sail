@@ -30,7 +30,7 @@ class UserModel extends BaseModel {
     String authData =
         await SharedPreferencesUtil.getInstance()?.getString(AppStrings.authData) ?? '';
 
-    if (token != null && token.isNotEmpty && authData != null && authData.isNotEmpty) {
+    if (token.isNotEmpty && authData.isNotEmpty) {
       _isLogin = true;
       _token = token;
       _authData = authData;
