@@ -58,7 +58,7 @@ class PlanEntity {
     transferEnable: json["transfer_enable"],
     name: json["name"],
     show: json["show"],
-    sort: json["sort"],
+    sort: json["sort"] == null ? 0 : json["sort"],
     renew: json["renew"],
     content: json["content"],
     monthPrice: json["month_price"],
