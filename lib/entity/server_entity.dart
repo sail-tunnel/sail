@@ -36,14 +36,14 @@ class ServerEntity {
   final String host;
   final int port;
   final int serverPort;
-  final String cipher;
+  final String? cipher;
   final int show;
-  final int sort;
+  final int? sort;
   Duration? ping;
   final int createdAt;
   final int updatedAt;
   final String type;
-  final String lastCheckAt;
+  final String? lastCheckAt;
 
   factory ServerEntity.fromJson(String str) => ServerEntity.fromMap(json.decode(str));
 
